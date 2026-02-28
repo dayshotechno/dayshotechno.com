@@ -43,20 +43,13 @@
             filter: grayscale(1) contrast(1.2);
         }
         /* Tech rider images */
-        .tech-image {
-            background-image: url('assets/techridermixerundplayer.png');
-            background-size: 600% auto;
-            background-repeat: no-repeat;
+        .tech-image-img {
             height: 200px;
+            width: 100%;
+            object-fit: contain;
             filter: invert(1) grayscale(1) contrast(1.25);
             mix-blend-mode: screen;
         }
-        .tech-image-1 { background-position: 0% 0; }
-        .tech-image-2 { background-position: 20% 0; }
-        .tech-image-3 { background-position: 40% 0; }
-        .tech-image-4 { background-position: 60% 0; }
-        .tech-image-5 { background-position: 80% 0; }
-        .tech-image-6 { background-position: 100% 0; }
         /* Glitch effect for hero tagline */
         .hero-tagline {
             position: relative;
@@ -223,27 +216,23 @@
         <!-- Grid of equipment with images -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
             <div class="p-6 border-2 border-red-600 bg-black">
-                <div class="tech-image tech-image-1 mb-4"></div>
+                <img src="assets/pioneer-cdj-3000.png" class="tech-image-img mb-4" alt="PIONEER CDJ-3000">
                 <p class="text-2xl md:text-3xl font-bold text-red-600" style="font-family: 'Oswald', sans-serif;">PIONEER CDJ-3000</p>
             </div>
             <div class="p-6 border-2 border-red-600 bg-black">
-                <div class="tech-image tech-image-2 mb-4"></div>
+                <img src="assets/pioneer-cdj-2000nxs2.png" class="tech-image-img mb-4" alt="PIONEER CDJ-2000NXS2">
                 <p class="text-2xl md:text-3xl font-bold text-red-600" style="font-family: 'Oswald', sans-serif;">PIONEER CDJ-2000NXS2</p>
             </div>
             <div class="p-6 border-2 border-red-600 bg-black">
-                <div class="tech-image tech-image-3 mb-4"></div>
-                <p class="text-2xl md:text-3xl font-bold text-red-600" style="font-family: 'Oswald', sans-serif;">ALLEN &amp; HEATH XONE:92</p>
-            </div>
-            <div class="p-6 border-2 border-red-600 bg-black">
-                <div class="tech-image tech-image-4 mb-4"></div>
+                <img src="assets/allen-heath-xone-96.png" class="tech-image-img mb-4" alt="ALLEN & HEATH XONE:96">
                 <p class="text-2xl md:text-3xl font-bold text-red-600" style="font-family: 'Oswald', sans-serif;">ALLEN &amp; HEATH XONE:96</p>
             </div>
             <div class="p-6 border-2 border-red-600 bg-black">
-                <div class="tech-image tech-image-5 mb-4"></div>
+                <img src="assets/pioneer-djm-v10.png" class="tech-image-img mb-4" alt="PIONEER DJM-V10">
                 <p class="text-2xl md:text-3xl font-bold text-red-600" style="font-family: 'Oswald', sans-serif;">PIONEER DJM‑V10</p>
             </div>
             <div class="p-6 border-2 border-red-600 bg-black">
-                <div class="tech-image tech-image-6 mb-4"></div>
+                <img src="assets/pioneer-djm-a9.png" class="tech-image-img mb-4" alt="PIONEER DJM-A9">
                 <p class="text-2xl md:text-3xl font-bold text-red-600" style="font-family: 'Oswald', sans-serif;">PIONEER DJM‑A9</p>
             </div>
         </div>

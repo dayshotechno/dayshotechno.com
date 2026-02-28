@@ -12,17 +12,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Custom hover effects */
-        .btn-download {
-            background-color: #ff0000;
+        .tech-rider-item {
+            background-color: #000000;
             color: #ffffff;
             border: 2px solid #ff0000;
-            padding: 1rem 2rem;
-            font-family: 'Oswald', sans-serif;
-            font-weight: 700;
-            letter-spacing: 0.05em;
+            padding: 1.5rem;
             transition: all 0.2s;
         }
-        .btn-download:hover {
+        .tech-rider-item:hover {
             background-color: #ffffff;
             color: #000000;
             border-color: #ffffff;
@@ -122,13 +119,13 @@
     <section class="py-20 px-4 max-w-4xl mx-auto">
         <h2 class="text-4xl md:text-5xl font-bold mb-12 text-center" style="font-family: 'Oswald', sans-serif;">TECH RIDER</h2>
         <div class="space-y-6 text-xl md:text-2xl">
-            <div class="border-2 border-red-600 p-6 bg-black">
+            <div class="tech-rider-item">
                 <p class="font-bold">3x Pioneer CDJ-3000/2000NXS2 (Linked)</p>
             </div>
-            <div class="border-2 border-red-600 p-6 bg-black">
+            <div class="tech-rider-item">
                 <p class="font-bold">1x Allen &amp; Heath Xone:92/96 or Pioneer DJM-V10/A9</p>
             </div>
-            <div class="border-2 border-red-600 p-6 bg-black">
+            <div class="tech-rider-item">
                 <p class="font-bold">2x High-Power Monitors (Ear Level, Zero Latency)</p>
             </div>
         </div>
@@ -164,14 +161,5 @@
         <p class="mt-2">No compromise. Just hard techno.</p>
     </footer>
 
-    <!-- Optional: small script to enhance interactivity (no external frameworks) -->
-    <script>
-        // Simple script to add a class on button click for a temporary "pressed" effect
-        document.querySelectorAll('.btn-download').forEach(button => {
-            button.addEventListener('mousedown', () => button.classList.add('opacity-70'));
-            button.addEventListener('mouseup', () => button.classList.remove('opacity-70'));
-            button.addEventListener('mouseleave', () => button.classList.remove('opacity-70'));
-        });
-    </script>
 </body>
 </html>

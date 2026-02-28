@@ -132,8 +132,8 @@
     <main id="main">
         <!-- Bio Section -->
         <section class="py-20 px-4 md:px-8 max-w-7xl mx-auto">
-        <div class="flex flex-col md:flex-row items-center gap-12">
-            <div class="md:w-1/2">
+        <div class="flex flex-col items-center gap-12">
+            <div class="w-full">
                 <h2 class="text-4xl md:text-5xl font-bold mb-6" style="font-family: 'Oswald', sans-serif;">BIO</h2>
                 <p class="text-lg md:text-xl leading-relaxed">
                     DAY SHO // RELENTLESS. RAW. REDEFINED. Seit zwei Jahren zerlegt DAY SHO die Floors der Region mit einer Präzision, die keinen Platz für Kompromisse lässt. Wo andere zögern, drückt DAY SHO aufs Gas: Hard Techno und Schranz in ihrer reinsten, dunkelsten Form. Inspiriert vom Erbe von Größen wie Svetec, O.B.I. und Golpe, kreiert DAY SHO eine Atmosphäre, die gleichermaßen bedrohlich wie befreiend wirkt.
@@ -141,16 +141,31 @@
                 <p class="text-lg md:text-xl leading-relaxed mt-4">
                     Massive Industrial-Kicks treffen auf verzerrte Texturen und treibende Rhythmen, die nur ein Ziel kennen: Die totale Eskalation. Hier wird nicht aufgelegt, hier wird gearbeitet. Keine Marketing-Fassade, kein unnötiger Noise – nur der Sound, der dich im Mark trifft. READY FOR THE ASSAULT.
                 </p>
+                
+                <!-- Photo Gallery -->
+                <div class="mt-12 mb-8">
+                    <!-- Large preview image -->
+                    <img id="bio-preview" src="assets/presse2.jpeg" alt="DAY SHO performing hard techno live in a dark industrial setting" class="w-full h-auto border-4 border-red-600 mb-6">
+                    <!-- Thumbnail grid -->
+                    <div class="grid grid-cols-3 md:grid-cols-4 gap-4">
+                        <button class="thumbnail-btn border-2 border-red-600 hover:border-white transition focus:outline-none" data-src="assets/presse2.jpeg">
+                            <img src="assets/presse2.jpeg" alt="Gallery 1" loading="lazy" class="w-full h-24 object-cover">
+                        </button>
+                        <button class="thumbnail-btn border-2 border-red-600 hover:border-white transition focus:outline-none" data-src="assets/presse1.jpeg">
+                            <img src="assets/presse1.jpeg" alt="Gallery 2" loading="lazy" class="w-full h-24 object-cover">
+                        </button>
+                        <button class="thumbnail-btn border-2 border-red-600 hover:border-white transition focus:outline-none" data-src="assets/presse3.JPG">
+                            <img src="assets/presse3.JPG" alt="Gallery 3" loading="lazy" class="w-full h-24 object-cover">
+                        </button>
+                        <button class="thumbnail-btn border-2 border-red-600 hover:border-white transition focus:outline-none" data-src="assets/presse4.JPG">
+                            <img src="assets/presse4.JPG" alt="Gallery 4" loading="lazy" class="w-full h-24 object-cover">
+                        </button>
+                    </div>
+                </div>
+
                 <a href="mailto:booking@dayshotechno.com" class="inline-block mt-8 px-10 py-5 bg-red-600 text-white font-black border-4 border-red-800 text-3xl md:text-4xl uppercase tracking-tight hover:bg-white hover:text-black transition-all duration-200" style="font-family: 'Oswald', sans-serif;">
                     BOOK DAY SHO
                 </a>
-            </div>
-            <div class="md:w-1/2">
-                <!-- Placeholder image; replace with actual press photo -->
-                <img src="assets/presse2.jpeg" 
-                     alt="DAY SHO performing hard techno live in a dark industrial setting" 
-                     loading="lazy"
-                     class="w-full h-auto border-4 border-red-600">
             </div>
         </div>
     </section>
@@ -274,5 +289,27 @@
             <svg class="w-10 h-10 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M111.4 256.3l5.8 65-5.8 68.3c0 6.2-5 11.3-11.2 11.3H11.2C5 400.6 0 395.5 0 389.3l5.8-68.3L0 256.2c0-6.2 5-11.3 11.2-11.3h89c6.2 0 11.2 5 11.2 11.3zm138.4-64.1c0-6.2-5-11.3-11.2-11.3h-89c-6.2 0-11.2 5-11.2 11.3l5.8 65-5.8 68.3c0 6.2 5 11.3 11.2 11.3h89c6.2 0 11.2-5 11.2-11.3l-5.8-68.3 5.8-65zm125.2 64.1l5.8 65-5.8 68.3c0 6.2-5 11.3-11.2 11.3h-89c-6.2 0-11.2-5-11.2-11.3l5.8-68.3-5.8-65c0-6.2 5-11.3 11.2-11.3h89c6.2 0 11.2 5 11.2 11.3zm138.3-64.1c0-6.2-5-11.3-11.2-11.3h-89c-6.2 0-11.2 5-11.2 11.3l5.8 65-5.8 68.3c0 6.2 5 11.3 11.2 11.3h89c6.2 0 11.2-5 11.2-11.3l-5.8-68.3 5.8-65zm125.2 64.1l5.8 65-5.8 68.3c0 6.2-5 11.3-11.2 11.3h-89c-6.2 0-11.2-5-11.2-11.3l5.8-68.3-5.8-65c0-6.2 5-11.3 11.2-11.3h89c6.2 0 11.2 5 11.2 11.3z"/></svg>
         </a>
     </div>
+    <script>
+        // Gallery thumbnail interaction
+        document.addEventListener('DOMContentLoaded', function() {
+            const preview = document.getElementById('bio-preview');
+            const thumbnails = document.querySelectorAll('.thumbnail-btn');
+            thumbnails.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const src = btn.getAttribute('data-src');
+                    preview.src = src;
+                    const imgAlt = btn.querySelector('img').alt;
+                    preview.alt = imgAlt;
+                    // Update active state
+                    thumbnails.forEach(b => {
+                        b.classList.remove('border-white', 'bg-red-900');
+                        b.classList.add('border-red-600');
+                    });
+                    btn.classList.remove('border-red-600');
+                    btn.classList.add('border-white', 'bg-red-900');
+                });
+            });
+        });
+    </script>
 </body>
 </html>

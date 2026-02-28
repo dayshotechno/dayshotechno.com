@@ -57,6 +57,52 @@
         .tech-image-4 { background-position: 60% 0; }
         .tech-image-5 { background-position: 80% 0; }
         .tech-image-6 { background-position: 100% 0; }
+        /* Glitch effect for hero tagline */
+        .hero-tagline {
+            position: relative;
+            display: inline-block;
+        }
+        .hero-tagline:hover {
+            text-shadow: 
+                0.5px 0 0 rgba(255, 0, 0, 0.7),
+                -0.5px 0 0 rgba(0, 255, 255, 0.7);
+        }
+        .hero-tagline::before,
+        .hero-tagline::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            color: #ff0000;
+            opacity: 0;
+            clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+        }
+        .hero-tagline:hover::before {
+            opacity: 0.8;
+            animation: glitch-1 0.3s infinite linear;
+        }
+        .hero-tagline:hover::after {
+            opacity: 0.8;
+            animation: glitch-2 0.4s infinite linear;
+        }
+        @keyframes glitch-1 {
+            0% { transform: translate(0); clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%); }
+            20% { transform: translate(-1px, 1px); clip-path: polygon(0 33%, 100% 33%, 100% 66%, 0 66%); }
+            40% { transform: translate(1px, -1px); clip-path: polygon(0 66%, 100% 66%, 100% 100%, 0 100%); }
+            60% { transform: translate(0); clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%); }
+            80% { transform: translate(1px, 1px); clip-path: polygon(0 33%, 100% 33%, 100% 66%, 0 66%); }
+            100% { transform: translate(-1px, -1px); clip-path: polygon(0 66%, 100% 66%, 100% 100%, 0 100%); }
+        }
+        @keyframes glitch-2 {
+            0% { transform: translate(0); clip-path: polygon(0 33%, 100% 33%, 100% 66%, 0 66%); }
+            25% { transform: translate(1px, -1px); clip-path: polygon(0 66%, 100% 66%, 100% 100%, 0 100%); }
+            50% { transform: translate(-1px, 1px); clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%); }
+            75% { transform: translate(0); clip-path: polygon(0 33%, 100% 33%, 100% 66%, 0 66%); }
+            100% { transform: translate(1px, 1px); clip-path: polygon(0 66%, 100% 66%, 100% 100%, 0 100%); }
+        }
     </style>
 </head>
 <body class="bg-black text-white font-sans antialiased">
@@ -77,8 +123,8 @@
         </div>
         <!-- Animated scroll arrow -->
         <a href="#main" class="absolute bottom-10 left-1/2 -translate-x-1/2 text-white animate-bounce z-20">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 32 32" stroke="currentColor">
+                <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="4" d="M16 6 L26 26 L16 18 L6 26 L16 6" />
             </svg>
         </a>
     </header>

@@ -42,6 +42,21 @@
         .soundcloud-embed iframe {
             filter: grayscale(1) contrast(1.2);
         }
+        /* Tech rider images */
+        .tech-image {
+            background-image: url('assets/techridermixerundplayer.png');
+            background-size: 600% auto;
+            background-repeat: no-repeat;
+            height: 200px;
+            filter: invert(1) grayscale(1) contrast(1.25);
+            mix-blend-mode: screen;
+        }
+        .tech-image-1 { background-position: 0% 0; }
+        .tech-image-2 { background-position: 20% 0; }
+        .tech-image-3 { background-position: 40% 0; }
+        .tech-image-4 { background-position: 60% 0; }
+        .tech-image-5 { background-position: 80% 0; }
+        .tech-image-6 { background-position: 100% 0; }
     </style>
 </head>
 <body class="bg-black text-white font-sans antialiased">
@@ -144,38 +159,31 @@
     <section class="py-20 px-4 max-w-7xl mx-auto">
         <h2 class="text-4xl md:text-5xl font-bold mb-12 text-center" style="font-family: 'Oswald', sans-serif;">TECH RIDER</h2>
         
-        <!-- Full equipment image with filters to remove white background -->
-        <div class="mb-16 flex justify-center px-8">
-            <img src="assets/techridermixerundplayer.png" 
-                 alt="All mixers and players used by DAY SHO"
-                 class="filter invert grayscale contrast-125 mix-blend-screen max-w-4xl w-full h-auto">
-        </div>
-        
-        <!-- Grid of equipment names -->
+        <!-- Grid of equipment with images -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
             <div class="p-6 border-2 border-red-600 bg-black">
+                <div class="tech-image tech-image-1 mb-4"></div>
                 <p class="text-2xl md:text-3xl font-bold text-red-600" style="font-family: 'Oswald', sans-serif;">PIONEER CDJ-3000</p>
-                <p class="mt-2 text-lg text-gray-300">Professional Multi‑Player</p>
             </div>
             <div class="p-6 border-2 border-red-600 bg-black">
+                <div class="tech-image tech-image-2 mb-4"></div>
                 <p class="text-2xl md:text-3xl font-bold text-red-600" style="font-family: 'Oswald', sans-serif;">PIONEER CDJ-2000NXS2</p>
-                <p class="mt-2 text-lg text-gray-300">Industry‑Standard Player</p>
             </div>
             <div class="p-6 border-2 border-red-600 bg-black">
+                <div class="tech-image tech-image-3 mb-4"></div>
                 <p class="text-2xl md:text-3xl font-bold text-red-600" style="font-family: 'Oswald', sans-serif;">ALLEN &amp; HEATH XONE:92</p>
-                <p class="mt-2 text-lg text-gray-300">4‑Channel Analog Mixer</p>
             </div>
             <div class="p-6 border-2 border-red-600 bg-black">
+                <div class="tech-image tech-image-4 mb-4"></div>
                 <p class="text-2xl md:text-3xl font-bold text-red-600" style="font-family: 'Oswald', sans-serif;">ALLEN &amp; HEATH XONE:96</p>
-                <p class="mt-2 text-lg text-gray-300">Flagship 4‑Channel Mixer</p>
             </div>
             <div class="p-6 border-2 border-red-600 bg-black">
+                <div class="tech-image tech-image-5 mb-4"></div>
                 <p class="text-2xl md:text-3xl font-bold text-red-600" style="font-family: 'Oswald', sans-serif;">PIONEER DJM‑V10</p>
-                <p class="mt-2 text-lg text-gray-300">10‑Channel Mixer / FX</p>
             </div>
             <div class="p-6 border-2 border-red-600 bg-black">
+                <div class="tech-image tech-image-6 mb-4"></div>
                 <p class="text-2xl md:text-3xl font-bold text-red-600" style="font-family: 'Oswald', sans-serif;">PIONEER DJM‑A9</p>
-                <p class="mt-2 text-lg text-gray-300">Flagship Club Mixer</p>
             </div>
         </div>
     </section>

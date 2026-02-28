@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DAY SHO | Hard Techno DJ Presskit</title>
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔊</text></svg>">
     <!-- Open Graph / Social Media Meta Tags -->
     <meta property="og:title" content="DAY SHO | Hard Techno DJ Presskit">
     <meta property="og:description" content="Relentless. Raw. Redefined. Hard Techno DJ from the underground.">
@@ -43,8 +45,10 @@
     </style>
 </head>
 <body class="bg-black text-white font-sans antialiased">
+    <!-- Skip to main content for accessibility -->
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-red-600 text-white p-2 z-50">Skip to main content</a>
     <!-- Hero Section -->
-    <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <header class="relative min-h-screen flex items-center justify-center overflow-hidden">
         <!-- Background Image with Overlay -->
         <div class="absolute inset-0 bg-[url('assets/presse1.jpg')] bg-cover bg-center"></div>
         <div class="absolute inset-0 bg-black opacity-50"></div>
@@ -56,10 +60,11 @@
                 Hard Techno Presskit
             </p>
         </div>
-    </section>
+    </header>
 
-    <!-- Bio Section -->
-    <section class="py-20 px-4 md:px-8 max-w-7xl mx-auto">
+    <main id="main">
+        <!-- Bio Section -->
+        <section class="py-20 px-4 md:px-8 max-w-7xl mx-auto">
         <div class="flex flex-col md:flex-row items-center gap-12">
             <div class="md:w-1/2">
                 <h2 class="text-4xl md:text-5xl font-bold mb-6" style="font-family: 'Oswald', sans-serif;">BIO</h2>
@@ -74,6 +79,7 @@
                 <!-- Placeholder image; replace with actual press photo -->
                 <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
                      alt="DAY SHO performing hard techno live in a dark industrial setting" 
+                     loading="lazy"
                      class="w-full h-auto border-4 border-red-600">
             </div>
         </div>
@@ -148,21 +154,22 @@
             </p>
             <div class="flex justify-center space-x-8">
                 <!-- Instagram -->
-                <a href="https://instagram.com" target="_blank" class="text-white hover:text-red-600 transition-colors">
+                <a href="https://instagram.com" target="_blank" aria-label="Instagram Profile" class="text-white hover:text-red-600 transition-colors">
                     <svg class="w-12 h-12 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
                 </a>
                 <!-- TikTok -->
-                <a href="https://tiktok.com" target="_blank" class="text-white hover:text-red-600 transition-colors">
+                <a href="https://tiktok.com" target="_blank" aria-label="TikTok Profile" class="text-white hover:text-red-600 transition-colors">
                     <svg class="w-12 h-12 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M448 209.9a210.1 210.1 0 0 1 -122.8-39.3v178.8A162.6 162.6 0 1 1 185 188.3v89.9a74.6 74.6 0 1 0 52.2 71.2V0h88a121.2 121.2 0 0 0 1.9 22.2A122.2 122.2 0 0 0 381 102.4a121.4 121.4 0 0 0 67 20.1z"/></svg>
                 </a>
                 <!-- SoundCloud -->
-                <a href="https://soundcloud.com" target="_blank" class="text-white hover:text-red-600 transition-colors">
+                <a href="https://soundcloud.com" target="_blank" aria-label="SoundCloud Profile" class="text-white hover:text-red-600 transition-colors">
                     <svg class="w-12 h-12 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M111.4 256.3l5.8 65-5.8 68.3c0 6.2-5 11.3-11.2 11.3H11.2C5 400.6 0 395.5 0 389.3l5.8-68.3L0 256.2c0-6.2 5-11.3 11.2-11.3h89c6.2 0 11.2 5 11.2 11.3zm138.4-64.1c0-6.2-5-11.3-11.2-11.3h-89c-6.2 0-11.2 5-11.2 11.3l5.8 65-5.8 68.3c0 6.2 5 11.3 11.2 11.3h89c6.2 0 11.2-5 11.2-11.3l-5.8-68.3 5.8-65zm125.2 64.1l5.8 65-5.8 68.3c0 6.2-5 11.3-11.2 11.3h-89c-6.2 0-11.2-5-11.2-11.3l5.8-68.3-5.8-65c0-6.2 5-11.3 11.2-11.3h89c6.2 0 11.2 5 11.2 11.3zm138.3-64.1c0-6.2-5-11.3-11.2-11.3h-89c-6.2 0-11.2 5-11.2 11.3l5.8 65-5.8 68.3c0 6.2 5 11.3 11.2 11.3h89c6.2 0 11.2-5 11.2-11.3l-5.8-68.3 5.8-65zm125.2 64.1l5.8 65-5.8 68.3c0 6.2-5 11.3-11.2 11.3h-89c-6.2 0-11.2-5-11.2-11.3l5.8-68.3-5.8-65c0-6.2 5-11.3 11.2-11.3h89c6.2 0 11.2 5 11.2 11.3z"/></svg>
                 </a>
             </div>
         </div>
     </section>
 
+    </main>
     <!-- Footer -->
     <footer class="py-6 text-center border-t border-red-600 text-gray-400 text-sm">
         <p>&copy; 2024 DAY SHO | Hard Techno Presskit | dayshotechno.com</p>

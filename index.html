@@ -148,6 +148,18 @@
         .cursor-dot { width: 6px; height: 6px; background-color: #dc2626; }
         .cursor-outline { width: 30px; height: 30px; border: 1px solid rgba(220, 38, 38, 0.5); transition: width 0.2s, height 0.2s, background-color 0.2s; }
         .cursor-hover .cursor-outline { width: 50px; height: 50px; background-color: rgba(220, 38, 38, 0.1); border-color: #dc2626; }
+        /* Mobile Optimierung für Press Assets Link */
+        @media (max-width: 768px) {
+            .press-assets-link {
+                font-size: clamp(11px, 3vw, 1rem);
+                letter-spacing: normal;
+                white-space: nowrap;
+                display: inline-block;
+                max-width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
     </style>
 </head>
 <body class="bg-black text-white font-sans antialiased md:cursor-none">
@@ -272,7 +284,7 @@
                 <div class="text-center mb-12"><a
                         href="https://drive.google.com/drive/folders/18_8LprLaJWo_4VLw6XGwOlia1jp0g34e?usp=sharing"
                         target="_blank" rel="noopener"
-                        class="text-gray-500 hover:text-red-600 font-['Oswald'] text-xl uppercase tracking-widest transition-all">DOWNLOAD
+                        class="text-gray-500 hover:text-red-600 font-['Oswald'] text-xl uppercase tracking-widest transition-all press-assets-link">DOWNLOAD
                         PRESS ASSETS (HQ PHOTOS, LOGO, RIDER)</a></div>
             </div>
         </div>

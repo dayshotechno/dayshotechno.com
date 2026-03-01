@@ -186,10 +186,10 @@
                     <div class="grid grid-cols-3 md:grid-cols-4 gap-4">
                         <div
                             class="relative group cursor-pointer overflow-hidden border-2 border-transparent hover:border-red-600 transition-all">
-                            <button
+                            <button type="button"
                                 class="thumbnail-btn border-2 border-red-600 hover:border-white transition focus:outline-none"
                                 data-src="assets/presse2.jpeg">
-                                <img src="assets/presse2.jpeg" alt="Gallery 1" loading="lazy"
+                                <img src="assets/presse2.jpeg" alt="DAY SHO bei einem Auftritt im industriellen Ambiente" loading="lazy"
                                     class="w-full h-24 object-cover grayscale group-hover:grayscale-0 transition-all duration-300">
                                 <div
                                     class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-40 transition-opacity duration-300 pointer-events-none mix-blend-multiply">
@@ -198,10 +198,10 @@
                         </div>
                         <div
                             class="relative group cursor-pointer overflow-hidden border-2 border-transparent hover:border-red-600 transition-all">
-                            <button
+                            <button type="button"
                                 class="thumbnail-btn border-2 border-red-600 hover:border-white transition focus:outline-none"
                                 data-src="assets/presse1.jpeg">
-                                <img src="assets/presse1.jpeg" alt="Gallery 2" loading="lazy"
+                                <img src="assets/presse1.jpeg" alt="DAY SHO im DJ‑Pult mit roten Lichtern" loading="lazy"
                                     class="w-full h-24 object-cover grayscale group-hover:grayscale-0 transition-all duration-300">
                                 <div
                                     class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-40 transition-opacity duration-300 pointer-events-none mix-blend-multiply">
@@ -210,10 +210,10 @@
                         </div>
                         <div
                             class="relative group cursor-pointer overflow-hidden border-2 border-transparent hover:border-red-600 transition-all">
-                            <button
+                            <button type="button"
                                 class="thumbnail-btn border-2 border-red-600 hover:border-white transition focus:outline-none"
                                 data-src="assets/presse3.JPG">
-                                <img src="assets/presse3.JPG" alt="Gallery 3" loading="lazy"
+                                <img src="assets/presse3.JPG" alt="DAY SHO vor der Menge bei einem Hard‑Techno‑Event" loading="lazy"
                                     class="w-full h-24 object-cover grayscale group-hover:grayscale-0 transition-all duration-300">
                                 <div
                                     class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-40 transition-opacity duration-300 pointer-events-none mix-blend-multiply">
@@ -222,10 +222,10 @@
                         </div>
                         <div
                             class="relative group cursor-pointer overflow-hidden border-2 border-transparent hover:border-red-600 transition-all">
-                            <button
+                            <button type="button"
                                 class="thumbnail-btn border-2 border-red-600 hover:border-white transition focus:outline-none"
                                 data-src="assets/presse4.JPG">
-                                <img src="assets/presse4.JPG" alt="Gallery 4" loading="lazy"
+                                <img src="assets/presse4.JPG" alt="DAY SHO mit intensivem Fokus am Mixer" loading="lazy"
                                     class="w-full h-24 object-cover grayscale group-hover:grayscale-0 transition-all duration-300">
                                 <div
                                     class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-40 transition-opacity duration-300 pointer-events-none mix-blend-multiply">
@@ -246,7 +246,7 @@
                     <div class="w-full">
                         <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
                             src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/user-110221213/schranzlangenvergleich&color=%23ff0000&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&theme=dark"
-                            class="w-full h-[166px] border-4 border-red-600"></iframe>
+                            class="w-full h-[166px] border-4 border-red-600" title="SoundCloud Track von DAY SHO"></iframe>
                     </div>
                 </div>
             </div>
@@ -257,15 +257,15 @@
     <!-- DESTROYED STAGES -->
     <section class="py-20 px-4 max-w-7xl mx-auto">
         <h2 class="text-red-600 text-4xl md:text-5xl lg:text-6xl font-black mb-12 border-b-4 border-red-600 pb-2 uppercase tracking-tighter block w-fit mx-auto" style="font-family: 'Oswald', sans-serif;">DESTROYED STAGES</h2>
-        <div class="flex flex-col gap-6 text-center max-w-4xl mx-auto">
-            <div class="text-2xl md:text-3xl font-bold font-['Oswald'] uppercase cursor-default hover:text-red-600 transition-colors duration-300">Ehrnau-Rave @ Schloss Mautern</div>
-            <div class="text-2xl md:text-3xl font-bold font-['Oswald'] uppercase cursor-default hover:text-red-600 transition-colors duration-300">Noise @ Eventfabrik Niklasdorf</div>
-            <div class="text-2xl md:text-3xl font-bold font-['Oswald'] uppercase cursor-default hover:text-red-600 transition-colors duration-300">Face2Face @ Das Werk Wien</div>
-            <div class="text-2xl md:text-3xl font-bold font-['Oswald'] uppercase cursor-default hover:text-red-600 transition-colors duration-300">Sauhaufen @ Postgarage</div>
-            <div class="text-2xl md:text-3xl font-bold font-['Oswald'] uppercase cursor-default hover:text-red-600 transition-colors duration-300">Polytox Production Face2Face @ Postgarage</div>
-            <div class="text-2xl md:text-3xl font-bold font-['Oswald'] uppercase cursor-default hover:text-red-600 transition-colors duration-300">Trash-O-Ween @ Kulturverein röda Steyr</div>
-            <div class="text-xl md:text-2xl font-['Oswald'] text-red-600 mt-2">...and many many more!</div>
-        </div>
+        <ul class="flex flex-col gap-6 text-center max-w-4xl mx-auto list-none pl-0">
+            <li class="text-2xl md:text-3xl font-bold font-['Oswald'] uppercase cursor-default hover:text-red-600 transition-colors duration-300">Ehrnau-Rave @ Schloss Mautern</li>
+            <li class="text-2xl md:text-3xl font-bold font-['Oswald'] uppercase cursor-default hover:text-red-600 transition-colors duration-300">Noise @ Eventfabrik Niklasdorf</li>
+            <li class="text-2xl md:text-3xl font-bold font-['Oswald'] uppercase cursor-default hover:text-red-600 transition-colors duration-300">Face2Face @ Das Werk Wien</li>
+            <li class="text-2xl md:text-3xl font-bold font-['Oswald'] uppercase cursor-default hover:text-red-600 transition-colors duration-300">Sauhaufen @ Postgarage</li>
+            <li class="text-2xl md:text-3xl font-bold font-['Oswald'] uppercase cursor-default hover:text-red-600 transition-colors duration-300">Polytox Production Face2Face @ Postgarage</li>
+            <li class="text-2xl md:text-3xl font-bold font-['Oswald'] uppercase cursor-default hover:text-red-600 transition-colors duration-300">Trash-O-Ween @ Kulturverein röda Steyr</li>
+            <li class="text-xl md:text-2xl font-['Oswald'] text-red-600 mt-2">...and many many more!</li>
+        </ul>
     </section>
 
     <!-- Press Assets Link -->

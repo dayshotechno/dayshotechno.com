@@ -138,8 +138,10 @@
         .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
         /* Hard Fade-In for mobile (fast, no easing) */
-        .hard-fade { opacity: 0; transition: opacity 0.2s linear; }
-        .hard-fade.active { opacity: 1; }
+        @media (max-width: 768px) {
+            .hard-fade { opacity: 0; transition: opacity 0.2s linear; }
+            .hard-fade.active { opacity: 1; }
+        }
         /* Kickdrum Pulse für den Play Button */
         @keyframes kickpulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); box-shadow: 0 0 15px rgba(220, 38, 38, 0.5); } }
         .animate-kickpulse { animation: kickpulse 1.2s infinite ease-in-out; }
@@ -156,8 +158,8 @@
             inset: 0;
             pointer-events: none;
             z-index: 45;
-            background-image: radial-gradient(ellipse at center, transparent 60%, rgba(139, 0, 0, 0.3) 100%);
-            animation: edgepulse 0.4s infinite;
+            background-image: radial-gradient(ellipse at center, transparent 80%, rgba(139, 0, 0, 0.4) 100%);
+            animation: edgepulse 0.4s infinite linear;
             backface-visibility: hidden;
             transform: translateZ(0);
         }
@@ -212,15 +214,17 @@
             text-transform: uppercase;
             letter-spacing: 0.1em;
         }
-        .glitch-button:hover::before {
+        .glitch-button:hover::before,
+        .glitch-button:active::before {
             color: #ff0000;
             text-shadow: 2px 0 #ff0000, -2px 0 #00ffff;
-            animation: glitch-button-1 0.12s steps(1) forwards;
+            animation: glitch-button-1 0.12s steps(5) forwards;
         }
-        .glitch-button:hover::after {
+        .glitch-button:hover::after,
+        .glitch-button:active::after {
             color: #00ffff;
             text-shadow: -2px 0 #00ffff, 2px 0 #ff0000;
-            animation: glitch-button-2 0.12s steps(1) forwards;
+            animation: glitch-button-2 0.12s steps(5) forwards;
         }
         .glitch-button:active::before,
         .glitch-button:active::after {
@@ -257,9 +261,9 @@
     <!-- Hero Section -->
     <header class="relative min-h-screen flex items-center justify-center overflow-hidden">
         <!-- Background Image with Overlay -->
-                <video autoplay loop muted playsinline preload="auto" width="1920" height="1080" class="absolute inset-0 w-full h-full object-cover z-0">
-          <source src="assets/desktop-loop.mp4" type="video/mp4" media="(min-width: 769px)">
-          <source src="assets/mobile-loop.mp4" type="video/mp4" media="(max-width: 768px)">
+        <video autoplay loop muted playsinline preload="auto" class="absolute inset-0 w-full h-full object-cover z-0">
+            <source src="assets/desktop-loop.mp4" type="video/mp4" media="(min-width: 769px)">
+            <source src="assets/mobile-loop.mp4" type="video/mp4" media="(max-width: 768px)">
         </video>
         <div class="absolute inset-0 bg-black/75 z-10" aria-hidden="true"></div>
         <div class="absolute inset-0 z-0 overflow-hidden flex items-center opacity-10 pointer-events-none"><div class="animate-marquee text-[10rem] font-black text-red-600 font-['Oswald'] tracking-widest uppercase select-none"> // DAY SHO // HARD TECHNO // NO MERCY // SCHRANZ // DAY SHO // HARD TECHNO // NO MERCY // SCHRANZ </div></div>
@@ -528,10 +532,13 @@ document.addEventListener('DOMContentLoaded', function() {
             if (bookButton) {
                 bookButton.addEventListener('click', function(event) {
                     // Vibrate pattern: short, hard kickdrum-like [40, 30, 40]
-                    if (window.navigator && typeof window.navigator.vibrate === 'function') {
-                        window.navigator.vibrate([40, 30, 40]);
+                    try {
+                        if (window.navigator && 'vibrate' in window.navigator) {
+                            window.navigator.vibrate([40, 30, 40]);
+                        }
+                    } catch (e) {
+                        // Silent fallback: vibration failed, but mailto action proceeds
                     }
-                    // Fallback: do nothing, let default mailto action proceed
                 });
             }
         });

@@ -131,13 +131,27 @@
             60% { clip-path: inset(20% 0 40% 0); }
             80% { clip-path: inset(70% 0 10% 0); }
             100% { clip-path: inset(15% 0 70% 0); }
-        }
-        .sticky-bar {
+        }        .sticky-bar {
             border-radius: 0.75rem !important;
         }
+        /* Scroll Reveal UX */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        /* Kickdrum Pulse für den Play Button */
+        @keyframes kickpulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); box-shadow: 0 0 15px rgba(220, 38, 38, 0.5); } }
+        .animate-kickpulse { animation: kickpulse 1.2s infinite ease-in-out; }
+        /* Marquee Ticker */
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .animate-marquee { animation: marquee 20s linear infinite; white-space: nowrap; }
+        /* Sniper Cursor */
+        .cursor-dot, .cursor-outline { position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 9999; pointer-events: none; }
+        .cursor-dot { width: 6px; height: 6px; background-color: #dc2626; }
+        .cursor-outline { width: 30px; height: 30px; border: 1px solid rgba(220, 38, 38, 0.5); transition: width 0.2s, height 0.2s, background-color 0.2s; }
+        .cursor-hover .cursor-outline { width: 50px; height: 50px; background-color: rgba(220, 38, 38, 0.1); border-color: #dc2626; }
     </style>
 </head>
-<body class="bg-black text-white font-sans antialiased">
+<body class="bg-black text-white font-sans antialiased md:cursor-none">
+    <div class="cursor-dot hidden md:block"></div><div class="cursor-outline hidden md:block"></div>
     <div class="fixed inset-0 pointer-events-none z-50 opacity-[0.04]"
         style="background-image: url(&quot;data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E&quot;);">
     </div>
@@ -149,6 +163,7 @@
     <header class="relative min-h-screen flex items-center justify-center overflow-hidden">
         <!-- Background Image with Overlay -->
         <div class="absolute inset-0 bg-[url('assets/presse1.jpeg')] bg-cover bg-center" aria-hidden="true"></div>
+        <div class="absolute inset-0 z-0 overflow-hidden flex items-center opacity-10 pointer-events-none"><div class="animate-marquee text-[10rem] font-black text-red-600 font-['Oswald'] tracking-widest uppercase select-none"> // DAY SHO // HARD TECHNO // NO MERCY // SCHRANZ // DAY SHO // HARD TECHNO // NO MERCY // SCHRANZ </div></div>
         <div class="absolute inset-0 bg-black opacity-50" aria-hidden="true"></div>
         <div class="relative z-10 text-center px-4">
             <h1 class="glitch-hover text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter leading-none relative block mx-auto" style="font-family: 'Oswald', sans-serif;" data-text="DAY SHO">
@@ -168,7 +183,7 @@
 
     <main id="main">
         <!-- Bio Section -->
-        <section class="py-12 px-4 md:px-8 max-w-7xl mx-auto">
+        <section class="reveal py-12 md:py-24 px-4 md:px-8 max-w-7xl mx-auto">
         <div class="flex flex-col items-center gap-12">
             <div class="w-full">
                 <h2 class="text-4xl md:text-5xl font-bold mb-6" style="font-family: 'Oswald', sans-serif;">BIO</h2>
@@ -186,52 +201,52 @@
                         alt="DAY SHO performing hard techno live in a dark industrial setting"
                         class="w-full max-h-[500px] object-contain border-4 border-red-600 mb-6">
                     <!-- Thumbnail grid -->
-                    <div class="grid grid-cols-3 md:grid-cols-4 gap-4">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div
-                            class="relative group cursor-pointer overflow-hidden border-2 border-transparent hover:border-red-600 transition-all">
+                            class="relative group cursor-pointer overflow-hidden border-2 border-transparent md:hover:border-red-600 transition-all">
                             <button type="button"
-                                class="thumbnail-btn border-2 border-red-600 hover:border-white transition focus:outline-none"
+                                class="thumbnail-btn border-2 border-red-600 md:hover:border-white transition focus:outline-none"
                                 data-src="assets/presse2.jpeg">
                                 <img src="assets/presse2.jpeg" alt="DAY SHO bei einem Auftritt im industriellen Ambiente" loading="lazy"
-                                    class="w-full h-24 object-cover grayscale group-hover:grayscale-0 transition-all duration-300">
+                                    class="w-full h-24 object-cover grayscale md:group-hover:grayscale-0 transition-all duration-300">
                                 <div
-                                    class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-40 transition-opacity duration-300 pointer-events-none mix-blend-multiply">
+                                    class="absolute inset-0 bg-red-600 opacity-0 md:group-hover:opacity-40 transition-opacity duration-300 pointer-events-none mix-blend-multiply">
                                 </div>
                             </button>
                         </div>
                         <div
-                            class="relative group cursor-pointer overflow-hidden border-2 border-transparent hover:border-red-600 transition-all">
+                            class="relative group cursor-pointer overflow-hidden border-2 border-transparent md:hover:border-red-600 transition-all">
                             <button type="button"
-                                class="thumbnail-btn border-2 border-red-600 hover:border-white transition focus:outline-none"
+                                class="thumbnail-btn border-2 border-red-600 md:hover:border-white transition focus:outline-none"
                                 data-src="assets/presse1.jpeg">
                                 <img src="assets/presse1.jpeg" alt="DAY SHO im DJ‑Pult mit roten Lichtern" loading="lazy"
-                                    class="w-full h-24 object-cover grayscale group-hover:grayscale-0 transition-all duration-300">
+                                    class="w-full h-24 object-cover grayscale md:group-hover:grayscale-0 transition-all duration-300">
                                 <div
-                                    class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-40 transition-opacity duration-300 pointer-events-none mix-blend-multiply">
+                                    class="absolute inset-0 bg-red-600 opacity-0 md:group-hover:opacity-40 transition-opacity duration-300 pointer-events-none mix-blend-multiply">
                                 </div>
                             </button>
                         </div>
                         <div
-                            class="relative group cursor-pointer overflow-hidden border-2 border-transparent hover:border-red-600 transition-all">
+                            class="relative group cursor-pointer overflow-hidden border-2 border-transparent md:hover:border-red-600 transition-all">
                             <button type="button"
-                                class="thumbnail-btn border-2 border-red-600 hover:border-white transition focus:outline-none"
+                                class="thumbnail-btn border-2 border-red-600 md:hover:border-white transition focus:outline-none"
                                 data-src="assets/presse3.JPG">
                                 <img src="assets/presse3.JPG" alt="DAY SHO vor der Menge bei einem Hard‑Techno‑Event" loading="lazy"
-                                    class="w-full h-24 object-cover grayscale group-hover:grayscale-0 transition-all duration-300">
+                                    class="w-full h-24 object-cover grayscale md:group-hover:grayscale-0 transition-all duration-300">
                                 <div
-                                    class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-40 transition-opacity duration-300 pointer-events-none mix-blend-multiply">
+                                    class="absolute inset-0 bg-red-600 opacity-0 md:group-hover:opacity-40 transition-opacity duration-300 pointer-events-none mix-blend-multiply">
                                 </div>
                             </button>
                         </div>
                         <div
-                            class="relative group cursor-pointer overflow-hidden border-2 border-transparent hover:border-red-600 transition-all">
+                            class="relative group cursor-pointer overflow-hidden border-2 border-transparent md:hover:border-red-600 transition-all">
                             <button type="button"
-                                class="thumbnail-btn border-2 border-red-600 hover:border-white transition focus:outline-none"
+                                class="thumbnail-btn border-2 border-red-600 md:hover:border-white transition focus:outline-none"
                                 data-src="assets/presse4.JPG">
                                 <img src="assets/presse4.JPG" alt="DAY SHO mit intensivem Fokus am Mixer" loading="lazy"
-                                    class="w-full h-24 object-cover grayscale group-hover:grayscale-0 transition-all duration-300">
+                                    class="w-full h-24 object-cover grayscale md:group-hover:grayscale-0 transition-all duration-300">
                                 <div
-                                    class="absolute inset-0 bg-red-600 opacity-0 group-hover:opacity-40 transition-opacity duration-300 pointer-events-none mix-blend-multiply">
+                                    class="absolute inset-0 bg-red-600 opacity-0 md:group-hover:opacity-40 transition-opacity duration-300 pointer-events-none mix-blend-multiply">
                                 </div>
                             </button>
                         </div>
@@ -240,9 +255,9 @@
 
                 <!-- Dual Button Layout -->
                 <div
-                    class="flex flex-col md:flex-row gap-6 justify-center w-full max-w-5xl mx-auto mt-16 mb-16 px-4">
+                    class="flex flex-col md:flex-row gap-6 justify-center w-full max-w-5xl mx-auto px-4 mt-8 md:mt-16 mb-8 md:mb-16 reveal">
                     <a href="mailto:booking@dayshotechno.com?subject=Booking Request: DAY SHO - [Date] / [City]"
-                        class="block w-full py-6 text-4xl md:text-5xl text-center border-4 border-red-600 bg-red-600 text-white hover:bg-white hover:border-white hover:text-black font-['Oswald'] font-black uppercase tracking-widest transition-all cursor-pointer"
+                        class="block w-full py-6 text-4xl md:text-5xl text-center border-4 border-red-600 bg-red-600 text-white hover:bg-white md:hover:border-white hover:text-black font-['Oswald'] font-black uppercase tracking-widest transition-all cursor-pointer"
                         style="font-family: 'Oswald', sans-serif;">
                         BOOK DAY SHO
                     </a>
@@ -264,7 +279,7 @@
 
 
     <!-- DESTROYED STAGES -->
-    <section class="py-20 px-4 max-w-7xl mx-auto">
+    <section class="reveal py-12 md:py-24 px-4 max-w-7xl mx-auto">
         <h2 class="text-red-600 text-4xl md:text-5xl lg:text-6xl font-black mb-12 border-b-4 border-red-600 pb-2 uppercase tracking-tighter block w-fit mx-auto" style="font-family: 'Oswald', sans-serif;">DESTROYED STAGES</h2>
         <ul class="flex flex-col gap-6 text-center max-w-4xl mx-auto list-none pl-0">
             <li class="text-2xl md:text-3xl font-bold font-['Oswald'] uppercase cursor-default hover:text-red-600 transition-colors duration-300">Ehrnau-Rave @ Schloss Mautern</li>
@@ -278,8 +293,8 @@
     </section>
 
     <!-- TECH RIDER VISUAL GRID -->
-    <section class="py-20 px-4 max-w-7xl mx-auto">
-        <h2 class="text-4xl md:text-5xl font-bold mb-12 text-center"
+    <section class="reveal py-12 md:py-24 px-4 max-w-7xl mx-auto">
+        <h2 class="text-4xl md:text-5xl lg:text-6xl font-black uppercase mb-12 text-center"
             style="font-family: 'Oswald', sans-serif;">TECH RIDER</h2>
 
         <!-- Two massive blocks -->
@@ -359,7 +374,40 @@
                 });
             });
         });
+    </script>    <script src="https://w.soundcloud.com/player/api.js"></script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    /* Scroll Reveal Logic */
+    const reveals = document.querySelectorAll('.reveal');
+    const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('active');
+            observer.unobserve(entry.target);
+        });
+    }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+    
+    reveals.forEach(reveal => revealOnScroll.observe(reveal));
+
+    /* Sniper Cursor Logic */
+    if (window.matchMedia("(min-width: 768px)").matches) {
+        const dot = document.querySelector('.cursor-dot');
+        const outline = document.querySelector('.cursor-outline');
+        
+        window.addEventListener('mousemove', function(e) {
+            const posX = e.clientX;
+            const posY = e.clientY;
+            dot.style.transform = `translate(${posX}px, ${posY}px)`;
+            setTimeout(() => { outline.style.transform = `translate(${posX}px, ${posY}px)`; }, 50);
+        });
+
+        const interactables = document.querySelectorAll('a, button, .cursor-pointer');
+        interactables.forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+        });
+    }
+});
     </script>
-    <script src="https://w.soundcloud.com/player/api.js"></script>
 </body>
 </html>

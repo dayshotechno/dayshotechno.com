@@ -163,6 +163,16 @@
             backface-visibility: hidden;
             transform: translateZ(0);
         }
+        /* Vibration effect for buttons (Safari fallback) */
+        @keyframes vibrate {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-1px); }
+            50% { transform: translateX(1px); }
+            75% { transform: translateX(-1px); }
+        }
+        .vibrate {
+            animation: vibrate 0.1s linear 3;
+        }
         /* Sniper Cursor */
         .cursor-dot, .cursor-outline { position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 9999; pointer-events: none; }
         .cursor-dot { width: 6px; height: 6px; background-color: #dc2626; }
@@ -531,7 +541,17 @@ document.addEventListener('DOMContentLoaded', function() {
             const bookButton = document.querySelector('a[href^="mailto:booking@dayshotechno.com"]');
             if (bookButton) {
                 bookButton.addEventListener('click', function(event) {
-                    // Vibrate pattern: short, hard kickdrum-like [40, 30, 40]
+                    // Visual vibration effect for all browsers (including Safari)
+                    this.classList.remove('vibrate');
+                    void this.offsetWidth; // Trigger reflow
+                    this.classList.add('vibrate');
+                    
+                    // Remove vibration class after animation completes
+                    setTimeout(() => {
+                        this.classList.remove('vibrate');
+                    }, 300);
+                    
+                    // Hardware vibration for supported browsers (Android, etc.)
                     try {
                         if (window.navigator && 'vibrate' in window.navigator) {
                             window.navigator.vibrate([40, 30, 40]);

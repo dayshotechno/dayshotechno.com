@@ -197,20 +197,14 @@
                     <a href="mailto:booking@dayshotechno.com" class="block w-full py-6 text-2xl md:text-3xl text-center border-4 border-red-600 bg-red-600 text-white hover:bg-white hover:border-white hover:text-black font-['Oswald'] font-bold uppercase tracking-widest transition-all cursor-pointer" style="font-family: 'Oswald', sans-serif;">
                         BOOK DAY SHO
                     </a>
-                    <button id="custom-play-btn" class="w-full py-6 text-2xl md:text-3xl text-center border-4 border-red-600 bg-black text-white hover:bg-red-600 font-['Oswald'] font-bold uppercase tracking-widest transition-all cursor-pointer">
-                        PLAY LAST SET
-                    </button>
+                    <div class="w-full">
+                        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/user-110221213/schranzlangenvergleich&color=%23ff0000&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&theme=dark" class="w-full h-[166px] border-4 border-red-600"></iframe>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Hidden SoundCloud Player -->
-    <iframe id="sc-widget" width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay"
-            src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fuser-110221213%2Fschranzlangenvergleich&color=%23ff0000&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"
-            class="absolute opacity-0 pointer-events-none w-0 h-0"
-            title="SoundCloud player: Schranzlangenvergleich (Hard Techno) by DAY SHO">
-    </iframe>
 
     <!-- DESTROYED STAGES -->
     <section class="py-20 px-4 max-w-7xl mx-auto">
@@ -298,28 +292,5 @@
         });
     </script>
     <script src="https://w.soundcloud.com/player/api.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-          const widgetIframe = document.getElementById('sc-widget');
-          if (widgetIframe) {
-            const widget = SC.Widget(widgetIframe);
-            const playBtn = document.getElementById('custom-play-btn');
-            
-            playBtn.addEventListener('click', function() {
-              widget.toggle();
-            });
-            
-            widget.bind(SC.Widget.Events.PLAY, function() {
-              playBtn.innerText = 'PAUSE SET';
-              playBtn.classList.add('bg-white', 'text-black', 'border-white');
-            });
-            
-            widget.bind(SC.Widget.Events.PAUSE, function() {
-              playBtn.innerText = 'PLAY LAST SET';
-              playBtn.classList.remove('bg-white', 'text-black', 'border-white');
-            });
-          }
-        });
-    </script>
 </body>
 </html>

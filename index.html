@@ -272,9 +272,10 @@
     <!-- Hero Section -->
     <header class="relative min-h-screen flex items-center justify-center overflow-hidden">
         <!-- Background Image with Overlay -->
-        <video autoplay loop muted playsinline preload="auto" poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="absolute inset-0 w-full h-full object-cover z-0">
+        <video autoplay loop muted playsinline webkit-playsinline disableRemotePlayback preload="metadata" class="absolute inset-0 w-full h-full object-cover z-0">
             <source src="assets/desktop-loop.mp4" type="video/mp4" media="(min-width: 769px)">
             <source src="assets/mobile-loop.mp4" type="video/mp4" media="(max-width: 768px)">
+            <source src="assets/desktop-loop.mp4" type="video/mp4">
         </video>
         <div class="absolute inset-0 bg-black/75 z-10" aria-hidden="true"></div>
         <div class="absolute inset-0 z-0 overflow-hidden flex items-center opacity-10 pointer-events-none"><div class="animate-marquee text-7xl md:text-[10rem] font-black text-red-600 font-['Oswald'] tracking-widest uppercase select-none"> // DAY SHO // HARD TECHNO // NO MERCY // SCHRANZ // DAY SHO // HARD TECHNO // NO MERCY // SCHRANZ </div></div>

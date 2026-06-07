@@ -261,16 +261,18 @@
             80% { transform: translate(-2px, -2px); clip-path: polygon(0 0, 100% 0, 100% 66%, 0 66%); opacity: 0.9; }
             100% { transform: translate(0); clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); opacity: 0; }
         }
-        /* Scroll cue: dropping bomb (replaces the bouncing arrow) */
-        .bomb-cue { animation: bomb-drop 1.5s cubic-bezier(0.45, 0, 0.9, 0.55) infinite; will-change: transform, opacity; }
+        /* Smooth scroll so the bomb cue glides the user down to the content */
+        html { scroll-behavior: smooth; }
+        /* Scroll cue: bomb nudges DOWNWARD (rest position = top) to invite further scrolling */
+        .bomb-cue { animation: bomb-invite 1.6s ease-in-out infinite; will-change: transform; }
         .bomb-cue img { filter: drop-shadow(0 0 7px rgba(220, 38, 38, 0.6)); }
-        @keyframes bomb-drop {
-            0%   { transform: translate(-50%, -16px); opacity: 0; }
-            20%  { transform: translate(-50%, -8px); opacity: 1; }
-            75%  { opacity: 1; }
-            100% { transform: translate(-50%, 16px); opacity: 0; }
+        @keyframes bomb-invite {
+            0%, 100% { transform: translate(-50%, 0); }
+            35%      { transform: translate(-50%, 14px); }
+            70%      { transform: translate(-50%, 0); }
         }
         @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
             .bomb-cue { animation: none; }
         }
     </style>
@@ -305,8 +307,8 @@
                 NO. MERCY.
             </p>
         </div>
-        <!-- Animated scroll cue: dropping bomb -->
-        <a href="#main" aria-label="Zum Inhalt scrollen" class="absolute bottom-32 md:bottom-24 left-1/2 -translate-x-1/2 z-50 bomb-cue">
+        <!-- Animated scroll cue: bomb nudging downward to invite scrolling -->
+        <a href="#main" aria-label="Zum Inhalt scrollen" class="absolute bottom-20 md:bottom-12 left-1/2 -translate-x-1/2 z-50 bomb-cue">
             <img src="assets/bomb-cue.png" alt="" aria-hidden="true" class="h-16 w-auto mx-auto">
         </a>
     </header>

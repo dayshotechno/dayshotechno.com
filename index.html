@@ -6,14 +6,18 @@
     <title>DAY SHO | Hard Techno DJ Presskit</title>
     <!-- Mobile UX Bugs fixed 2026-03-02 -->
     <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔊</text></svg>">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
     <!-- Open Graph / Social Media Meta Tags -->
     <meta property="og:title" content="DAY SHO | Hard Techno DJ Presskit">
     <meta property="og:description" content="Relentless. Raw. Redefined. Hard Techno DJ from the underground.">
-    <meta property="og:image" content="https://dayshotechno.com/assets/presse1.webp">
+    <meta property="og:image" content="https://dayshotechno.com/assets/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:url" content="https://dayshotechno.com">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://dayshotechno.com/assets/og-image.jpg">
     <meta name="description" content="Presskit for DAY SHO, driving the hard-techno scene with relentless energy.">
     <!-- Google Font Oswald -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -257,6 +261,18 @@
             80% { transform: translate(-2px, -2px); clip-path: polygon(0 0, 100% 0, 100% 66%, 0 66%); opacity: 0.9; }
             100% { transform: translate(0); clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); opacity: 0; }
         }
+        /* Scroll cue: dropping bomb (replaces the bouncing arrow) */
+        .bomb-cue { animation: bomb-drop 1.5s cubic-bezier(0.45, 0, 0.9, 0.55) infinite; will-change: transform, opacity; }
+        .bomb-cue img { filter: drop-shadow(0 0 7px rgba(220, 38, 38, 0.6)); }
+        @keyframes bomb-drop {
+            0%   { transform: translate(-50%, -16px); opacity: 0; }
+            20%  { transform: translate(-50%, -8px); opacity: 1; }
+            75%  { opacity: 1; }
+            100% { transform: translate(-50%, 16px); opacity: 0; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .bomb-cue { animation: none; }
+        }
     </style>
 </head>
 <body class="bg-black text-white font-sans antialiased md:cursor-none">
@@ -281,18 +297,17 @@
         <div class="absolute inset-0 z-0 overflow-hidden flex items-center opacity-10 pointer-events-none"><div class="animate-marquee text-7xl md:text-[10rem] font-black text-red-600 font-['Oswald'] tracking-widest uppercase select-none"> // DAY SHO // HARD TECHNO // NO MERCY // SCHRANZ // DAY SHO // HARD TECHNO // NO MERCY // SCHRANZ </div></div>
 
         <div class="relative z-20 text-center px-4">
-            <h1 class="glitch-hover text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter leading-none relative block mx-auto" style="font-family: 'Oswald', sans-serif;" data-text="DAY SHO">
-                DAY SHO
+            <h1 class="mx-auto mb-2">
+                <img src="assets/day-sho-wordmark.png" alt="DAY SHO"
+                    class="block mx-auto w-auto object-contain h-[clamp(220px,40vh,420px)] mix-blend-screen">
             </h1>
             <p class="hero-tagline mt-6 text-3xl md:text-5xl uppercase tracking-tighter font-black text-red-600" data-text="NO. MERCY.">
                 NO. MERCY.
             </p>
         </div>
-        <!-- Animated scroll arrow -->
-        <a href="#main" class="absolute bottom-32 md:bottom-24 left-1/2 -translate-x-1/2 text-white animate-bounce z-60">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 32 32" stroke="currentColor">
-                <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="4" d="M16 26 L26 6 L16 14 L6 6 L16 26" />
-            </svg>
+        <!-- Animated scroll cue: dropping bomb -->
+        <a href="#main" aria-label="Zum Inhalt scrollen" class="absolute bottom-32 md:bottom-24 left-1/2 -translate-x-1/2 z-50 bomb-cue">
+            <img src="assets/bomb-cue.png" alt="" aria-hidden="true" class="h-16 w-auto mx-auto">
         </a>
     </header>
 
@@ -457,10 +472,10 @@
             </div>
             <!-- Block 2: Mixer -->
             <div class="flex flex-col items-center justify-end hard-fade">
-                <img src="assets/xone96.png" alt="XONE:96"
+                <img src="assets/djma9.png" alt="DJM-A9"
                     class="w-full max-w-[350px] mx-auto mb-6 object-contain">
-                <p class="font-bold text-2xl text-center text-white font-['Oswald']">1x ALLEN &amp; HEATH XONE:96 <br>
-                    <span class="text-red-600 text-lg">// ALT: DJM-V10 / A9</span>
+                <p class="font-bold text-2xl text-center text-white font-['Oswald']">1x DJM-A9 <br>
+                    <span class="text-red-600 text-lg">// ALT: ALLEN &amp; HEATH XONE:96</span>
                 </p>
             </div>
         </div>

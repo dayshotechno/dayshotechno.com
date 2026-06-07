@@ -1,2 +1,4 @@
 .aider*
 node_modules/
+# Illustrator brand source (.ai ~3.3MB) — used icons/wordmarks are copied into assets/
+day_sho_logo/

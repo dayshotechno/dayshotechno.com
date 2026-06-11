@@ -1,0 +1,76 @@
+---
+// Printable one-sheet: dark on screen, clean black-on-white via @media print.
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="One-Sheet | DAY SHO" description="Printable one-sheet for DAY SHO. Hard Techno & Schranz DJ." noindex>
+  <main id="main" class="one-sheet mx-auto w-full max-w-3xl px-6 py-12">
+    <div class="no-print mb-8 flex items-center justify-between gap-4">
+      <a href="/" class="glitch-hover font-mono text-xs uppercase tracking-widest text-muted hover:text-primary">&lt; BACK</a>
+      <button
+        type="button"
+        onclick="window.print()"
+        class="switch-btn glitch-hover max-w-[220px] !py-3 text-center"
+      >
+        &gt; PRINT_PDF
+      </button>
+    </div>
+
+    <header class="border-b-4 border-primary pb-6">
+      <img src="/assets/day-sho-wordmark.png" alt="DAY SHO" class="onesheet-logo h-24 w-auto object-contain" />
+      <p class="mt-4 font-mono text-xs uppercase tracking-[0.4em]">HARD TECHNO / SCHRANZ — OFFICIAL ONE-SHEET</p>
+    </header>
+
+    <section class="mt-8">
+      <h2 class="font-mono text-sm font-bold uppercase tracking-widest text-primary">// BIO</h2>
+      <p class="mt-3 text-sm leading-relaxed">
+        DAY SHO // RELENTLESS. RAW. REDEFINED. For two years, DAY SHO has been dismantling regional dancefloors with a
+        precision that leaves absolutely zero room for compromise. Where others hold back, DAY SHO goes full throttle:
+        delivering Hard Techno and Schranz in their purest, darkest forms. Drawing inspiration from the legacy of
+        heavyweights like Svetec, O.B.I., and Golpe, DAY SHO engineers an atmosphere that is as menacing as it is
+        liberating. Massive industrial kicks and distorted textures forge a sound that doesn't just fill the room—it
+        holds the crowd in a merciless grip until the very last minute.
+      </p>
+    </section>
+
+    <section class="mt-8 grid grid-cols-2 gap-8">
+      <div>
+        <h2 class="font-mono text-sm font-bold uppercase tracking-widest text-primary">// STAGES</h2>
+        <ul class="mt-3 space-y-1 font-mono text-xs uppercase leading-relaxed">
+          <li>Trash-O-Ween — Kulturverein röda, Steyr</li>
+          <li>Polytox Face2Face — Postgarage, Graz</li>
+          <li>Sauhaufen — Postgarage, Graz</li>
+          <li>Face2Face — Das Werk, Wien</li>
+          <li>Noise — Eventfabrik, Niklasdorf</li>
+          <li>Ehrnau-Rave — Schloss Mautern, Mautern</li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="font-mono text-sm font-bold uppercase tracking-widest text-primary">// TECH RIDER</h2>
+        <ul class="mt-3 space-y-1 font-mono text-xs uppercase leading-relaxed">
+          <li>3x Pioneer CDJ-3000 (linked) // alt: 2000NXS2</li>
+          <li>1x DJM-A9 // alt: Allen &amp; Heath Xone:96</li>
+        </ul>
+        <h2 class="mt-6 font-mono text-sm font-bold uppercase tracking-widest text-primary">// CONTACT</h2>
+        <p class="mt-3 font-mono text-xs uppercase leading-relaxed">
+          booking@dayshotechno.com<br />
+          dayshotechno.com<br />
+          IG @daysho.techno // TT @daysho.dj
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <style>
+    @media print {
+      .one-sheet {
+        max-width: 100%;
+        color: #000;
+      }
+      .onesheet-logo {
+        /* The wordmark is white-on-transparent — invert for paper. */
+        filter: invert(1);
+      }
+    }
+  </style>
+</Layout>

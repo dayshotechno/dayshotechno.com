@@ -1,0 +1,63 @@
+---
+// Section E — TECHNICAL_SPEC: brutalist CSS grid spec sheet.
+const requirements = [
+  {
+    id: "REQ_01",
+    image: "/assets/cdj3000.webp",
+    alt: "Pioneer CDJ-3000 player, technical schematic view",
+    spec: "3x PIONEER CDJ-3000 (LINKED)",
+    alt_spec: "ALT: 2000NXS2",
+  },
+  {
+    id: "REQ_02",
+    image: "/assets/djma9.webp",
+    alt: "Pioneer DJM-A9 mixer, technical schematic view",
+    spec: "1x DJM-A9",
+    alt_spec: "ALT: ALLEN & HEATH XONE:96",
+  },
+];
+---
+
+<section id="rider" class="blueprint mx-auto w-full max-w-7xl px-4 py-20 md:py-28">
+  <h2 class="flex items-center gap-3 font-mono text-2xl font-bold uppercase tracking-widest text-content md:text-4xl">
+    <svg class="h-7 w-7 shrink-0 text-primary md:h-9 md:w-9" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 2L1 21h22L12 2zm0 6l7 12H5l7-12zm-1 4v4h2v-4h-2zm0 5v2h2v-2h-2z" />
+    </svg>
+    <span><span class="text-primary">//</span> TECHNICAL_SPEC</span>
+  </h2>
+  <p class="mt-2 font-mono text-xs uppercase tracking-widest text-muted">
+    NON-NEGOTIABLE EQUIPMENT REQUIREMENTS
+  </p>
+
+  <div class="mt-10 grid gap-8 md:grid-cols-2">
+    {
+      requirements.map((req) => (
+        <article class="border border-primary bg-surface">
+          <header class="flex items-center justify-between border-b border-primary px-4 py-2">
+            <span class="font-mono text-xs uppercase tracking-widest text-primary">{req.id}</span>
+            <span class="font-mono text-[11px] uppercase tracking-widest text-muted">STATUS: MANDATORY</span>
+          </header>
+          <div class="blueprint flex items-center justify-center p-8">
+            <img
+              src={req.image}
+              alt={req.alt}
+              loading="lazy"
+              width="800"
+              height="600"
+              class="max-h-56 w-auto object-contain"
+              style="filter: grayscale(0.6) contrast(1.15);"
+            />
+          </div>
+          <footer class="border-t border-[#333] px-4 py-4">
+            <p class="font-display text-lg font-bold uppercase tracking-tight text-content md:text-xl">{req.spec}</p>
+            <p class="mt-1 font-mono text-xs uppercase tracking-widest text-primary">// {req.alt_spec}</p>
+          </footer>
+        </article>
+      ))
+    }
+  </div>
+
+  <p class="mt-8 border border-[#333] bg-surface px-4 py-3 font-mono text-xs uppercase leading-relaxed tracking-wider text-muted">
+    <span class="text-primary">NOTE:</span> FULL RIDER AVAILABLE IN PRESS_ARMORY BELOW. SOUND PRESSURE IS NOT OPTIONAL.
+  </p>
+</section>

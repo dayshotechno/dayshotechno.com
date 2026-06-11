@@ -1,0 +1,105 @@
+---
+import SoundCloudPlayer from "./SoundCloudPlayer.astro";
+---
+
+<header class="relative flex min-h-screen flex-col justify-between overflow-hidden bg-void">
+  <!-- Blueprint grid background (parallax via data attribute, see script) -->
+  <div class="blueprint absolute inset-[-20%] z-0" data-parallax aria-hidden="true"></div>
+
+  <!-- Moving green scan beam -->
+  <div class="scan-beam z-10" aria-hidden="true"></div>
+
+  <!-- SCAN HUD corner element -->
+  <div class="absolute right-4 top-4 z-20 hidden md:block" aria-hidden="true">
+    <div class="border border-[#333] bg-surface/80 px-3 py-2 font-mono text-[11px] uppercase tracking-widest text-muted">
+      <span class="text-scan">●</span> SCAN_ACTIVE<br />
+      LAT 47.0707 / LON 15.4395<br />
+      SIGNAL: HARD_TECHNO
+    </div>
+  </div>
+
+  <!-- Corner brackets -->
+  <div class="pointer-events-none absolute left-4 top-4 z-20 h-8 w-8 border-l-2 border-t-2 border-primary" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute bottom-4 right-4 z-20 h-8 w-8 border-b-2 border-r-2 border-primary" aria-hidden="true"></div>
+
+  <div class="relative z-20 mx-auto flex w-full max-w-7xl flex-1 flex-col items-center justify-center px-4 pt-20 pb-8 text-center">
+    <img
+      src="/assets/day-sho-wordmark.png"
+      alt="DAY SHO"
+      width="800"
+      height="306"
+      class="hero-stagger mx-auto h-[clamp(120px,24vh,260px)] w-auto object-contain mix-blend-screen"
+      fetchpriority="high"
+    />
+
+    <p class="hero-stagger mt-6 font-mono text-sm uppercase tracking-[0.4em] text-primary">
+      HARD TECHNO / SCHRANZ
+    </p>
+
+    <h1
+      class="hero-stagger mt-4 font-display font-bold uppercase leading-[0.9] tracking-tight text-content"
+      style="font-size: clamp(3rem, 10vw, 12rem);"
+    >
+      RELENTLESS.<br />
+      RAW.<br />
+      <span class="text-primary">REDEFINED.</span>
+    </h1>
+
+    <div class="hero-stagger mt-10 w-full max-w-xl">
+      <SoundCloudPlayer trackUrl="https://soundcloud.com/user-110221213/schranzlangenvergleich" />
+    </div>
+  </div>
+
+  <!-- Distorted red arrow scroll cue -->
+  <a
+    href="#audio-feed"
+    aria-label="Scroll to content"
+    class="hero-arrow relative z-20 mx-auto mb-6 block w-12 text-primary"
+  >
+    <svg viewBox="0 0 48 64" fill="currentColor" aria-hidden="true" style="filter: drop-shadow(2px 2px 0 rgba(255,42,42,0.35));">
+      <path d="M19 0h10v34h11L24 64 8 34h11z" transform="skewX(-6) translate(5 0)" />
+    </svg>
+  </a>
+</header>
+
+<script>
+  import { gsap } from "gsap";
+
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (!reduced) {
+    gsap.from(".hero-stagger", {
+      opacity: 0,
+      y: 32,
+      duration: 0.7,
+      stagger: 0.12,
+      ease: "power3.out",
+    });
+
+    gsap.to(".hero-arrow", {
+      y: 10,
+      duration: 0.8,
+      repeat: -1,
+      yoyo: true,
+      ease: "power1.inOut",
+    });
+
+    // Grid parallax at 0.5x scroll speed, GPU-friendly transform only
+    const grid = document.querySelector<HTMLElement>("[data-parallax]");
+    if (grid) {
+      let ticking = false;
+      window.addEventListener(
+        "scroll",
+        () => {
+          if (ticking) return;
+          ticking = true;
+          requestAnimationFrame(() => {
+            grid.style.transform = `translateY(${window.scrollY * 0.5}px)`;
+            ticking = false;
+          });
+        },
+        { passive: true }
+      );
+    }
+  }
+</script>

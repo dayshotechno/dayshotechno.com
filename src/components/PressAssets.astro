@@ -1,0 +1,51 @@
+---
+// Section F — PRESS_ARMORY: direct downloads, industrial-switch buttons.
+const downloads = [
+  { href: "/downloads/presskit.zip", label: "PRESSKIT.ZIP", note: "PHOTOS + LOGOS + RIDER // FULL PACKAGE", download: true },
+  { href: "/downloads/rider.txt", label: "RIDER.TXT", note: "TECHNICAL REQUIREMENTS // PLAIN TEXT", download: true },
+  { href: "/one-sheet", label: "ONE_SHEET", note: "PRINTABLE PDF VIA BROWSER PRINT", download: false },
+];
+
+const photos = [
+  { href: "/assets/presse1.webp", label: "IMG_01" },
+  { href: "/assets/presse2.webp", label: "IMG_02" },
+  { href: "/assets/presse3.webp", label: "IMG_03" },
+  { href: "/assets/presse4.webp", label: "IMG_04" },
+];
+---
+
+<section id="press" class="mx-auto w-full max-w-7xl px-4 py-20 md:py-28">
+  <h2 class="font-mono text-2xl font-bold uppercase tracking-widest text-content md:text-4xl">
+    <span class="text-primary">//</span> PRESS_ARMORY
+  </h2>
+  <p class="mt-2 font-mono text-xs uppercase tracking-widest text-muted">
+    HI-RES ASSETS // CLEARED FOR PROMOTION
+  </p>
+
+  <div class="mt-10 grid gap-4 md:grid-cols-3">
+    {
+      downloads.map((item) => (
+        <a href={item.href} class="switch-btn glitch-hover" download={item.download ? "" : undefined}>
+          <span class="block text-base font-bold">&gt; {item.label}</span>
+          <span class="mt-2 block text-[11px] text-muted">{item.note}</span>
+        </a>
+      ))
+    }
+  </div>
+
+  <div class="mt-6 flex flex-wrap items-center gap-3 border border-[#333] bg-surface px-4 py-3">
+    <span class="font-mono text-xs uppercase tracking-widest text-muted">DIRECT_IMAGE_ACCESS:</span>
+    {
+      photos.map((photo) => (
+        <a
+          href={photo.href}
+          target="_blank"
+          rel="noopener"
+          class="glitch-hover font-mono text-xs uppercase tracking-widest text-content underline decoration-primary underline-offset-4 hover:text-primary"
+        >
+          [{photo.label}]
+        </a>
+      ))
+    }
+  </div>
+</section>

@@ -1,0 +1,89 @@
+---
+import "../styles/global.css";
+import ScanlineOverlay from "../components/ScanlineOverlay.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+}
+
+const {
+  title = "DAY SHO | Hard Techno DJ & Schranz Artist — Official EPK",
+  description = "Electronic Press Kit for DAY SHO. Hard Techno & Schranz DJ. Bookings, rider, press assets, and tour history.",
+  noindex = false,
+} = Astro.props;
+
+const ogImage = new URL("/assets/og-image.jpg", Astro.site).href;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "MusicGroup",
+  name: "DAY SHO",
+  genre: ["Hard Techno", "Schranz"],
+  url: "https://dayshotechno.com",
+  image: ogImage,
+  email: "mailto:booking@dayshotechno.com",
+  sameAs: [
+    "https://instagram.com/daysho.techno",
+    "https://www.tiktok.com/@daysho.dj",
+    "https://soundcloud.com/user-110221213",
+  ],
+  event: [
+    { "@type": "MusicEvent", name: "Ehrnau-Rave", location: { "@type": "Place", name: "Schloss Mautern", address: "Mautern, Austria" } },
+    { "@type": "MusicEvent", name: "Noise", location: { "@type": "Place", name: "Eventfabrik", address: "Niklasdorf, Austria" } },
+    { "@type": "MusicEvent", name: "Face2Face", location: { "@type": "Place", name: "Das Werk", address: "Wien, Austria" } },
+    { "@type": "MusicEvent", name: "Sauhaufen", location: { "@type": "Place", name: "Postgarage", address: "Graz, Austria" } },
+    { "@type": "MusicEvent", name: "Polytox Production Face2Face", location: { "@type": "Place", name: "Postgarage", address: "Graz, Austria" } },
+    { "@type": "MusicEvent", name: "Trash-O-Ween", location: { "@type": "Place", name: "Kulturverein röda", address: "Steyr, Austria" } },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+  <body>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] bg-primary text-void font-mono text-xs uppercase tracking-widest px-4 py-2"
+    >
+      SKIP_TO_CONTENT
+    </a>
+
+    <div class="noise-overlay" aria-hidden="true"></div>
+    <ScanlineOverlay />
+
+    <slot />
+  </body>
+</html>

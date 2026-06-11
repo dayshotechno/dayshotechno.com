@@ -1,0 +1,62 @@
+---
+// Brutalist click-to-load chrome around the SoundCloud iframe.
+// The third-party embed only loads after user interaction (performance + GDPR).
+interface Props {
+  trackUrl: string;
+  label?: string;
+  trackName?: string;
+}
+
+const {
+  trackUrl,
+  label = "AUDIO_FEED_01",
+  trackName = "SCHRANZLÄNGENVERGLEICH",
+} = Astro.props;
+
+const embedSrc =
+  "https://w.soundcloud.com/player/?url=" +
+  encodeURIComponent(trackUrl) +
+  "&color=%23ff2a2a&auto_play=true&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&theme=dark";
+---
+
+<div class="sc-player border border-primary bg-surface" data-embed-src={embedSrc}>
+  <div class="flex items-center justify-between border-b border-primary px-3 py-2">
+    <span class="font-mono text-xs uppercase tracking-widest text-primary">{label}</span>
+    <span class="font-mono text-xs uppercase tracking-widest text-muted" aria-hidden="true">REC ●</span>
+  </div>
+  <button
+    type="button"
+    class="sc-load group flex w-full items-center gap-4 px-4 py-6 text-left hover:bg-void transition-colors"
+  >
+    <span
+      class="flex h-12 w-12 shrink-0 items-center justify-center border border-content text-content group-hover:border-primary group-hover:text-primary transition-colors"
+      aria-hidden="true"
+    >
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M3 1l11 7-11 7z" /></svg>
+    </span>
+    <span class="min-w-0">
+      <span class="block truncate font-mono text-sm uppercase tracking-wider text-content">{trackName}</span>
+      <span class="block font-mono text-[11px] uppercase tracking-widest text-muted">
+        TRANSMIT VIA SOUNDCLOUD // CLICK TO ARM
+      </span>
+    </span>
+  </button>
+</div>
+
+<script>
+  // Swap the facade for the real iframe on first interaction.
+  document.querySelectorAll<HTMLElement>(".sc-player").forEach((player) => {
+    const btn = player.querySelector(".sc-load");
+    btn?.addEventListener("click", () => {
+      const iframe = document.createElement("iframe");
+      iframe.src = player.dataset.embedSrc ?? "";
+      iframe.width = "100%";
+      iframe.height = "166";
+      iframe.setAttribute("allow", "autoplay");
+      iframe.setAttribute("title", "SoundCloud player — DAY SHO");
+      iframe.style.border = "0";
+      iframe.style.display = "block";
+      btn.replaceWith(iframe);
+    });
+  });
+</script>

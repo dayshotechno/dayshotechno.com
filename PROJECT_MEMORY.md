@@ -1,51 +1,51 @@
 # Project Memory - DAYSHOTECHNO.COM
 
 ## Current State
-Static presskit website for hard techno DJ "DAY SHO". Single-page HTML (index.html) with two supporting legal pages (impressum.html, datenschutz.html). No build system, no package manager, no backend. Assets include high-resolution press photos and equipment images.
+Electronic Press Kit (EPK) for hard techno DJ "DAY SHO", rebuilt 2026-06 as a statically
+generated Astro site per the brief in `.claude/CLAUDE.md` ("Dark Industrial Interface"
+design system). Single-page EPK plus legal pages and a printable one-sheet.
 
 **Technology Stack:**
-- HTML5 with semantic markup and accessibility features (skip link, ARIA labels)
-- Tailwind CSS via CDN (v3) for utility-first styling
-- Google Fonts (Oswald) for typography
-- Vanilla JavaScript for interactivity (no frameworks)
-- Static hosting (Git-based deployment assumed)
+- Astro 5 (static output), TypeScript strict
+- Tailwind CSS 3.4 via @astrojs/tailwind (custom color regime in tailwind.config.js)
+- React 19 island: only `BookingForm.tsx` (client:visible)
+- GSAP + ScrollTrigger: hero stagger + DESTROYED_STAGES log reveal only
+- Google Fonts: Space Grotesk (display/body) + JetBrains Mono (data/labels)
 
-**Key Features:**
-- Dark industrial aesthetic with red accent color (#dc2626)
-- Responsive design (mobile-first via Tailwind)
-- Interactive elements: image gallery with preview, custom cursor (desktop), scroll‑reveal animations, glitch hover effects
-- Embedded SoundCloud player
-- Legal pages (Impressum, Datenschutz) following German requirements
-- Open Graph and Twitter meta tags for social sharing
+**Pages:**
+- `/` — single-page EPK: Hero, AUDIO_FEED, BIO, DESTROYED_STAGES.LOG, TECHNICAL_SPEC, PRESS_ARMORY, INITIATE_CONTACT, Footer
+- `/impressum`, `/datenschutz` — Austrian legal pages (German)
+- `/one-sheet` — printable one-pager (@media print → clean black-on-white)
+- `/downloads/rider.txt`, `/downloads/presskit.zip`
 
 ## Architectural Decisions (The "Why")
-1. **Tailwind via CDN** – Chosen for rapid prototyping and consistent styling without a build step. The project’s visual complexity (grids, hover states, responsive breakpoints) is well‑served by utility classes, and the CDN keeps the setup simple.
+1. **Astro static output** — mandated by CLAUDE.md; zero-JS-by-default for Lighthouse 95+.
+2. **SoundCloud click-to-load facade** (`SoundCloudPlayer.astro`) — third-party iframe only
+   loads after user click: performance + GDPR (documented in /datenschutz).
+3. **Booking form = mailto composer** — static hosting, no backend. `BookingForm.tsx`
+   builds a structured mailto to booking@dayshotechno.com. Swap in a Formspree/Getform
+   endpoint later if desired.
+4. **Color named `void`, not `base`** — a Tailwind color named `base` makes `text-base`
+   (font-size) emit a color instead. Don't rename it back.
+5. **GSAP initial states set via JS, not CSS** — content must be visible without JS;
+   `gsap.fromTo` hides elements only once JS runs.
+6. **Source assets stay in `/assets` + `/day_sho_logo`** (day_sho_logo is gitignored);
+   `npm run assets` (scripts/prepare-assets.js) builds optimized copies into
+   `/public/assets` (webp gear shots, noise.png, favicons). Re-run after asset changes.
+7. **No real event dates exist** — stage log uses LOG_01..06 ids instead of fabricated
+   YYYY.MM.DD dates. Add real dates if the artist supplies them.
 
-2. **No build toolchain** – The site is purely presentational; no compilation, bundling, or minification is required. This eliminates tooling overhead and simplifies maintenance. All assets are served as‑is.
-
-3. **Vanilla JavaScript** – Interactivity (image gallery, cursor, scroll detection) is lightweight and specific; a framework would add unnecessary weight. Event‑driven custom scripts keep the footprint minimal.
-
-4. **Inline CSS for complex effects** – Glitch animations, custom cursor, and scroll‑reveal transitions are defined in a `<style>` block within index.html. This ensures the critical visual behavior loads with the page and avoids extra HTTP requests.
-
-5. **Asset organization** – All images reside in `/assets/`. Legal pages are also placed in `/assets/` (unconventional) to keep the root directory clean. This reflects a flat structure suited for static hosting.
-
-6. **Accessibility and semantics** – Skip‑to‑content link, proper heading hierarchy, `aria‑hidden` on decorative elements, and focus styles show a conscious effort toward inclusive design.
-
-7. **German language (de)** – The target audience is German‑speaking promoters and fans, hence content and legal pages are in German.
-
-## Next Steps
-1. **Performance audit** – Optimize image delivery (serve WebP/AVIF, implement lazy‑loading beyond native `loading="lazy"`).
-2. **SEO enhancement** – Add structured data (JSON‑LD) for artist/music events, improve meta descriptions.
-3. **Analytics integration** – Consider adding a privacy‑friendly tracking solution (e.g., Plausible) to measure traffic.
-4. **Contact form** – Replace static mailto link with a simple, secure form (could be hosted via a serverless function).
-5. **Asset pipeline** – If the site grows, introduce a lightweight build step (e.g., Vite) to bundle CSS/JS, minify HTML, and optimize images.
+## Deployment
+- GitHub Pages via `.github/workflows/deploy.yml` (withastro/action → deploy-pages).
+- ONE-TIME MANUAL STEP: repo Settings → Pages → Source = "GitHub Actions"
+  (was branch-based serving the old static root files).
+- CNAME lives in `/public/CNAME` so it lands in the build artifact.
 
 ## Context Debt
-- **Images are high‑resolution JPEGs/PNGs** – No compression or modern formats; page weight could be reduced significantly.
-- **Legal pages in `/assets/`** – This breaks conventional expectations (usually placed in root). Consider moving them to root or a `/legal/` subdirectory for clarity.
-- **Inline CSS and JavaScript** – While acceptable for a single page, scaling would benefit from separation (external CSS/JS files) and modularization.
-- **No version control for third‑party CDNs** – Tailwind and Google Fonts are pinned to “latest”; a version‑locked URL would guarantee stability.
-- **Custom cursor only on desktop (`md:cursor-none`)** – The cursor behavior may conflict with some assistive technologies; consider adding a toggle or respecting `prefers‑reduced‑motion`.
+- presskit.zip (~14 MB) is committed binary in /public/downloads — regenerate manually
+  when photos/logos change (see git history for the Compress-Archive command).
+- One-sheet "PDF" relies on browser print; no generated .pdf file in the zip.
+- Stage log has no dates; schema.org events have no startDate.
 
 ---
-*Last updated: 2026‑03‑01 (initial analysis)*
+*Last updated: 2026-06-11 (Astro rebuild)*

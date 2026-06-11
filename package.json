@@ -1,15 +1,29 @@
 {
-  "name": "dayshotechno-epk",
-  "version": "1.0.0",
+  "name": "daysho-epk",
+  "version": "2.0.0",
   "private": true,
-  "description": "Static Electronic Presskit for DAY SHO (Hard Techno). Tailwind is pre-built into assets/tailwind.css.",
+  "type": "module",
+  "description": "DAY SHO — Electronic Press Kit. Brutalist single-page Astro build.",
   "scripts": {
-    "build:css": "tailwindcss -i ./src/tailwind.css -o ./assets/tailwind.css --minify",
-    "watch:css": "tailwindcss -i ./src/tailwind.css -o ./assets/tailwind.css --watch",
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "assets": "node scripts/prepare-assets.js",
     "make:og": "node scripts/make-og.js"
   },
-  "devDependencies": {
-    "sharp": "^0.34.5",
+  "dependencies": {
+    "@astrojs/react": "^4.2.0",
+    "@astrojs/tailwind": "^6.0.0",
+    "astro": "^5.7.0",
+    "gsap": "^3.12.7",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "tailwindcss": "^3.4.17"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "sharp": "^0.34.5",
+    "typescript": "^5.7.0"
   }
 }

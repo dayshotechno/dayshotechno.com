@@ -1,0 +1,97 @@
+---
+// Section C — the "Data Sheet": three bio lengths, each copy-to-clipboard.
+const bios = [
+  {
+    id: "micro",
+    label: "BIO_MICRO // 1_SENTENCE",
+    text: "DAY SHO delivers merciless Hard Techno and Schranz for the darkest dancefloors.",
+  },
+  {
+    id: "short",
+    label: "BIO_SHORT // 50_WORDS",
+    text: "DAY SHO is a Hard Techno & Schranz DJ dismantling regional dancefloors with industrial precision. Inspired by Svetec, O.B.I., and Golpe, his sound is relentless, raw, and uncompromising.",
+  },
+  {
+    id: "long",
+    label: "BIO_LONG // FULL_DOSSIER",
+    text: "DAY SHO // RELENTLESS. RAW. REDEFINED. For two years, DAY SHO has been dismantling regional dancefloors with a precision that leaves absolutely zero room for compromise. Where others hold back, DAY SHO goes full throttle: delivering Hard Techno and Schranz in their purest, darkest forms. Drawing inspiration from the legacy of heavyweights like Svetec, O.B.I., and Golpe, DAY SHO engineers an atmosphere that is as menacing as it is liberating. Massive industrial kicks and distorted textures forge a sound that doesn't just fill the room—it holds the crowd in a merciless grip until the very last minute. This isn't just spinning tracks; it's heavy labor. No corporate marketing facades, no pointless noise—just sound that cuts straight to the bone. READY FOR THE ASSAULT.",
+  },
+];
+---
+
+<section id="bio" class="mx-auto w-full max-w-7xl px-4 py-20 md:py-28">
+  <div class="grid gap-10 md:grid-cols-[1fr_2fr]">
+    <!-- Left: oversized display title -->
+    <div>
+      <div class="sticky top-8">
+        <h2
+          class="font-display font-bold uppercase leading-[0.9] text-content"
+          style="font-size: clamp(3rem, 8vw, 8rem);"
+        >
+          BIO<span class="cursor-blink text-[0.35em] align-middle"></span>
+        </h2>
+        <p class="mt-4 font-mono text-xs uppercase tracking-widest text-muted">
+          SUBJECT: DAY SHO<br />
+          CLASS: HARD_TECHNO / SCHRANZ<br />
+          STATUS: <span class="text-scan">OPERATIONAL</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Right: terminal containers -->
+    <div class="space-y-6">
+      {
+        bios.map((bio) => (
+          <article class="border border-[#333] bg-surface" data-bio={bio.id}>
+            <header class="flex items-center justify-between gap-2 border-b border-[#333] px-4 py-2">
+              <h3 class="font-mono text-xs uppercase tracking-widest text-primary">{bio.label}</h3>
+              <button
+                type="button"
+                class="copy-btn glitch-hover shrink-0 border border-[#333] px-3 py-1 font-mono text-[11px] uppercase tracking-widest text-muted hover:border-primary hover:text-primary transition-colors"
+                data-copy={bio.text}
+              >
+                [COPY]
+              </button>
+            </header>
+            <p class="px-4 py-5 font-body text-sm leading-relaxed text-content md:text-base">{bio.text}</p>
+          </article>
+        ))
+      }
+
+      <!-- Press photo strip -->
+      <div class="grid grid-cols-2 gap-4 pt-4 md:grid-cols-4">
+        {
+          [
+            { src: "/assets/presse2.webp", alt: "DAY SHO performing in an industrial venue" },
+            { src: "/assets/presse1.webp", alt: "DAY SHO behind the decks under red light" },
+            { src: "/assets/presse3.webp", alt: "DAY SHO in front of the crowd at a hard techno event" },
+            { src: "/assets/presse4.webp", alt: "DAY SHO focused at the mixer" },
+          ].map((img) => (
+            <figure class="press-frame aspect-[3/4]">
+              <img src={img.src} alt={img.alt} loading="lazy" class="h-full w-full object-cover" />
+            </figure>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>(".copy-btn").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(btn.dataset.copy ?? "");
+        const original = btn.textContent;
+        btn.textContent = "[COPIED]";
+        btn.classList.add("text-scan", "border-scan");
+        setTimeout(() => {
+          btn.textContent = original;
+          btn.classList.remove("text-scan", "border-scan");
+        }, 1500);
+      } catch {
+        btn.textContent = "[FAILED]";
+      }
+    });
+  });
+</script>

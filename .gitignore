@@ -2,3 +2,13 @@
 node_modules/
 # Illustrator brand source (.ai ~3.3MB) — used icons/wordmarks are copied into assets/
 day_sho_logo/
+# Astro build output & cache
+dist/
+.astro/
+# Local verification artifacts
+.playwright-mcp/
+shot-*.jpeg
+epk-full.jpeg
+
+# Local Claude settings
+.claude/settings.local.json

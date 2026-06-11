@@ -1,0 +1,50 @@
+---
+import Layout from "../layouts/Layout.astro";
+import HeroSection from "../components/HeroSection.astro";
+import AudioFeed from "../components/AudioFeed.astro";
+import BioSystem from "../components/BioSystem.astro";
+import StageTimeline from "../components/StageTimeline.astro";
+import TechRider from "../components/TechRider.astro";
+import PressAssets from "../components/PressAssets.astro";
+import BookingForm from "../components/BookingForm.tsx";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout>
+  <HeroSection />
+
+  <main id="main">
+    <div class="divider-stripes" aria-hidden="true"></div>
+    <AudioFeed />
+
+    <div class="divider-stripes divider-stripes--bw" aria-hidden="true"></div>
+    <BioSystem />
+
+    <div class="divider-stripes" aria-hidden="true"></div>
+    <StageTimeline />
+
+    <div class="divider-stripes divider-stripes--bw" aria-hidden="true"></div>
+    <TechRider />
+
+    <div class="divider-stripes" aria-hidden="true"></div>
+    <PressAssets />
+
+    <div class="divider-stripes divider-stripes--bw" aria-hidden="true"></div>
+
+    <!-- Section G — INITIATE_CONTACT -->
+    <section id="booking" class="mx-auto w-full max-w-7xl px-4 py-20 md:py-28">
+      <h2 class="font-mono text-2xl font-bold uppercase tracking-widest text-content md:text-4xl">
+        <span class="text-primary">//</span> INITIATE_CONTACT<span class="cursor-blink"></span>
+      </h2>
+      <p class="mt-2 font-mono text-xs uppercase tracking-widest text-muted">
+        BOOKING REQUESTS ONLY // RESPONSE WITHIN 48H
+      </p>
+
+      <div class="mt-10 max-w-3xl border border-[#333] bg-surface p-6 md:p-10">
+        <BookingForm client:visible />
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

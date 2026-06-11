@@ -1,0 +1,71 @@
+---
+// Section D — DESTROYED_STAGES.LOG: vertical event log, typed in on scroll (GSAP ScrollTrigger).
+const stages = [
+  { id: "LOG_06", event: "Trash-O-Ween", venue: "Kulturverein röda // Steyr", tag: "ACTIVE" },
+  { id: "LOG_05", event: "Polytox Production Face2Face", venue: "Postgarage // Graz", tag: "LOGGED" },
+  { id: "LOG_04", event: "Sauhaufen", venue: "Postgarage // Graz", tag: "LOGGED" },
+  { id: "LOG_03", event: "Face2Face", venue: "Das Werk // Wien", tag: "LOGGED" },
+  { id: "LOG_02", event: "Noise", venue: "Eventfabrik // Niklasdorf", tag: "LOGGED" },
+  { id: "LOG_01", event: "Ehrnau-Rave", venue: "Schloss Mautern // Mautern", tag: "LOGGED" },
+];
+---
+
+<section id="stages" class="mx-auto w-full max-w-7xl px-4 py-20 md:py-28">
+  <h2 class="font-mono text-2xl font-bold uppercase tracking-widest text-content md:text-4xl">
+    <span class="text-primary">//</span> DESTROYED_STAGES.LOG<span class="cursor-blink"></span>
+  </h2>
+  <p class="mt-2 font-mono text-xs uppercase tracking-widest text-muted">
+    EVENT HISTORY // VERIFIED IMPACT REPORTS
+  </p>
+
+  <ol id="stage-log" class="mt-10 border-l border-[#333]">
+    {
+      stages.map((stage) => (
+        <li class="log-entry relative py-5 pl-6 md:pl-10">
+          <span class="absolute -left-[5px] top-7 h-[9px] w-[9px] bg-primary" aria-hidden="true" />
+          <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+            <span class="font-mono text-xs tracking-widest text-muted">{stage.id}</span>
+            <span
+              class:list={[
+                "font-mono text-[11px] uppercase tracking-widest",
+                stage.tag === "ACTIVE" ? "text-primary" : "text-content/70",
+              ]}
+            >
+              [{stage.tag}]
+            </span>
+          </div>
+          <h3 class="mt-1 font-display text-2xl font-bold uppercase tracking-tight text-content md:text-4xl">
+            {stage.event}
+          </h3>
+          <p class="mt-1 font-mono text-sm uppercase tracking-wider text-muted">{stage.venue}</p>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (!reduced) {
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.utils.toArray<HTMLElement>(".log-entry").forEach((entry, i) => {
+      gsap.fromTo(
+        entry,
+        { opacity: 0, x: -24 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.45,
+          delay: (i % 3) * 0.08,
+          ease: "steps(6)",
+          scrollTrigger: { trigger: entry, start: "top 85%" },
+        }
+      );
+    });
+  }
+</script>

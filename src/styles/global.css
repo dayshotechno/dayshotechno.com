@@ -7,6 +7,16 @@
    ============================================================ */
 
 :root {
+  /* ---- Layout grid ------------------------------------------
+     One container definition for the whole page. Column edges, the HUD and the
+     hero figure all resolve against these three values, so nothing is positioned
+     against the raw viewport. Absolutely positioned elements re-derive the shell
+     width themselves rather than reading 100vw — 100vw includes the scrollbar
+     and would land them ~7px off the grid. */
+  --gutter: clamp(1rem, 2.6vw, 3rem);
+  --maxw: 1560px;
+  --gap: clamp(0.75rem, 1.3vw, 1.5rem);
+
   --c-base: #050505;
   --c-surface: #0a0a0a;
   --c-primary: #ff2a2a;
@@ -44,6 +54,29 @@ body {
 :focus-visible {
   outline: 1px solid var(--c-primary);
   outline-offset: 2px;
+}
+
+/* ---- Container + 12 column grid ---------------------------- */
+.shell {
+  width: min(100% - var(--gutter) * 2, var(--maxw));
+  margin-inline: auto;
+}
+
+.g12 {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap);
+}
+
+/* Debug aid: append ?grid to the URL to see the column rhythm. */
+body[data-grid] .shell {
+  background-image: repeating-linear-gradient(
+    to right,
+    rgba(255, 42, 42, 0.14) 0,
+    rgba(255, 42, 42, 0.14) calc((100% - 11 * var(--gap)) / 12),
+    transparent calc((100% - 11 * var(--gap)) / 12),
+    transparent calc((100% - 11 * var(--gap)) / 12 + var(--gap))
+  );
 }
 
 /* ---- Global noise overlay --------------------------------- */

@@ -2,7 +2,9 @@
 // The long bio previously lived in both BioSystem.astro and one-sheet.astro; the two
 // drifted apart the first time the claim changed. Import from here, never re-type.
 
-export const CLAIM = ["DRIVE.", "DISTORTION.", "DESTRUCTION."] as const;
+// Read top-down this traces the signal chain backwards: what you hear, how it is
+// made, where it comes from. The type scale descends to match — see HeroSection.
+export const CLAIM = ["DESTRUCTION.", "DISTORTION.", "DRIVE."] as const;
 
 export const CLAIM_INLINE = CLAIM.join(" ");
 

@@ -67,7 +67,7 @@ async function photos() {
   for (const [src, name] of PRESS) await emit(src, name, 1400, 82);
   for (const [src, name] of WEB_ONLY) await emit(src, name, 1200, 80);
   // Narrow cut of the hero figure — it is the LCP element on mobile.
-  await emit("New_website_pics/press_02_front(1).jpg", "press_05@700", 700, 78);
+  await emit("New_website_pics/flux-2-dev_a_exact_same_person_as.jpeg", "studio_side@700", 700, 78);
 }
 
 async function logos() {

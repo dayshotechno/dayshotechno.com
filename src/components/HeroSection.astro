@@ -5,8 +5,11 @@ import Micro from "./Micro.astro";
 import { CLAIM } from "../data/bio";
 import dims from "../data/images.json";
 
-const figure = dims["press_05"];
-const figureSm = dims["press_05@700"];
+// Profile frame: the figure faces left, into the copy. A front-facing shot looks
+// out of the page and competes with the claim.
+const FIGURE = "studio_side";
+const figure = dims[FIGURE];
+const figureSm = dims[`${FIGURE}@700`];
 ---
 
 <header class="hero relative flex min-h-screen flex-col overflow-hidden bg-void">
@@ -17,8 +20,8 @@ const figureSm = dims["press_05@700"];
        into the page instead of sitting in a visible box. -->
   <div class="hero-figure" aria-hidden="true">
     <img
-      src="/assets/press_05.webp"
-      srcset={`/assets/press_05@700.webp ${figureSm.w}w, /assets/press_05.webp ${figure.w}w`}
+      src={`/assets/${FIGURE}.webp`}
+      srcset={`/assets/${FIGURE}@700.webp ${figureSm.w}w, /assets/${FIGURE}.webp ${figure.w}w`}
       sizes="(max-width: 1024px) 60vw, 45vw"
       alt=""
       width={figure.w}
@@ -140,20 +143,22 @@ const figureSm = dims["press_05@700"];
     white-space: nowrap;
   }
 
+  /* Descending: the loudest word carries the most weight, then the chain is
+     traced back to its source. DESTRUCTION leads, DRIVE closes. */
   .claim-line[data-stage="0"] {
-    font-size: clamp(2rem, 6vw, 5rem);
-    color: var(--c-muted);
+    font-size: clamp(3rem, 9.6vw, 8.4rem);
+    color: var(--c-primary);
+    text-shadow: 3px 3px 0 rgba(255, 42, 42, 0.22);
   }
 
   .claim-line[data-stage="1"] {
-    font-size: clamp(2.9rem, 8.6vw, 7.4rem);
+    font-size: clamp(2.5rem, 7.6vw, 6.6rem);
     color: var(--c-content);
   }
 
   .claim-line[data-stage="2"] {
-    font-size: clamp(3.4rem, 10.4vw, 9rem);
-    color: var(--c-primary);
-    text-shadow: 3px 3px 0 rgba(255, 42, 42, 0.22);
+    font-size: clamp(1.9rem, 5.4vw, 4.6rem);
+    color: var(--c-muted);
   }
 
   /* ---- Entrance stagger (replaces GSAP; --d set per element) ---- */

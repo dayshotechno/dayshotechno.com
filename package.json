@@ -9,20 +9,15 @@
     "build": "astro build",
     "preview": "astro preview",
     "assets": "node scripts/prepare-assets.js",
+    "presskit": "node scripts/make-presskit.js && powershell -NoProfile -Command \"Compress-Archive -Path build/presskit/* -DestinationPath public/downloads/presskit.zip -Force\"",
     "make:og": "node scripts/make-og.js"
   },
   "dependencies": {
-    "@astrojs/react": "^4.2.0",
     "@astrojs/tailwind": "^6.0.0",
     "astro": "^5.7.0",
-    "gsap": "^3.12.7",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
     "tailwindcss": "^3.4.17"
   },
   "devDependencies": {
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
     "sharp": "^0.34.5",
     "typescript": "^5.7.0"
   }

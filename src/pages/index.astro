@@ -6,8 +6,9 @@ import BioSystem from "../components/BioSystem.astro";
 import StageTimeline from "../components/StageTimeline.astro";
 import TechRider from "../components/TechRider.astro";
 import PressAssets from "../components/PressAssets.astro";
-import BookingForm from "../components/BookingForm.tsx";
+import BookingForm from "../components/BookingForm.astro";
 import Footer from "../components/Footer.astro";
+import dims from "../data/images.json";
 ---
 
 <Layout>
@@ -29,6 +30,25 @@ import Footer from "../components/Footer.astro";
     <div class="divider-stripes" aria-hidden="true"></div>
     <PressAssets />
 
+    <!-- Studio triptych, full bleed. Site-only imagery: the outer two frames are
+         AI-generated extensions of the centre shoot and are deliberately excluded
+         from presskit.zip and the press download list. -->
+    <div class="triptych" aria-hidden="true">
+      {
+        ["studio_side", "press_05", "studio_walk"].map((name) => (
+          <figure>
+            <img
+              src={`/assets/${name}.webp`}
+              alt=""
+              loading="lazy"
+              width={dims[name].w}
+              height={dims[name].h}
+            />
+          </figure>
+        ))
+      }
+    </div>
+
     <div class="divider-stripes divider-stripes--bw" aria-hidden="true"></div>
 
     <!-- Section G — INITIATE_CONTACT -->
@@ -41,7 +61,7 @@ import Footer from "../components/Footer.astro";
       </p>
 
       <div class="mt-10 max-w-3xl border border-[#333] bg-surface p-6 md:p-10">
-        <BookingForm client:visible />
+        <BookingForm />
       </div>
     </section>
   </main>

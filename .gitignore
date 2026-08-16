@@ -2,6 +2,16 @@
 node_modules/
 # Illustrator brand source (.ai ~3.3MB) — used icons/wordmarks are copied into assets/
 day_sho_logo/
+
+# Unprocessed brand & photo source. This repo is public: the brand book PDF, the .ai
+# vectors and the original frames stay out of it. Everything the site needs is the
+# processed output in public/assets/, which IS committed (CI only runs `astro build`,
+# not `npm run assets`). Consequence: `npm run assets` and `npm run presskit` need
+# these folders present locally and cannot run from a bare clone.
+Neuer Ordner/
+New_website_pics/
+assets/NEW_PRESSPICS/
+assets/DNA/
 # Astro build output & cache
 dist/
 .astro/
@@ -12,3 +22,4 @@ epk-full.jpeg
 
 # Local Claude settings
 .claude/settings.local.json
+build/

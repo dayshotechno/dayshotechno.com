@@ -1,22 +1,6 @@
 ---
 // Section C — the "Data Sheet": three bio lengths, each copy-to-clipboard.
-const bios = [
-  {
-    id: "micro",
-    label: "BIO_MICRO // 1_SENTENCE",
-    text: "DAY SHO delivers merciless Hard Techno and Schranz for the darkest dancefloors.",
-  },
-  {
-    id: "short",
-    label: "BIO_SHORT // 50_WORDS",
-    text: "DAY SHO is a Hard Techno & Schranz DJ dismantling regional dancefloors with industrial precision. Inspired by Svetec, O.B.I., and Golpe, his sound is relentless, raw, and uncompromising.",
-  },
-  {
-    id: "long",
-    label: "BIO_LONG // FULL_DOSSIER",
-    text: "DAY SHO // RELENTLESS. RAW. REDEFINED. For two years, DAY SHO has been dismantling regional dancefloors with a precision that leaves absolutely zero room for compromise. Where others hold back, DAY SHO goes full throttle: delivering Hard Techno and Schranz in their purest, darkest forms. Drawing inspiration from the legacy of heavyweights like Svetec, O.B.I., and Golpe, DAY SHO engineers an atmosphere that is as menacing as it is liberating. Massive industrial kicks and distorted textures forge a sound that doesn't just fill the room—it holds the crowd in a merciless grip until the very last minute. This isn't just spinning tracks; it's heavy labor. No corporate marketing facades, no pointless noise—just sound that cuts straight to the bone. READY FOR THE ASSAULT.",
-  },
-];
+import { BIOS as bios } from "../data/bio";
 ---
 
 <section id="bio" class="mx-auto w-full max-w-7xl px-4 py-20 md:py-28">
@@ -58,17 +42,19 @@ const bios = [
         ))
       }
 
-      <!-- Press photo strip -->
+      <!-- Contact sheet. Desaturated at rest so six frames from three different
+           shoots read as one system; colour returns on the hovered frame only. -->
       <div class="grid grid-cols-2 gap-4 pt-4 md:grid-cols-4">
         {
           [
-            { src: "/assets/presse2.webp", alt: "DAY SHO performing in an industrial venue" },
-            { src: "/assets/presse1.webp", alt: "DAY SHO behind the decks under red light" },
-            { src: "/assets/presse3.webp", alt: "DAY SHO in front of the crowd at a hard techno event" },
-            { src: "/assets/presse4.webp", alt: "DAY SHO focused at the mixer" },
+            { src: "/assets/press_01.webp", fig: "FIG_01", alt: "DAY SHO in profile against a concrete wall, lowering his sunglasses" },
+            { src: "/assets/press_02.webp", fig: "FIG_02", alt: "DAY SHO facing the camera with headphones around his neck, reaching toward the lens" },
+            { src: "/assets/press_03.webp", fig: "FIG_03", alt: "DAY SHO shielding his face with an outstretched hand in front of a concrete wall" },
+            { src: "/assets/press_06.webp", fig: "FIG_04", alt: "DAY SHO mixing on Pioneer CDJs, headphones on, tattooed arms over the decks" },
           ].map((img) => (
             <figure class="press-frame aspect-[3/4]">
               <img src={img.src} alt={img.alt} loading="lazy" class="h-full w-full object-cover" />
+              <figcaption class="press-frame__tag">{img.fig}</figcaption>
             </figure>
           ))
         }

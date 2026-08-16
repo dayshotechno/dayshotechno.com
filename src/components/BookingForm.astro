@@ -1,0 +1,101 @@
+---
+// Static site, no backend: the form composes a structured booking request and hands
+// it to the promoter's own mail client via mailto.
+// ponytail: plain <form> + ~20 lines of script. This was a React island (265 kB of
+// runtime) to build a mailto: string. Native constraint validation does the checking.
+const BOOKING_EMAIL = "booking@dayshotechno.com";
+
+const BUDGET_RANGES = ["< 500 EUR", "500 - 1.000 EUR", "1.000 - 2.500 EUR", "> 2.500 EUR", "TBD / NEGOTIABLE"];
+
+const FIELDS = [
+  { name: "name", label: "NAME *", placeholder: "YOUR NAME", required: true, autocomplete: "name" },
+  { name: "venue", label: "VENUE *", placeholder: "CLUB / FESTIVAL", required: true },
+  { name: "city", label: "CITY *", placeholder: "CITY", required: true },
+  { name: "date", label: "DATE *", type: "date", required: true },
+  { name: "capacity", label: "ESTIMATED CAPACITY", type: "number", placeholder: "e.g. 800", min: "0" },
+];
+---
+
+<form id="booking-form" class="space-y-6" data-email={BOOKING_EMAIL}>
+  <div class="grid gap-6 md:grid-cols-2">
+    {
+      FIELDS.map((f) => (
+        <label class="block">
+          <span class="font-mono text-[11px] uppercase tracking-widest text-muted">{f.label}</span>
+          <input
+            name={f.name}
+            type={f.type ?? "text"}
+            required={f.required}
+            placeholder={f.placeholder}
+            min={f.min}
+            autocomplete={f.autocomplete}
+            class="field-raw mt-1"
+          />
+        </label>
+      ))
+    }
+
+    <label class="block">
+      <span class="font-mono text-[11px] uppercase tracking-widest text-muted">BUDGET RANGE</span>
+      <select name="budget" class="field-raw mt-1">
+        <option value="" disabled selected>SELECT RANGE</option>
+        {BUDGET_RANGES.map((range) => <option value={range}>{range}</option>)}
+      </select>
+    </label>
+  </div>
+
+  <label class="block">
+    <span class="font-mono text-[11px] uppercase tracking-widest text-muted">MESSAGE</span>
+    <textarea
+      name="message"
+      rows="4"
+      class="field-raw mt-1 resize-y"
+      placeholder="EVENT DETAILS, LINE-UP, SET LENGTH..."></textarea>
+  </label>
+
+  <button type="submit" class="switch-btn switch-btn--primary glitch-hover cursor-pointer">
+    &gt; TRANSMIT_REQUEST
+  </button>
+
+  <p
+    id="booking-status"
+    class="font-mono text-[11px] uppercase leading-relaxed tracking-wider text-muted"
+    aria-live="polite"
+  >
+    <span data-idle>OPENS YOUR MAIL CLIENT. DIRECT LINE: </span>
+    <span data-sent hidden>REQUEST HANDED TO YOUR MAIL CLIENT. NO CLIENT? WRITE DIRECTLY TO </span>
+    <a href={`mailto:${BOOKING_EMAIL}`} class="text-primary underline underline-offset-4">{BOOKING_EMAIL}</a>
+  </p>
+</form>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>("#booking-form");
+
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const data = new FormData(form);
+    const get = (k: string) => String(data.get(k) ?? "").trim();
+
+    const subject = `Booking Request: DAY SHO - ${get("date") || "[DATE]"} / ${get("city") || "[CITY]"}`;
+    const body = [
+      "BOOKING REQUEST // DAY SHO",
+      "----------------------------------------",
+      `NAME:      ${get("name")}`,
+      `VENUE:     ${get("venue")}`,
+      `CITY:      ${get("city")}`,
+      `DATE:      ${get("date")}`,
+      `CAPACITY:  ${get("capacity")}`,
+      `BUDGET:    ${get("budget")}`,
+      "----------------------------------------",
+      "MESSAGE:",
+      get("message"),
+    ].join("\n");
+
+    const to = form.dataset.email;
+    location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    document.querySelector("[data-idle]")?.setAttribute("hidden", "");
+    document.querySelector("[data-sent]")?.removeAttribute("hidden");
+  });
+</script>

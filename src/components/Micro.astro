@@ -1,0 +1,82 @@
+---
+// Micrographic kit from assets/DNA — recolored to currentColor so each glyph
+// inherits its context (primary red, muted gray, scan green).
+interface Props {
+  name: "reticle" | "regMark" | "asterisk" | "stepSeq" | "tickStrip" | "stepArrowDown";
+  class?: string;
+}
+
+const { name, class: className } = Astro.props;
+---
+
+{
+  name === "reticle" && (
+    <svg viewBox="0 0 120 120" class={className} fill="none" stroke="currentColor" aria-hidden="true">
+      <circle cx="60" cy="60" r="18.4" stroke-width="2.4" />
+      <circle cx="60" cy="60" r="36.8" stroke-width="2.4" />
+      <line x1="60" y1="8" x2="60" y2="46" stroke-width="2.4" />
+      <line x1="60" y1="74" x2="60" y2="112" stroke-width="2.4" />
+      <line x1="8" y1="60" x2="46" y2="60" stroke-width="2.4" />
+      <line x1="74" y1="60" x2="112" y2="60" stroke-width="2.4" />
+    </svg>
+  )
+}
+
+{
+  name === "regMark" && (
+    <svg viewBox="0 0 120 120" class={className} fill="none" stroke="currentColor" aria-hidden="true">
+      <circle cx="60" cy="60" r="36" stroke-width="4.8" />
+      <line x1="60" y1="0" x2="60" y2="120" stroke-width="4.8" />
+      <line x1="0" y1="60" x2="120" y2="60" stroke-width="4.8" />
+    </svg>
+  )
+}
+
+{
+  name === "asterisk" && (
+    <svg viewBox="0 0 120 120" class={className} fill="none" stroke="currentColor" aria-hidden="true">
+      <line x1="12" y1="60" x2="108" y2="60" stroke-width="19.2" />
+      <line x1="36" y1="18.4" x2="84" y2="101.6" stroke-width="19.2" />
+      <line x1="84" y1="18.4" x2="36" y2="101.6" stroke-width="19.2" />
+    </svg>
+  )
+}
+
+{
+  /* 16-step sequencer rail, kick on 1/5/9/13 — four to the floor */
+  name === "stepSeq" && (
+    <svg viewBox="0 0 120 8.8" class={className} aria-hidden="true">
+      {Array.from({ length: 16 }, (_, i) => (
+        <rect
+          x={1 + i * 7.55}
+          y="0.5"
+          width="5.8"
+          height="8.3"
+          stroke="currentColor"
+          stroke-width="1.2"
+          fill={i % 4 === 0 ? "currentColor" : "none"}
+        />
+      ))}
+    </svg>
+  )
+}
+
+{
+  /* Vernier-style measurement rail; major ticks pop in primary red via CSS class on wrapper */
+  name === "tickStrip" && (
+    <svg viewBox="0 0 70 13" class={className} fill="none" stroke="currentColor" aria-hidden="true">
+      {Array.from({ length: 11 }, (_, i) => (
+        <line x1={i * 7} y1={i % 5 === 0 ? 0 : 5.2} x2={i * 7} y2="13" stroke-width="1.5" />
+      ))}
+    </svg>
+  )
+}
+
+{
+  /* STOCKDUNKEL-style stepped (staircase) arrow, pointing down */
+  name === "stepArrowDown" && (
+    <svg viewBox="0 0 64 88" class={className} fill="currentColor" aria-hidden="true">
+      <path d="M26 0h12v8h8v8h-8v8h8v8h-8v8h8v8h-8v4h18L32 88 8 52h18V0z" />
+    </svg>
+  )
+}

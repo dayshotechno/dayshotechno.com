@@ -1,20 +1,16 @@
 ---
-// Section D — DESTROYED_STAGES.LOG: vertical event log, typed in on scroll (GSAP ScrollTrigger).
-const stages = [
-  { id: "LOG_06", event: "Trash-O-Ween", venue: "Kulturverein röda // Steyr", tag: "ACTIVE" },
-  { id: "LOG_05", event: "Polytox Production Face2Face", venue: "Postgarage // Graz", tag: "LOGGED" },
-  { id: "LOG_04", event: "Sauhaufen", venue: "Postgarage // Graz", tag: "LOGGED" },
-  { id: "LOG_03", event: "Face2Face", venue: "Das Werk // Wien", tag: "LOGGED" },
-  { id: "LOG_02", event: "Noise", venue: "Eventfabrik // Niklasdorf", tag: "LOGGED" },
-  { id: "LOG_01", event: "Ehrnau-Rave", venue: "Schloss Mautern // Mautern", tag: "LOGGED" },
-];
+import Micro from "./Micro.astro";
+
+// Section D — DESTROYED_STAGES.LOG: vertical event log, printed line-by-line on scroll.
+import { STAGES as stages } from "../data/bio";
 ---
 
 <section id="stages" class="mx-auto w-full max-w-7xl px-4 py-20 md:py-28">
   <h2 class="font-mono text-2xl font-bold uppercase tracking-widest text-content md:text-4xl">
     <span class="text-primary">//</span> DESTROYED_STAGES.LOG<span class="cursor-blink"></span>
   </h2>
-  <p class="mt-2 font-mono text-xs uppercase tracking-widest text-muted">
+  <p class="mt-2 flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-muted">
+    <Micro name="tickStrip" class="h-3 w-[70px] text-primary" />
     EVENT HISTORY // VERIFIED IMPACT REPORTS
   </p>
 
@@ -44,28 +40,63 @@ const stages = [
   </ol>
 </section>
 
+<style>
+  /* Each entry is wiped in left-to-right in discrete steps, like a line being
+     printed to a terminal. Stays visible if JS never runs (no .is-in dependency
+     for the base state under reduced motion). */
+  .log-entry {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+  }
+
+  .log-entry.is-in {
+    animation:
+      log-print 0.5s steps(14, end) forwards,
+      log-fade 0.12s linear forwards;
+    animation-delay: var(--d, 0ms);
+  }
+
+  @keyframes log-print {
+    to { clip-path: inset(0 0 0 0); }
+  }
+
+  @keyframes log-fade {
+    to { opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .log-entry {
+      opacity: 1;
+      clip-path: none;
+    }
+    .log-entry.is-in { animation: none; }
+  }
+</style>
+
 <script>
-  import { gsap } from "gsap";
-  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  // ponytail: IntersectionObserver + a CSS class. This replaced gsap + ScrollTrigger
+  // (44 kB) for what is ultimately "add a class when it scrolls into view".
+  const entries = document.querySelectorAll<HTMLElement>(".log-entry");
 
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const io = new IntersectionObserver(
+      (records, obs) => {
+        records.forEach((r) => {
+          if (!r.isIntersecting) return;
+          const el = r.target as HTMLElement;
+          el.style.setProperty("--d", `${(Number(el.dataset.i) % 3) * 90}ms`);
+          el.classList.add("is-in");
+          obs.unobserve(el);
+        });
+      },
+      { rootMargin: "0px 0px -12% 0px" }
+    );
 
-  if (!reduced) {
-    gsap.registerPlugin(ScrollTrigger);
-
-    gsap.utils.toArray<HTMLElement>(".log-entry").forEach((entry, i) => {
-      gsap.fromTo(
-        entry,
-        { opacity: 0, x: -24 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 0.45,
-          delay: (i % 3) * 0.08,
-          ease: "steps(6)",
-          scrollTrigger: { trigger: entry, start: "top 85%" },
-        }
-      );
+    entries.forEach((el, i) => {
+      el.dataset.i = String(i);
+      io.observe(el);
     });
+  } else {
+    entries.forEach((el) => el.classList.add("is-in"));
   }
 </script>

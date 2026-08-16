@@ -6,12 +6,15 @@ interface Props {
   title?: string;
   description?: string;
   noindex?: boolean;
+  /** Page language. Impressum and Datenschutz are German; the EPK itself is English. */
+  lang?: "en" | "de";
 }
 
 const {
   title = "DAY SHO | Hard Techno DJ & Schranz Artist — Official EPK",
   description = "Electronic Press Kit for DAY SHO. Hard Techno & Schranz DJ. Bookings, rider, press assets, and tour history.",
   noindex = false,
+  lang = "en",
 } = Astro.props;
 
 const ogImage = new URL("/assets/og-image.jpg", Astro.site).href;
@@ -42,7 +45,7 @@ const schema = {
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

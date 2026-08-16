@@ -1,105 +1,210 @@
 ---
 import SoundCloudPlayer from "./SoundCloudPlayer.astro";
+import Micro from "./Micro.astro";
+
+import { CLAIM } from "../data/bio";
+import dims from "../data/images.json";
+
+const figure = dims["press_05"];
+const figureSm = dims["press_05@700"];
 ---
 
-<header class="relative flex min-h-screen flex-col justify-between overflow-hidden bg-void">
-  <!-- Blueprint grid background (parallax via data attribute, see script) -->
+<header class="hero relative flex min-h-screen flex-col overflow-hidden bg-void">
+  <!-- Blueprint grid, parallaxed at 0.5x -->
   <div class="blueprint absolute inset-[-20%] z-0" data-parallax aria-hidden="true"></div>
 
-  <!-- Moving green scan beam -->
+  <!-- Studio figure. The source frame's backdrop is already near-black, so it dissolves
+       into the page instead of sitting in a visible box. -->
+  <div class="hero-figure" aria-hidden="true">
+    <img
+      src="/assets/press_05.webp"
+      srcset={`/assets/press_05@700.webp ${figureSm.w}w, /assets/press_05.webp ${figure.w}w`}
+      sizes="(max-width: 1024px) 60vw, 45vw"
+      alt=""
+      width={figure.w}
+      height={figure.h}
+      fetchpriority="high"
+      decoding="async"
+    />
+  </div>
+
   <div class="scan-beam z-10" aria-hidden="true"></div>
 
-  <!-- SCAN HUD corner element -->
+  <!-- HUD: telemetry block -->
   <div class="absolute right-4 top-4 z-20 hidden md:block" aria-hidden="true">
-    <div class="border border-[#333] bg-surface/80 px-3 py-2 font-mono text-[11px] uppercase tracking-widest text-muted">
-      <span class="text-scan">●</span> SCAN_ACTIVE<br />
-      LAT 47.0707 / LON 15.4395<br />
-      SIGNAL: HARD_TECHNO
+    <div class="flex items-start gap-3 border border-[#333] bg-surface/80 px-3 py-2 font-mono text-[11px] uppercase tracking-widest text-muted backdrop-blur-sm">
+      <Micro name="reticle" class="mt-[2px] h-6 w-6 text-scan" />
+      <div>
+        <span class="text-scan">●</span> SCAN_ACTIVE<br />
+        LAT 47.0707 / LON 15.4395<br />
+        SIGNAL: HARD_TECHNO
+      </div>
     </div>
   </div>
 
-  <!-- Corner brackets -->
   <div class="pointer-events-none absolute left-4 top-4 z-20 h-8 w-8 border-l-2 border-t-2 border-primary" aria-hidden="true"></div>
   <div class="pointer-events-none absolute bottom-4 right-4 z-20 h-8 w-8 border-b-2 border-r-2 border-primary" aria-hidden="true"></div>
 
-  <div class="relative z-20 mx-auto flex w-full max-w-7xl flex-1 flex-col items-center justify-center px-4 pt-20 pb-8 text-center">
-    <img
-      src="/assets/day-sho-wordmark.png"
-      alt="DAY SHO"
-      width="800"
-      height="306"
-      class="hero-stagger mx-auto h-[clamp(120px,24vh,260px)] w-auto object-contain mix-blend-screen"
-      fetchpriority="high"
-    />
+  <div class="relative z-20 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-4 pb-8 pt-24 md:pt-20">
+    <div class="max-w-[62ch]">
+      <a href="/" class="hero-stagger block w-[clamp(72px,9vw,116px)]" style="--d:0ms" aria-label="DAY SHO — home">
+        <img src="/assets/logo-day-sho.svg" alt="DAY SHO" width="765" height="1000" class="w-full" />
+      </a>
 
-    <p class="hero-stagger mt-6 font-mono text-sm uppercase tracking-[0.4em] text-primary">
-      HARD TECHNO / SCHRANZ
-    </p>
+      <div class="hero-stagger mt-7 flex items-center gap-3" style="--d:80ms">
+        <Micro name="tickStrip" class="h-3 w-[70px] text-primary" />
+        <p class="font-mono text-xs uppercase tracking-[0.4em] text-primary md:text-sm">
+          HARD TECHNO / SCHRANZ
+        </p>
+      </div>
 
-    <h1
-      class="hero-stagger mt-4 font-display font-bold uppercase leading-[0.9] tracking-tight text-content"
-      style="font-size: clamp(3rem, 10vw, 12rem);"
-    >
-      RELENTLESS.<br />
-      RAW.<br />
-      <span class="text-primary">REDEFINED.</span>
-    </h1>
+      <!-- Claim. Each stage is set larger than the last: the type is the gain curve. -->
+      <h1 class="claim mt-5 font-display font-bold uppercase text-content">
+        {
+          CLAIM.map((word, i) => (
+            <span class="hero-stagger claim-line" data-stage={i} style={`--d:${160 + i * 90}ms`}>
+              {word}
+            </span>
+          ))
+        }
+      </h1>
 
-    <div class="hero-stagger mt-10 w-full max-w-xl">
-      <SoundCloudPlayer trackUrl="https://soundcloud.com/user-110221213/schranzlangenvergleich" />
+      <div class="hero-stagger mt-9 flex items-center gap-4" style="--d:460ms">
+        <Micro name="stepSeq" class="hidden h-3 w-[120px] text-muted sm:block" />
+        <p class="font-mono text-[11px] uppercase tracking-widest text-muted">
+          GRAZ / AT — AVAILABLE FOR BOOKING
+        </p>
+      </div>
+
+      <div class="hero-stagger mt-6 w-full max-w-xl" style="--d:540ms">
+        <SoundCloudPlayer trackUrl="https://soundcloud.com/user-110221213/schranzlangenvergleich" />
+      </div>
     </div>
   </div>
 
-  <!-- Distorted red arrow scroll cue -->
   <a
     href="#audio-feed"
     aria-label="Scroll to content"
-    class="hero-arrow relative z-20 mx-auto mb-6 block w-12 text-primary"
+    class="hero-arrow relative z-20 mx-auto mb-6 block w-10 text-primary"
   >
-    <svg viewBox="0 0 48 64" fill="currentColor" aria-hidden="true" style="filter: drop-shadow(2px 2px 0 rgba(255,42,42,0.35));">
-      <path d="M19 0h10v34h11L24 64 8 34h11z" transform="skewX(-6) translate(5 0)" />
-    </svg>
+    <Micro name="stepArrowDown" class="w-full" />
   </a>
 </header>
 
-<script>
-  import { gsap } from "gsap";
+<style>
+  /* ---- Figure: bleeds off the right edge, masked into the page background ---- */
+  .hero-figure {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+  }
 
+  .hero-figure img {
+    position: absolute;
+    right: -6%;
+    bottom: 0;
+    height: 92%;
+    width: auto;
+    max-width: none;
+    object-fit: contain;
+    object-position: bottom right;
+    /* Dissolve the frame edges so no photo boundary is visible against the page. */
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 42%),
+      linear-gradient(to top, transparent 2%, #000 22%);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(to right, transparent, #000 42%),
+      linear-gradient(to top, transparent 2%, #000 22%);
+    mask-composite: intersect;
+    filter: grayscale(0.55) contrast(1.12);
+  }
+
+  @media (max-width: 1023px) {
+    .hero-figure img {
+      right: -22%;
+      height: 74%;
+      opacity: 0.38;
+    }
+  }
+
+  /* ---- Claim: three escalating stages ---- */
+  .claim {
+    display: flex;
+    flex-direction: column;
+    line-height: 0.86;
+    letter-spacing: -0.02em;
+  }
+
+  .claim-line {
+    display: block;
+    white-space: nowrap;
+  }
+
+  .claim-line[data-stage="0"] {
+    font-size: clamp(2rem, 6vw, 5rem);
+    color: var(--c-muted);
+  }
+
+  .claim-line[data-stage="1"] {
+    font-size: clamp(2.9rem, 8.6vw, 7.4rem);
+    color: var(--c-content);
+  }
+
+  .claim-line[data-stage="2"] {
+    font-size: clamp(3.4rem, 10.4vw, 9rem);
+    color: var(--c-primary);
+    text-shadow: 3px 3px 0 rgba(255, 42, 42, 0.22);
+  }
+
+  /* ---- Entrance stagger (replaces GSAP; --d set per element) ---- */
+  .hero-stagger {
+    animation: hero-rise 0.65s cubic-bezier(0.2, 0.75, 0.2, 1) both;
+    animation-delay: var(--d, 0ms);
+  }
+
+  @keyframes hero-rise {
+    from {
+      opacity: 0;
+      transform: translateY(26px);
+    }
+  }
+
+  .hero-arrow {
+    animation: arrow-invite 1.6s ease-in-out infinite;
+  }
+
+  @keyframes arrow-invite {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(9px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-stagger,
+    .hero-arrow {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  // Grid parallax at 0.5x scroll speed. ponytail: rAF-throttled scroll listener,
+  // ~15 lines of transform maths — this is what GSAP used to be loaded for.
+  const grid = document.querySelector<HTMLElement>("[data-parallax]");
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  if (!reduced) {
-    gsap.from(".hero-stagger", {
-      opacity: 0,
-      y: 32,
-      duration: 0.7,
-      stagger: 0.12,
-      ease: "power3.out",
-    });
-
-    gsap.to(".hero-arrow", {
-      y: 10,
-      duration: 0.8,
-      repeat: -1,
-      yoyo: true,
-      ease: "power1.inOut",
-    });
-
-    // Grid parallax at 0.5x scroll speed, GPU-friendly transform only
-    const grid = document.querySelector<HTMLElement>("[data-parallax]");
-    if (grid) {
-      let ticking = false;
-      window.addEventListener(
-        "scroll",
-        () => {
-          if (ticking) return;
-          ticking = true;
-          requestAnimationFrame(() => {
-            grid.style.transform = `translateY(${window.scrollY * 0.5}px)`;
-            ticking = false;
-          });
-        },
-        { passive: true }
-      );
-    }
+  if (grid && !reduced) {
+    let ticking = false;
+    addEventListener(
+      "scroll",
+      () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          grid.style.transform = `translateY(${scrollY * 0.5}px)`;
+          ticking = false;
+        });
+      },
+      { passive: true }
+    );
   }
 </script>

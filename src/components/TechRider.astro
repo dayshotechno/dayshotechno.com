@@ -1,19 +1,25 @@
 ---
 // Section E — TECHNICAL_SPEC: brutalist CSS grid spec sheet.
+//
+// Register note: this section states a PREFERENCE, not a condition. The earlier copy
+// ("NON-NEGOTIABLE", "STATUS: MANDATORY", "SOUND PRESSURE IS NOT OPTIONAL") read as a
+// threat from an artist a promoter has not booked before, and it was not even true —
+// he has played a Xone:96 cold and came up on 900s. Keep the deadpan spec-sheet voice;
+// do not put the ultimatum back.
 const requirements = [
   {
     id: "REQ_01",
     image: "/assets/cdj3000.webp",
     alt: "Pioneer CDJ-3000 player, technical schematic view",
     spec: "3x PIONEER CDJ-3000 (LINKED)",
-    alt_spec: "ALT: 2000NXS2",
+    alt_spec: "ACCEPTED: CDJ-2000NXS2",
   },
   {
     id: "REQ_02",
     image: "/assets/djma9.webp",
     alt: "Pioneer DJM-A9 mixer, technical schematic view",
     spec: "1x DJM-A9",
-    alt_spec: "ALT: ALLEN & HEATH XONE:96",
+    alt_spec: "ACCEPTED: XONE:96 / DJM-900NXS2",
   },
 ];
 ---
@@ -26,7 +32,7 @@ const requirements = [
     <span><span class="text-primary">//</span> TECHNICAL_SPEC</span>
   </h2>
   <p class="mt-2 font-mono text-xs uppercase tracking-widest text-muted">
-    NON-NEGOTIABLE EQUIPMENT REQUIREMENTS
+    PREFERRED SETUP // ALTERNATIVES ACCEPTED
   </p>
 
   <div class="mt-10 grid gap-8 md:grid-cols-2">
@@ -35,7 +41,7 @@ const requirements = [
         <article class="border border-primary bg-surface">
           <header class="flex items-center justify-between border-b border-primary px-4 py-2">
             <span class="font-mono text-xs uppercase tracking-widest text-primary">{req.id}</span>
-            <span class="font-mono text-[11px] uppercase tracking-widest text-muted">STATUS: MANDATORY</span>
+            <span class="font-mono text-[11px] uppercase tracking-widest text-muted">STATUS: PREFERRED</span>
           </header>
           <div class="blueprint flex items-center justify-center p-8">
             <img
@@ -58,6 +64,7 @@ const requirements = [
   </div>
 
   <p class="mt-8 border border-[#333] bg-surface px-4 py-3 font-mono text-xs uppercase leading-relaxed tracking-wider text-muted">
-    <span class="text-primary">NOTE:</span> FULL RIDER AVAILABLE IN PRESS_ARMORY BELOW. SOUND PRESSURE IS NOT OPTIONAL.
+    <span class="text-primary">NOTE:</span> SET LENGTH 90–120 MIN // 145–160 BPM // SLOT: AFTER THE HEADLINER.
+    SETUP DOESN'T MATCH? GET IN TOUCH — IT HAS BEEN SOLVED BEFORE. FULL RIDER IN PRESS_ARMORY BELOW.
   </p>
 </section>

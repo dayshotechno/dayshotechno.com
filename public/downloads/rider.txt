@@ -1,6 +1,6 @@
 ============================================================
  DAY SHO // TECHNICAL RIDER
- HARD TECHNO / SCHRANZ
+ SCHRANZ / HARD TECHNO
 ============================================================
 
 CONTACT
@@ -8,16 +8,17 @@ CONTACT
   WEB:       https://dayshotechno.com
 
 ------------------------------------------------------------
- EQUIPMENT REQUIREMENTS
+ PREFERRED SETUP
 ------------------------------------------------------------
 
 REQ_01  PLAYERS
   3x PIONEER CDJ-3000 (LINKED VIA PRO DJ LINK)
-  ALTERNATIVE: 3x PIONEER CDJ-2000NXS2
+  ACCEPTED: 3x PIONEER CDJ-2000NXS2
 
 REQ_02  MIXER
   1x PIONEER DJM-A9
-  ALTERNATIVE: 1x ALLEN & HEATH XONE:96
+  ACCEPTED: ALLEN & HEATH XONE:96
+            PIONEER DJM-900NXS2
 
 ------------------------------------------------------------
  MONITORING & BOOTH
@@ -29,11 +30,21 @@ REQ_02  MIXER
   - 2x FREE POWER SOCKETS (230V) AT THE BOOTH
 
 ------------------------------------------------------------
+ BOOKING NOTES
+------------------------------------------------------------
+
+  SET LENGTH:     90 - 120 MINUTES
+  TEMPO:          145 - 160 BPM
+  PREFERRED SLOT: AFTER THE HEADLINER
+  BASED IN:       GRAZ, AUSTRIA
+
+------------------------------------------------------------
  NOTES
 ------------------------------------------------------------
 
-  - ALL PLAYERS MUST RUN CURRENT FIRMWARE
-  - SOUND PRESSURE IS NOT OPTIONAL.
+  - ALL PLAYERS SHOULD RUN CURRENT FIRMWARE
+  - SETUP DOESN'T MATCH? GET IN TOUCH. IT HAS BEEN
+    SOLVED BEFORE AND IT WILL BE SOLVED AGAIN.
 
 ============================================================
  (c) DAY SHO // ALL SYSTEMS OPERATIONAL

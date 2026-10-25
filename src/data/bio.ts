@@ -22,7 +22,7 @@ export const BIO_MICRO =
   "DAY SHO is a schranz DJ from Graz, Austria — 145 to 160 BPM, no breaks, and closing tracks that have no business being in a schranz set.";
 
 export const BIO_SHORT =
-  "DAY SHO is a schranz DJ from Graz, Austria. He plays 145 to 160 BPM with no breaks and no runways — the older, more relentless end of the genre rather than the current hard techno wave. Into that he folds old records and tracks a room will shout along to, and he usually closes somewhere outside techno entirely. Postgarage, Das Werk, röda.";
+  "DAY SHO is a schranz DJ from Graz, Austria. He plays 145 to 160 BPM with no breaks and no runways — the older, more relentless end of the genre rather than the current hard techno wave. Into that he folds old records and tracks a room will shout along to, and he usually closes somewhere outside techno entirely. Resident at Café Stockwerk, Graz. Postgarage, Eventfabrik, Das Werk, röda.";
 
 // Kept as paragraphs rather than one block: rendered with `whitespace-pre-line`, and
 // the copy button hands a promoter real paragraph breaks to paste into an event page.
@@ -37,7 +37,7 @@ export const BIO_LONG_PARAGRAPHS = [
 
   "Postgarage Graz, Das Werk Vienna, Kulturverein röda Steyr, Eventfabrik Niklasdorf, Schloss Mautern. Shared bills with Jan Vanderveigt and 333CXT. Sets of 90 to 120 minutes.",
 
-  "Based in Graz. Replies within 48 hours and turns up on time.",
+  "Based in Graz and resident at Café Stockwerk, where he runs the STOCKDUNKEL day-rave and, almost every Saturday with a friend, the After Hour im Stockwerk from seven in the morning. Replies within 48 hours and turns up on time.",
 ] as const;
 
 export const BIO_LONG_BODY = BIO_LONG_PARAGRAPHS.join("\n\n");
@@ -57,9 +57,15 @@ export const BIOS = [
 // Newest first. Dates only where a flyer or recording confirms them; the older
 // gigs have none, and none are invented here.
 export const STAGES: { event: string; venue: string; city: string; date?: string }[] = [
+  // District X and RYFT. from the organisers' Instagram posts; venues, Mission Harder
+  // Styles and Fagtory confirmed by DAY SHO himself.
+  { event: "District X — Axony presents", venue: "Volkshaus", city: "Weiz", date: "2026-10-24" },
+  { event: "Mission Harder Styles — 2nd floor, ANL", venue: "Eventfabrik", city: "Graz", date: "2026-10-23" },
   { event: "STOCKDUNKEL Vol. 3", venue: "Café Stockwerk", city: "Graz", date: "2026-10-17" },
+  { event: "RYFT. [pure hypnosis]", venue: "Eventfabrik", city: "Graz", date: "2026-10-02" },
   { event: "STOCKDUNKEL Vol. 2", venue: "Café Stockwerk", city: "Graz", date: "2026-09-05" },
   { event: "Trash-O-Ween", venue: "Kulturverein röda", city: "Steyr" },
+  { event: "Fagtory", venue: "Postgarage", city: "Graz" },
   { event: "Polytox Production Face2Face", venue: "Postgarage", city: "Graz" },
   { event: "Sauhaufen", venue: "Postgarage", city: "Graz" },
   { event: "Face2Face", venue: "Das Werk", city: "Vienna" },

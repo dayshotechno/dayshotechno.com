@@ -54,8 +54,11 @@ export const BIOS = [
   { id: "long", label: "Full press bio", use: "The whole story, for press and promoters who want it.", text: BIO_LONG },
 ];
 
-// Newest first. No dates: none were supplied, and none are invented here.
-export const STAGES = [
+// Newest first. Dates only where a flyer or recording confirms them; the older
+// gigs have none, and none are invented here.
+export const STAGES: { event: string; venue: string; city: string; date?: string }[] = [
+  { event: "STOCKDUNKEL Vol. 3", venue: "Café Stockwerk", city: "Graz", date: "2026-10-17" },
+  { event: "STOCKDUNKEL Vol. 2", venue: "Café Stockwerk", city: "Graz", date: "2026-09-05" },
   { event: "Trash-O-Ween", venue: "Kulturverein röda", city: "Steyr" },
   { event: "Polytox Production Face2Face", venue: "Postgarage", city: "Graz" },
   { event: "Sauhaufen", venue: "Postgarage", city: "Graz" },
@@ -63,3 +66,26 @@ export const STAGES = [
   { event: "Noise", venue: "Eventfabrik", city: "Niklasdorf" },
   { event: "Ehrnau-Rave", venue: "Schloss Mautern", city: "Mautern" },
 ];
+
+// His own night. Dates and line-ups as printed on each edition's flyer (Vol. 1's
+// flyer names no acts, so none are listed).
+export const STOCKDUNKEL = {
+  venue: "Café Stockwerk",
+  address: "Jakominiplatz 18, 8010 Graz",
+  venueUrl: "https://instagram.com/cafe_stockwerk",
+  editions: [
+    { vol: 3, date: "2026-10-17", with: ["Krawalljulz", "Sebacid"], image: "stockdunkel_vol3" },
+    { vol: 2, date: "2026-09-05", with: ["L4nce", "Sebacid"], image: "stockdunkel_vol2" },
+    { vol: 1, date: "2026-06-05", with: [], image: "stockdunkel_vol1" },
+  ],
+};
+
+// Own edits. `url` stays null until the track is public; the page then shows it
+// as coming rather than linking nowhere.
+export const EDITS: { artist: string; title: string; bpm?: number; url: string | null }[] = [
+  { artist: "Billy Talent", title: "Red Flag", url: null },
+  { artist: "Bunt., Mapei", title: "Trippin", bpm: 160, url: null },
+];
+
+/** "2026-10-17" → "17.10.2026", the way the flyers print it. */
+export const formatDate = (iso: string) => iso.split("-").reverse().join(".");

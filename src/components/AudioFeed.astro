@@ -5,7 +5,7 @@
 // screen; the booth photograph does that job until a brighter clip exists.
 import SoundCloudPlayer from "./SoundCloudPlayer.astro";
 import StepArrow from "./StepArrow.astro";
-import { CLAIM } from "../data/bio";
+import { CLAIM, EDITS } from "../data/bio";
 import dims from "../data/images.json";
 ---
 
@@ -26,6 +26,33 @@ import dims from "../data/images.json";
         Every set on SoundCloud
         <StepArrow />
       </a>
+
+      <div class="edits">
+        <h3 class="edits-title">Own edits</h3>
+        <ul>
+          {
+            EDITS.map((e) => {
+              const name = `${e.artist} – ${e.title} (DAY SHO Edit)`;
+              return (
+                <li class="edit">
+                  <span class="edit-name">
+                    {name}
+                    {e.bpm && <span class="edit-bpm tabular"> · {e.bpm} BPM</span>}
+                  </span>
+                  {e.url ? (
+                    <a href={e.url} target="_blank" rel="noopener noreferrer" class="edit-link">
+                      Free download <span class="sr-only">of {name}</span>
+                      <StepArrow />
+                    </a>
+                  ) : (
+                    <span class="edit-soon">Free download soon</span>
+                  )}
+                </li>
+              );
+            })
+          }
+        </ul>
+      </div>
     </div>
 
     <figure class="listen-photo" data-reveal>
@@ -84,6 +111,60 @@ import dims from "../data/images.json";
   }
 
   .listen-more:hover :global(.step-arrow) {
+    transform: translateX(4px);
+  }
+
+  .edits {
+    margin-top: 3rem;
+  }
+
+  .edits-title {
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .edits ul {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .edit {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.25rem 1.5rem;
+    padding: 0.9rem 1.1rem;
+    background: var(--c-base);
+    color: var(--c-content);
+  }
+
+  .edit-name {
+    font-weight: 700;
+  }
+
+  .edit-bpm {
+    font-weight: 400;
+    color: var(--c-soft);
+  }
+
+  .edit-soon {
+    font-size: var(--t-small);
+    color: var(--c-soft);
+  }
+
+  .edit-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: var(--t-small);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--c-primary);
+  }
+
+  .edit-link:hover :global(.step-arrow),
+  .edit-link:focus-visible :global(.step-arrow) {
     transform: translateX(4px);
   }
 

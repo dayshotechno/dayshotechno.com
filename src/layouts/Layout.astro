@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { STAGES } from "../data/bio";
 
 interface Props {
   title?: string;
@@ -32,14 +33,12 @@ const schema = {
     "https://www.tiktok.com/@daysho.dj",
     "https://soundcloud.com/user-110221213",
   ],
-  event: [
-    { "@type": "MusicEvent", name: "Ehrnau-Rave", location: { "@type": "Place", name: "Schloss Mautern", address: "Mautern, Austria" } },
-    { "@type": "MusicEvent", name: "Noise", location: { "@type": "Place", name: "Eventfabrik", address: "Niklasdorf, Austria" } },
-    { "@type": "MusicEvent", name: "Face2Face", location: { "@type": "Place", name: "Das Werk", address: "Wien, Austria" } },
-    { "@type": "MusicEvent", name: "Sauhaufen", location: { "@type": "Place", name: "Postgarage", address: "Graz, Austria" } },
-    { "@type": "MusicEvent", name: "Polytox Production Face2Face", location: { "@type": "Place", name: "Postgarage", address: "Graz, Austria" } },
-    { "@type": "MusicEvent", name: "Trash-O-Ween", location: { "@type": "Place", name: "Kulturverein röda", address: "Steyr, Austria" } },
-  ],
+  event: STAGES.map((st) => ({
+    "@type": "MusicEvent",
+    name: st.event,
+    ...(st.date && { startDate: st.date }),
+    location: { "@type": "Place", name: st.venue, address: `${st.city}, Austria` },
+  })),
 };
 ---
 

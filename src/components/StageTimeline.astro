@@ -1,7 +1,7 @@
 ---
 // Stages: the rooms he has played, set like a line-up — one size, fixed column
 // starts, nothing between the rows but leading.
-import { STAGES } from "../data/bio";
+import { STAGES, formatDate } from "../data/bio";
 ---
 
 <section id="stages" class="stages section">
@@ -26,7 +26,10 @@ import { STAGES } from "../data/bio";
             <tr>
               <th scope="row">{s.event}</th>
               <td>{s.venue}</td>
-              <td>{s.city}</td>
+              <td>
+                {s.date && <time datetime={s.date} class="stage-date tabular">{formatDate(s.date)}</time>}
+                {s.city}
+              </td>
             </tr>
           ))
         }
@@ -76,6 +79,12 @@ import { STAGES } from "../data/bio";
 
   .stages-table td {
     color: var(--c-soft);
+  }
+
+  /* Same size as the row: a date is part of the line-up, not a label above it. */
+  .stage-date {
+    margin-right: 0.6em;
+    color: var(--c-primary);
   }
 
   .stages-table td:last-child {

@@ -1,0 +1,125 @@
+---
+// STOCKDUNKEL: his own night. The three flyers hang side by side like posters on a
+// wall, newest first, because the flyers are the record of each edition.
+import { STOCKDUNKEL, formatDate } from "../data/bio";
+import StepArrow from "./StepArrow.astro";
+---
+
+<section id="stockdunkel" class="section sd">
+  <div class="shell g12 sd-grid">
+    <div class="sd-copy" data-reveal>
+      <h2 class="h2">Stockdunkel</h2>
+      <p class="lead">
+        His own night: an indoor day-rave at
+        <a href={STOCKDUNKEL.venueUrl} target="_blank" rel="noopener noreferrer" class="link">{STOCKDUNKEL.venue}</a>
+        in Graz.
+      </p>
+      <p>
+        16:00 to 22:00, no daylight, phones in pockets. Three editions in 2026. He books the line-up, makes the flyers and plays. Hypnotic,
+        hardgroove and schranz in one room.
+      </p>
+      <a href="#booking" class="btn btn--ghost sd-swap">
+        Run a night elsewhere? Talk swap
+        <StepArrow />
+      </a>
+    </div>
+
+    <ol class="sd-wall" data-reveal aria-label="STOCKDUNKEL editions, newest first">
+      {
+        STOCKDUNKEL.editions.map((e) => (
+          <li>
+            <figure>
+              <img
+                src={`/assets/${e.image}.webp`}
+                alt={`STOCKDUNKEL Vol. ${e.vol} flyer, ${formatDate(e.date)}, ${STOCKDUNKEL.venue}`}
+                width="720"
+                height="900"
+                loading="lazy"
+              />
+              <figcaption>
+                <span class="sd-vol">Vol. {e.vol}</span>
+                <time datetime={e.date} class="tabular">{formatDate(e.date)}</time>
+                {e.with.length > 0 && <span class="small soft">with {e.with.join(", ")}</span>}
+              </figcaption>
+            </figure>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .sd-grid {
+    align-items: start;
+    row-gap: 3rem;
+  }
+
+  .sd-copy {
+    grid-column: 1 / span 4;
+    display: grid;
+    gap: 1.25rem;
+    justify-items: start;
+  }
+
+  .sd-copy .lead {
+    margin-top: 0.5rem;
+  }
+
+  .sd-copy p:not(.lead) {
+    max-width: 36ch;
+  }
+
+  .sd-swap {
+    margin-top: 0.75rem;
+  }
+
+  .sd-wall {
+    grid-column: 6 / span 7;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--gap);
+  }
+
+  .sd-wall img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    transition: transform 0.35s var(--ease-out);
+  }
+
+  .sd-wall li:hover img {
+    transform: translateY(-6px) rotate(-1deg);
+  }
+
+  .sd-wall figcaption {
+    display: grid;
+    gap: 0.1rem;
+    margin-top: 0.85rem;
+  }
+
+  .sd-vol {
+    font-weight: 700;
+  }
+
+  @media (max-width: 1023px) {
+    .sd-copy,
+    .sd-wall {
+      grid-column: 1 / -1;
+    }
+  }
+
+  /* Phone: the newest flyer large, the two before it side by side. */
+  @media (max-width: 640px) {
+    .sd-wall {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: 2rem;
+    }
+
+    .sd-wall li:first-child {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

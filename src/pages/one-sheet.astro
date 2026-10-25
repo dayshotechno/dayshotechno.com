@@ -1,7 +1,7 @@
 ---
 // Printable one-sheet: dark on screen, clean black-on-white via @media print.
 import Layout from "../layouts/Layout.astro";
-import { CLAIM_INLINE, BIO_LONG_BODY, STAGES } from "../data/bio";
+import { CLAIM_INLINE, BIO_LONG_BODY, STAGES, formatDate } from "../data/bio";
 ---
 
 <Layout title="One-Sheet | DAY SHO" description="Printable one-sheet for DAY SHO. Hard Techno & Schranz DJ." noindex>
@@ -30,7 +30,7 @@ import { CLAIM_INLINE, BIO_LONG_BODY, STAGES } from "../data/bio";
       <section class="os-block">
         <h2 class="os-h">Stages</h2>
         <ul>
-          {STAGES.map((s) => <li>{s.event}, {s.venue}, {s.city}</li>)}
+          {STAGES.map((s) => <li>{s.event}, {s.venue}, {s.city}{s.date && `, ${formatDate(s.date)}`}</li>)}
         </ul>
       </section>
       <section class="os-block">

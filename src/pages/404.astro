@@ -1,0 +1,40 @@
+---
+// GitHub Pages serves dist/404.html for any unknown path.
+import Layout from "../layouts/Layout.astro";
+import StepArrow from "../components/StepArrow.astro";
+---
+
+<Layout title="Not found | DAY SHO" description="This page does not exist." noindex>
+  <main id="main" class="shell nf">
+    <p class="nf-code" aria-hidden="true">404</p>
+    <h1 class="h2">This room is empty.</h1>
+    <p class="lead nf-lead">The page you were looking for is not here. The press kit is.</p>
+    <a href="/" class="btn btn--red">
+      Back to the press kit
+      <StepArrow />
+    </a>
+  </main>
+
+  <style>
+    .nf {
+      display: grid;
+      align-content: center;
+      justify-items: start;
+      gap: 1.5rem;
+      min-height: 100svh;
+      padding-block: 4rem;
+    }
+
+    .nf-code {
+      font-size: clamp(8rem, 30vw, 22rem);
+      font-weight: 700;
+      line-height: 0.74;
+      letter-spacing: -0.055em;
+      color: var(--c-primary);
+    }
+
+    .nf-lead {
+      max-width: 30ch;
+    }
+  </style>
+</Layout>

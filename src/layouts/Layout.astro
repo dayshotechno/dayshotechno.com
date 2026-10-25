@@ -1,4 +1,8 @@
 ---
+// Self-hosted fonts: no request to Google, so no visitor IP leaves for fonts.googleapis.com.
+import "@fontsource/space-grotesk/latin-400.css";
+import "@fontsource/space-grotesk/latin-500.css";
+import "@fontsource/space-grotesk/latin-700.css";
 import "../styles/global.css";
 import { STAGES } from "../data/bio";
 
@@ -12,7 +16,7 @@ interface Props {
 
 const {
   title = "DAY SHO | Hard Techno DJ & Schranz Artist — Official EPK",
-  description = "Electronic Press Kit for DAY SHO. Hard Techno & Schranz DJ. Bookings, rider, press assets, and tour history.",
+  description = "Electronic Press Kit for DAY SHO, schranz and hard techno DJ from Graz, resident at Café Stockwerk. Sets, bio, stages, rider, press photos and booking.",
   noindex = false,
   lang = "en",
 } = Astro.props;
@@ -64,13 +68,6 @@ const schema = {
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImage} />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
 
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     <!-- Opts the page into entrance motion. Without script, nothing is ever hidden. -->

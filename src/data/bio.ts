@@ -59,8 +59,8 @@ export const BIOS = [
 export const STAGES: { event: string; venue: string; city: string; date?: string }[] = [
   // District X and RYFT. from the organisers' Instagram posts; venues, Mission Harder
   // Styles and Fagtory confirmed by DAY SHO himself.
-  { event: "District X — Axony presents", venue: "Volkshaus", city: "Weiz", date: "2026-10-24" },
-  { event: "Mission Harder Styles — 2nd floor, ANL", venue: "Eventfabrik", city: "Graz", date: "2026-10-23" },
+  { event: "District X", venue: "Volkshaus", city: "Weiz", date: "2026-10-24" },
+  { event: "ANL @ Mission Harder Styles", venue: "Eventfabrik", city: "Graz", date: "2026-10-23" },
   { event: "STOCKDUNKEL Vol. 3", venue: "Café Stockwerk", city: "Graz", date: "2026-10-17" },
   { event: "RYFT. [pure hypnosis]", venue: "Eventfabrik", city: "Graz", date: "2026-10-02" },
   { event: "STOCKDUNKEL Vol. 2", venue: "Café Stockwerk", city: "Graz", date: "2026-09-05" },
@@ -86,12 +86,13 @@ export const STOCKDUNKEL = {
   ],
 };
 
-// Own edits. `url` stays null until the track is public; the page then shows it
-// as coming rather than linking nowhere.
-export const EDITS: { artist: string; title: string; bpm?: number; url: string | null }[] = [
-  { artist: "Billy Talent", title: "Red Flag", url: null },
-  { artist: "Bunt., Mapei", title: "Trippin", bpm: 160, url: null },
-];
+// Own edits. Unlicensed edits of other people's songs get taken down on upload
+// (SoundCloud's content matching), so they are not published: he plays them, and
+// DJs can ask for the file.
+export const EDITS: { artist: string; title: string; bpm?: number }[] = [
+  { artist: "Billy Talent", title: "Red Flag" },
+  { artist: "Bunt., Mapei", title: "Trippin", bpm: 160 },
+]
 
 /** "2026-10-17" → "17.10.2026", the way the flyers print it. */
 export const formatDate = (iso: string) => iso.split("-").reverse().join(".");

@@ -136,9 +136,15 @@ const FIELDS = [
     min-width: 14rem;
   }
 
+  /* Phone: name, venue and message full width; the short fields stay in pairs. */
   @media (max-width: 640px) {
     .bf-grid {
-      grid-template-columns: 1fr;
+      row-gap: 1.25rem;
+    }
+
+    .bf-field:nth-child(1),
+    .bf-field:nth-child(2) {
+      grid-column: 1 / -1;
     }
 
     .bf-submit {

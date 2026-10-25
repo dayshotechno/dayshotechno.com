@@ -40,11 +40,11 @@ const links = [
   </nav>
 
   <div class="hero-band shell">
-    <h1 class="hero-name">DAY SHO</h1>
+    <h1 class="hero-name"><span>DAY</span> <span>SHO</span></h1>
 
     <div class="hero-row">
       <p class="hero-sentence">
-        Schranz DJ from Graz, Austria. 145 to 160 BPM, no breaks, best after the headliner.
+        Schranz DJ from Graz, resident at Café Stockwerk. 145 to 160 BPM, no breaks, best after the headliner.
       </p>
       <a href="#booking" class="btn btn--red hero-cta">
         Send a booking request
@@ -191,7 +191,7 @@ const links = [
   }
 
   .hero-sentence {
-    max-width: 34ch;
+    max-width: 44ch;
     font-size: var(--t-lead);
     line-height: 1.2;
     letter-spacing: -0.015em;
@@ -259,7 +259,7 @@ const links = [
     .hero {
       height: auto;
       min-height: 0;
-      grid-template-rows: 56svh auto;
+      grid-template-rows: 34svh auto;
     }
 
     .hero-photo img {
@@ -275,12 +275,23 @@ const links = [
     }
 
     .hero-sentence {
-      font-size: 1.25rem;
+      font-size: 1.375rem;
     }
 
     .hero-cta {
       width: 100%;
       justify-content: space-between;
+    }
+
+    /* Phone: the name stacks like the logo, DAY over SHO, each line margin to margin. */
+    .hero-name {
+      font-size: calc((100vw - var(--gutter) * 2) / 1.74);
+      line-height: 0.76;
+      margin-top: 0.06em;
+    }
+
+    .hero-name span {
+      display: block;
     }
 
   }

@@ -1,7 +1,13 @@
 ---
 // Stages: the rooms he has played, set like a line-up — one size, fixed column
-// starts, nothing between the rows but leading.
+// starts, nothing between the rows but leading. Dated gigs and the older, undated
+// ones sit in two groups, so no row has an empty date beside it by accident.
 import { STAGES, formatDate } from "../data/bio";
+
+const groups = [
+  { label: "2026", rows: STAGES.filter((s) => s.date) },
+  { label: "Earlier", rows: STAGES.filter((s) => !s.date) },
+];
 ---
 
 <section id="stages" class="stages section">
@@ -18,22 +24,28 @@ import { STAGES, formatDate } from "../data/bio";
           <th scope="col">Event</th>
           <th scope="col">Venue</th>
           <th scope="col">City</th>
+          <th scope="col">Date</th>
         </tr>
       </thead>
-      <tbody data-reveal>
-        {
-          STAGES.map((s) => (
-            <tr>
-              <th scope="row">{s.event}</th>
-              <td>{s.venue}</td>
-              <td>
-                {s.date && <time datetime={s.date} class="stage-date tabular">{formatDate(s.date)}</time>}
-                {s.city}
-              </td>
+      {
+        groups.map((g) => (
+          <tbody data-reveal>
+            <tr class="stage-group">
+              <th scope="colgroup" colspan="4">{g.label}</th>
             </tr>
-          ))
-        }
-      </tbody>
+            {g.rows.map((s) => (
+              <tr>
+                <th scope="row">{s.event}</th>
+                <td>{s.venue}</td>
+                <td>{s.city}</td>
+                <td class="stage-date tabular">
+                  {s.date && <time datetime={s.date}>{formatDate(s.date)}</time>}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        ))
+      }
     </table>
 
     <p class="stages-foot lead" data-reveal>
@@ -59,7 +71,7 @@ import { STAGES, formatDate } from "../data/bio";
   .stages-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: clamp(1.375rem, 0.9rem + 2vw, 2.75rem);
+    font-size: clamp(1.375rem, 0.9rem + 1.8vw, 2.5rem);
     line-height: 1.45;
     letter-spacing: -0.02em;
   }
@@ -73,30 +85,41 @@ import { STAGES, formatDate } from "../data/bio";
   }
 
   .stages-table tbody th {
-    width: 48%;
+    width: 46%;
     font-weight: 500;
+  }
+
+  .stages-table td:nth-child(2) {
+    width: 26%;
+  }
+
+  /* Group headings at the row size, in red: part of the line-up, not a label. */
+  .stages-table .stage-group th {
+    padding-top: 1.2em;
+    padding-bottom: 0.15em;
+    color: var(--c-primary);
+    font-weight: 700;
+  }
+
+  .stages-table tbody:first-of-type .stage-group th {
+    padding-top: 0;
   }
 
   .stages-table td {
     color: var(--c-soft);
   }
 
-  /* Same size as the row: a date is part of the line-up, not a label above it. */
-  .stage-date {
-    margin-right: 0.6em;
-    color: var(--c-primary);
-  }
-
-  .stages-table td:last-child {
+  .stages-table td.stage-date {
     text-align: right;
+    color: var(--c-content);
   }
 
   .stages-table tbody tr {
     transition: color 0.2s;
   }
 
-  .stages-table tbody tr:hover th,
-  .stages-table tbody tr:hover td {
+  .stages-table tbody tr:not(.stage-group):hover th,
+  .stages-table tbody tr:not(.stage-group):hover td {
     color: var(--c-primary);
   }
 
@@ -109,6 +132,7 @@ import { STAGES, formatDate } from "../data/bio";
     transition-property: opacity, transform, color;
   }
 
+  /* Phone: event on its own line; venue and city on the left, date on the right. */
   @media (max-width: 767px) {
     .stages-table,
     .stages-table tbody,
@@ -116,25 +140,32 @@ import { STAGES, formatDate } from "../data/bio";
     .stages-table th,
     .stages-table td {
       display: block;
+      width: auto;
     }
 
-    .stages-table tbody tr {
+    .stages-table tbody tr:not(.stage-group) {
       display: grid;
-      grid-template-columns: 1fr auto;
-      column-gap: 1rem;
-      padding-block: 0.6rem;
+      grid-template-columns: max-content max-content 1fr;
+      column-gap: 0.4rem;
+      padding-block: 0.55rem;
+      font-size: var(--t-body);
+      letter-spacing: 0;
     }
 
-    .stages-table tbody th {
+    .stages-table tbody tr:not(.stage-group) th {
       grid-column: 1 / -1;
       width: auto;
       font-size: 1.375rem;
       line-height: 1.2;
+      letter-spacing: -0.02em;
     }
 
-    .stages-table td {
-      font-size: 1rem;
-      letter-spacing: 0;
+    .stages-table td:nth-child(2)::after {
+      content: ",";
+    }
+
+    .stages-table .stage-group th {
+      font-size: 1.375rem;
     }
   }
 </style>

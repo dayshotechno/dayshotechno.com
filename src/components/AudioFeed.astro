@@ -16,7 +16,11 @@ import dims from "../data/images.json";
       <p class="listen-lead lead">
         One set, start to finish. No breakdowns to hide behind, no runway before the drop.
       </p>
-      <SoundCloudPlayer trackUrl="https://soundcloud.com/user-110221213/schranzlangenvergleich" />
+      <SoundCloudPlayer
+        trackUrl="https://soundcloud.com/user-110221213/daysho-stockdunkel-dayrave"
+        trackName="DAY SHO @ STOCKDUNKEL"
+        note="Live at his own day-rave, Café Stockwerk · plays from SoundCloud"
+      />
       <a
         href="https://on.soundcloud.com/0Oiz8yh04PoAh92DmF"
         target="_blank"
@@ -28,30 +32,26 @@ import dims from "../data/images.json";
       </a>
 
       <div class="edits">
-        <h3 class="edits-title">Own edits</h3>
+        <h3 class="edits-title">Own edits, played in his sets</h3>
         <ul>
           {
-            EDITS.map((e) => {
-              const name = `${e.artist} – ${e.title} (DAY SHO Edit)`;
-              return (
-                <li class="edit">
-                  <span class="edit-name">
-                    {name}
-                    {e.bpm && <span class="edit-bpm tabular"> · {e.bpm} BPM</span>}
-                  </span>
-                  {e.url ? (
-                    <a href={e.url} target="_blank" rel="noopener noreferrer" class="edit-link">
-                      Free download <span class="sr-only">of {name}</span>
-                      <StepArrow />
-                    </a>
-                  ) : (
-                    <span class="edit-soon">Free download soon</span>
-                  )}
-                </li>
-              );
-            })
+            EDITS.map((e) => (
+              <li class="edit">
+                <span class="edit-name">
+                  {e.artist} – {e.title} (DAY SHO Edit)
+                  {e.bpm && <span class="edit-bpm tabular"> · {e.bpm} BPM</span>}
+                </span>
+              </li>
+            ))
           }
         </ul>
+        <a
+          class="edit-ask"
+          href={`mailto:booking@dayshotechno.com?subject=${encodeURIComponent("Edit request: DAY SHO")}&body=${encodeURIComponent("Hi DAY SHO, could you send me your edit of: ")}`}
+        >
+          DJ and want one? Ask for the file
+          <StepArrow />
+        </a>
       </div>
     </div>
 
@@ -148,23 +148,26 @@ import dims from "../data/images.json";
     color: var(--c-soft);
   }
 
-  .edit-soon {
-    font-size: var(--t-small);
-    color: var(--c-soft);
-  }
 
-  .edit-link {
+  .edit-ask {
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
-    font-size: var(--t-small);
+    margin-top: 1rem;
     font-weight: 700;
-    text-transform: uppercase;
-    color: var(--c-primary);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.3em;
+    transition: text-decoration-thickness 0.2s;
   }
 
-  .edit-link:hover :global(.step-arrow),
-  .edit-link:focus-visible :global(.step-arrow) {
+  .edit-ask:hover,
+  .edit-ask:focus-visible {
+    text-decoration-thickness: 4px;
+  }
+
+  .edit-ask:hover :global(.step-arrow),
+  .edit-ask:focus-visible :global(.step-arrow) {
     transform: translateX(4px);
   }
 

@@ -1,101 +1,74 @@
 // Generates the 1200x630 Open-Graph card.
-// Run: npm run make:og   (regenerate whenever the wordmark or the press shot changes)
+// Run: npm run make:og   (regenerate whenever the hero photo or the copy changes)
 //
-// Was CommonJS (`require`) in a package with "type": "module", so it threw
-// ReferenceError on every run and the OG image could not be rebuilt. ESM now.
+// The card is the site's first screen in miniature: the crowd photo cut at the
+// shoulders, the name underneath in red, one line saying what this is. It is laid out
+// as HTML with the self-hosted Space Grotesk and photographed by an installed Chrome
+// in headless mode, because SVG text through sharp cannot use the site's typeface.
+// Needs Chrome or Edge; set CHROME_PATH if it is not in a standard location.
 //
-// The old card was the wordmark centred on black: no photo, no genre, no city. A link
-// dropped into a promoter group showed a logo and nothing else. This one carries the
-// four things that decide whether someone opens it — face, name, genre, availability —
-// in the site's own colour regime.
-//
-// Writes to both the source folder and public/, because prepare-assets.js (which used
-// to do the copy) needs the gitignored photo folders and cannot run from a bare clone.
+// Writes to both the source folder and public/, because prepare-assets.js needs the
+// gitignored photo folders and cannot run from a bare clone.
 import sharp from "sharp";
-import { copyFile } from "node:fs/promises";
+import { execFileSync } from "node:child_process";
+import { existsSync, mkdtempSync, writeFileSync, copyFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join, resolve } from "node:path";
+import { pathToFileURL } from "node:url";
 
 const W = 1200;
 const H = 630;
 
-const BASE = "#050505";
-const SIGNAL = "#FF2A2A";
-const INK = "#E0E0E0";
-const DIM = "#8A8A8A";
+const CHROME = [
+  process.env.CHROME_PATH,
+  "C:/Program Files/Google/Chrome/Application/chrome.exe",
+  "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+  "/usr/bin/google-chrome",
+  "/usr/bin/chromium",
+].find((p) => p && existsSync(p));
 
-// The PNG wordmark carries an opaque black box (corner pixels are 0,0,0,255) that
-// shows as a rectangle against the #050505 ground. This SVG cut is the same mark with
-// the background rect already stripped by prepare-assets.js.
-const WORDMARK = "public/assets/logo-day-sho.svg";
-const PORTRAIT = "public/assets/press_06.webp";
+if (!CHROME) throw new Error("No Chrome/Edge found. Set CHROME_PATH.");
+
+const font = (w) =>
+  pathToFileURL(resolve(`node_modules/@fontsource/space-grotesk/files/space-grotesk-latin-${w}-normal.woff2`)).href;
+const photo = pathToFileURL(resolve("public/assets/hero_wide@1440.webp")).href;
+
+const html = `<!doctype html><meta charset="utf-8">
+<style>
+  @font-face { font-family: SG; font-weight: 400; src: url(${font(400)}); }
+  @font-face { font-family: SG; font-weight: 700; src: url(${font(700)}); }
+  * { margin: 0; box-sizing: border-box; }
+  body { width: ${W}px; height: ${H}px; background: #050505; color: #e6e6e6; font-family: SG; overflow: hidden; }
+  .photo { height: 290px; background: url(${photo}) 50% 100% / cover; filter: grayscale(1) contrast(1.18) brightness(.92); }
+  .name { margin: 2px 40px 0; font-size: 306px; font-weight: 700; line-height: .74; letter-spacing: -.055em; color: #ff2a2a; white-space: nowrap; }
+  .row { position: absolute; left: 48px; right: 48px; bottom: 34px; display: flex; justify-content: space-between; align-items: baseline; font-size: 30px; letter-spacing: -.01em; }
+  .row span:last-child { color: #a6a6a6; font-size: 26px; }
+</style>
+<div class="photo"></div>
+<div class="name">DAY SHO</div>
+<div class="row"><span>Schranz DJ · Graz · Resident at Café Stockwerk</span><span>dayshotechno.com</span></div>`;
+
+const dir = mkdtempSync(join(tmpdir(), "og-"));
+const page = join(dir, "card.html");
+const shot = join(dir, "card.png");
+writeFileSync(page, html);
+
+execFileSync(CHROME, [
+  "--headless=new",
+  "--disable-gpu",
+  "--hide-scrollbars",
+  "--allow-file-access-from-files",
+  "--force-device-scale-factor=1",
+  `--window-size=${W},${H}`,
+  "--virtual-time-budget=3000",
+  `--screenshot=${shot}`,
+  pathToFileURL(page).href,
+]);
+
 const OUT = "assets/og-image.jpg";
 const OUT_PUBLIC = "public/assets/og-image.jpg";
 
-// Photo occupies the right third and dissolves into the page on its left edge — the
-// same treatment as the hero figure, so the card reads as part of the site.
-const PHOTO_X = 620;
-const PHOTO_W = W - PHOTO_X;
-
-async function portrait() {
-  const img = sharp(PORTRAIT)
-    .resize(PHOTO_W, H, { fit: "cover", position: sharp.strategy.attention })
-    .grayscale()
-    .linear(1.12, -10)
-    .ensureAlpha();
-
-  const fade = Buffer.from(
-    `<svg xmlns="http://www.w3.org/2000/svg" width="${PHOTO_W}" height="${H}">
-       <defs>
-         <linearGradient id="f" x1="0" x2="1" y1="0" y2="0">
-           <stop offset="0" stop-color="#000"/>
-           <stop offset="0.45" stop-color="#fff"/>
-         </linearGradient>
-       </defs>
-       <rect width="${PHOTO_W}" height="${H}" fill="url(#f)"/>
-     </svg>`
-  );
-
-  return img
-    .composite([{ input: fade, blend: "dest-in" }])
-    .png()
-    .toBuffer();
-}
-
-// Stripes, corner brackets and type in one overlay so nothing can drift out of register.
-const overlay = Buffer.from(
-  `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">
-     <defs>
-       <pattern id="warn" width="24" height="24" patternUnits="userSpaceOnUse"
-                patternTransform="rotate(45)">
-         <rect width="24" height="24" fill="${BASE}"/>
-         <rect width="12" height="24" fill="${SIGNAL}"/>
-       </pattern>
-     </defs>
-
-     <path d="M44 44 h56 M44 44 v56" stroke="${SIGNAL}" stroke-width="4" fill="none"/>
-     <path d="M1156 568 h-56 M1156 568 v-56" stroke="${SIGNAL}" stroke-width="4" fill="none"/>
-
-     <rect x="80" y="380" width="150" height="5" fill="${SIGNAL}"/>
-
-     <text x="80" y="450" fill="${INK}" font-size="30" letter-spacing="3.5"
-           font-family="Consolas, DejaVu Sans Mono, monospace">SCHRANZ / HARD TECHNO</text>
-     <text x="80" y="496" fill="${DIM}" font-size="21" letter-spacing="3"
-           font-family="Consolas, DejaVu Sans Mono, monospace">GRAZ / AT — BOOKING OPEN</text>
-
-     <rect x="0" y="612" width="${W}" height="18" fill="url(#warn)"/>
-   </svg>`
-);
-
-const mark = await sharp(WORDMARK).resize({ height: 230 }).png().toBuffer();
-
-await sharp({ create: { width: W, height: H, channels: 3, background: BASE } })
-  .composite([
-    { input: await portrait(), left: PHOTO_X, top: 0 },
-    { input: overlay, left: 0, top: 0 },
-    { input: mark, left: 80, top: 110 },
-  ])
-  .jpeg({ quality: 90, mozjpeg: true })
-  .toFile(OUT);
-
-await copyFile(OUT, OUT_PUBLIC);
-
-console.log("OG image written ->", OUT, "and", OUT_PUBLIC);
+await sharp(shot).resize(W, H, { fit: "cover", position: "top" }).jpeg({ quality: 86, mozjpeg: true }).toFile(OUT_PUBLIC);
+if (existsSync("assets")) copyFileSync(OUT_PUBLIC, OUT);
+console.log(`og-image.jpg written (${W}x${H})`);

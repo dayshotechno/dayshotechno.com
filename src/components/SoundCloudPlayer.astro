@@ -4,9 +4,10 @@
 interface Props {
   trackUrl: string;
   trackName?: string;
+  note?: string;
 }
 
-const { trackUrl, trackName = "Schranzlängenvergleich" } = Astro.props;
+const { trackUrl, trackName = "Schranzlängenvergleich", note = "Full set · plays from SoundCloud" } = Astro.props;
 
 const embedSrc =
   "https://w.soundcloud.com/player/?url=" +
@@ -20,8 +21,8 @@ const embedSrc =
       <svg viewBox="0 0 16 16" fill="currentColor"><path d="M3 1l11 7-11 7z"></path></svg>
     </span>
     <span class="sc-text">
-      <span class="sc-title" lang="de">{trackName}</span>
-      <span class="sc-note">Full set · plays from SoundCloud</span>
+      <span class="sc-title">{trackName}</span>
+      <span class="sc-note">{note}</span>
     </span>
   </button>
 </div>
@@ -86,7 +87,7 @@ const embedSrc =
 
   @media (max-width: 480px) {
     .sc-title {
-      font-size: 1.2rem;
+      font-size: 1.375rem;
     }
 
     .sc-play {

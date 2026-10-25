@@ -1,0 +1,122 @@
+---
+// Booking: the inverse of the page. The address is the headline-sized thing on
+// the screen, because writing to it is the whole point of an EPK.
+import BookingForm from "./BookingForm.astro";
+
+const EMAIL = "booking@dayshotechno.com";
+---
+
+<section id="booking" class="booking section">
+  <div class="shell">
+    <div class="booking-head" data-reveal>
+      <h2 class="h2">Booking</h2>
+      <p class="lead">Send the date, the city, the room and its capacity. Replies within 48 hours.</p>
+    </div>
+
+    <a href={`mailto:${EMAIL}`} class="booking-email" data-reveal>
+      <span>booking@</span><span>dayshotechno.com</span>
+    </a>
+
+    <div class="booking-form-wrap g12" data-reveal>
+      <div class="booking-form-intro">
+        <h3 class="booking-sub">Or let the form write it</h3>
+        <p>Fill in what you know. Your mail app opens with a finished request, addressed and ready to send.</p>
+      </div>
+      <div class="booking-form">
+        <BookingForm />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .booking {
+    background: var(--c-paper);
+    color: var(--c-base);
+  }
+
+  .booking ::selection {
+    background: var(--c-base);
+    color: var(--c-paper);
+  }
+
+  .booking-head {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--gap);
+    row-gap: 1.25rem;
+    align-items: end;
+  }
+
+  .booking-head .h2 {
+    grid-column: 1 / span 5;
+  }
+
+  .booking-head .lead {
+    grid-column: 7 / span 6;
+    max-width: 30ch;
+  }
+
+  /* Fitted so the address runs margin to margin on one line at desktop. */
+  .booking-email {
+    display: block;
+    margin-block: clamp(3rem, 7vw, 6rem);
+    margin-inline: -0.03em;
+    font-size: calc((min(100vw, var(--maxw) + var(--gutter) * 2) - var(--gutter) * 2) / 13.6);
+    font-weight: 500;
+    line-height: 0.95;
+    letter-spacing: -0.045em;
+    white-space: nowrap;
+    transition: color 0.2s;
+  }
+
+  .booking-email:hover,
+  .booking-email:focus-visible {
+    color: var(--c-primary);
+  }
+
+  .booking-email span {
+    display: inline-block;
+  }
+
+  .booking-form-wrap {
+    row-gap: 2rem;
+  }
+
+  .booking-form-intro {
+    grid-column: 1 / span 4;
+  }
+
+  .booking-sub {
+    font-size: var(--t-lead);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+
+  .booking-form {
+    grid-column: 6 / span 7;
+  }
+
+  @media (max-width: 1023px) {
+    .booking-head .h2,
+    .booking-head .lead,
+    .booking-form-intro,
+    .booking-form {
+      grid-column: 1 / -1;
+    }
+  }
+
+  /* Phone: break after the @ and fit each half to the width. */
+  @media (max-width: 767px) {
+    .booking-email {
+      font-size: calc((100vw - var(--gutter) * 2) / 8.4);
+      line-height: 1;
+    }
+
+    .booking-email span {
+      display: block;
+    }
+  }
+</style>

@@ -1,56 +1,142 @@
 ---
-// Section B — video reel in a damaged-CRT frame + link out to the SoundCloud archive.
+// Listen: the claim, one set to play, and the booth on loop. A whole field of
+// red, the colour of every DAY SHO flyer, so the first scroll changes the room.
+// The old live loop (desktop-loop.mp4) was shot so dark it read as a black box on
+// screen; the booth photograph does that job until a brighter clip exists.
+import SoundCloudPlayer from "./SoundCloudPlayer.astro";
+import StepArrow from "./StepArrow.astro";
+import { CLAIM } from "../data/bio";
+import dims from "../data/images.json";
 ---
 
-<section id="audio-feed" class="blueprint relative shell py-20 md:py-28">
-  <h2 class="font-mono text-2xl font-bold uppercase tracking-widest text-content md:text-4xl">
-    <span class="text-primary">//</span> AUDIO_FEED<span class="cursor-blink"></span>
-  </h2>
-  <p class="mt-2 font-mono text-xs uppercase tracking-widest text-muted">
-    LIVE TRANSMISSION ARCHIVE // VISUAL EVIDENCE
-  </p>
-
-  <div class="mt-10 grid gap-8 md:grid-cols-3">
-    <!-- CRT video reel -->
-    <figure class="crt-frame md:col-span-2">
-      <div class="flex items-center justify-between border-b border-[#333] px-3 py-2">
-        <span class="font-mono text-[11px] uppercase tracking-widest text-muted">VISUAL_FEED_01 // LIVE_LOOP</span>
-        <span class="font-mono text-[11px] uppercase tracking-widest text-scan">● REC</span>
-      </div>
-      <video
-        autoplay
-        loop
-        muted
-        playsinline
-        preload="metadata"
-        class="block w-full"
-        aria-label="DAY SHO live loop"
-      >
-        <source src="/assets/desktop-loop.mp4" type="video/mp4" media="(min-width: 769px)" />
-        <source src="/assets/mobile-loop.mp4" type="video/mp4" />
-      </video>
-      <figcaption class="sr-only">Live visual loop of DAY SHO performing.</figcaption>
-    </figure>
-
-    <!-- Archive link block -->
-    <div class="flex flex-col justify-between border border-[#333] bg-surface p-6">
-      <div>
-        <p class="font-mono text-xs uppercase tracking-widest text-primary">ARCHIVE_ACCESS</p>
-        <p class="mt-4 font-display text-xl font-bold uppercase leading-tight text-content">
-          Full mix archive on SoundCloud.
-        </p>
-        <p class="mt-3 font-mono text-xs uppercase leading-relaxed tracking-wider text-muted">
-          Latest sets, raw recordings, no filler.
-        </p>
-      </div>
+<section id="listen" class="listen section">
+  <div class="shell g12 listen-grid">
+    <div class="listen-copy" data-reveal>
+      <h2 class="h2">{CLAIM.join(" ")}</h2>
+      <p class="listen-lead lead">
+        One set, start to finish. No breakdowns to hide behind, no runway before the drop.
+      </p>
+      <SoundCloudPlayer trackUrl="https://soundcloud.com/user-110221213/schranzlangenvergleich" />
       <a
         href="https://on.soundcloud.com/0Oiz8yh04PoAh92DmF"
         target="_blank"
         rel="noopener noreferrer"
-        class="switch-btn glitch-hover mt-8"
+        class="listen-more"
       >
-        &gt; OPEN_SOUNDCLOUD
+        Every set on SoundCloud
+        <StepArrow />
       </a>
     </div>
+
+    <figure class="listen-photo" data-reveal>
+      <div class="listen-photo__frame">
+        <img
+          src="/assets/press_06.webp"
+          alt="DAY SHO mixing, headphones on, both hands on the mixer"
+          width={dims.press_06.w}
+          height={dims.press_06.h}
+          loading="lazy"
+        />
+      </div>
+      <figcaption class="small">In the booth, mid-set.</figcaption>
+    </figure>
   </div>
 </section>
+
+<style>
+  .listen {
+    background: var(--c-primary);
+    color: var(--c-base);
+  }
+
+  .listen-grid {
+    align-items: center;
+    row-gap: 3.5rem;
+  }
+
+  .listen-copy {
+    grid-column: 1 / span 6;
+  }
+
+  .listen-lead {
+    max-width: 26ch;
+    margin-top: 1.75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .listen-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.3em;
+    transition: text-decoration-thickness 0.2s;
+  }
+
+  .listen-more:hover,
+  .listen-more:focus-visible {
+    text-decoration-thickness: 4px;
+  }
+
+  .listen-more:hover :global(.step-arrow) {
+    transform: translateX(4px);
+  }
+
+  .listen-photo {
+    grid-column: 8 / span 5;
+  }
+
+  .listen-photo__frame {
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    background: var(--c-base);
+  }
+
+  .listen-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 45% 35%;
+    filter: grayscale(1) contrast(1.15);
+  }
+
+  /* The one moving picture: a slow push-in tied to the scroll. */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .listen-photo img {
+        animation: push-in linear both;
+        animation-timeline: view();
+        animation-range: entry 0% exit 100%;
+      }
+    }
+  }
+
+  @keyframes push-in {
+    from {
+      transform: scale(1.18) translateY(4%);
+    }
+    to {
+      transform: scale(1) translateY(-2%);
+    }
+  }
+
+  .listen-photo figcaption {
+    margin-top: 0.75rem;
+  }
+
+  @media (max-width: 1023px) {
+    .listen-copy,
+    .listen-photo {
+      grid-column: 1 / -1;
+    }
+
+    .listen-photo__frame {
+      aspect-ratio: 4 / 3;
+    }
+  }
+</style>

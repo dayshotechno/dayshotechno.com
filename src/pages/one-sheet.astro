@@ -5,69 +5,157 @@ import { CLAIM_INLINE, BIO_LONG_BODY, STAGES } from "../data/bio";
 ---
 
 <Layout title="One-Sheet | DAY SHO" description="Printable one-sheet for DAY SHO. Hard Techno & Schranz DJ." noindex>
-  <main id="main" class="one-sheet mx-auto w-full max-w-3xl px-6 py-12">
-    <div class="no-print mb-8 flex items-center justify-between gap-4">
-      <a href="/" class="glitch-hover font-mono text-xs uppercase tracking-widest text-muted hover:text-primary">&lt; BACK</a>
-      <button
-        type="button"
-        onclick="window.print()"
-        class="switch-btn glitch-hover max-w-[220px] !py-3 text-center"
-      >
-        &gt; PRINT_PDF
-      </button>
+  <main id="main" class="one-sheet shell">
+    <div class="no-print os-actions">
+      <a href="/" class="link">Back to the press kit</a>
+      <button type="button" onclick="window.print()" class="btn btn--red">Print or save as PDF</button>
     </div>
 
-    <header class="flex items-end gap-6 border-b-4 border-primary pb-6">
+    <header class="os-head">
       <!-- Two cuts of the same mark: white-on-transparent for screen, dark ink for paper. -->
-      <img src="/assets/logo-day-sho.svg" alt="DAY SHO" width="765" height="1000" class="onesheet-logo--screen h-28 w-auto" />
-      <img src="/assets/logo-day-sho-ink.svg" alt="DAY SHO" width="765" height="1000" class="onesheet-logo--print h-28 w-auto" />
-      <p class="font-mono text-xs uppercase tracking-[0.4em]">
-        HARD TECHNO / SCHRANZ<br />OFFICIAL ONE-SHEET
-      </p>
+      <img src="/assets/logo-day-sho.svg" alt="DAY SHO" width="765" height="1000" class="onesheet-logo--screen" />
+      <img src="/assets/logo-day-sho-ink.svg" alt="DAY SHO" width="765" height="1000" class="onesheet-logo--print" />
+      <div>
+        <h1 class="os-title">DAY SHO</h1>
+        <p class="os-sub">Schranz DJ, Graz, Austria · {CLAIM_INLINE}</p>
+      </div>
     </header>
 
-    <section class="mt-8">
-      <h2 class="font-mono text-sm font-bold uppercase tracking-widest text-primary">// BIO</h2>
-      <p class="mt-3 font-mono text-sm font-bold uppercase tracking-widest">DAY SHO // {CLAIM_INLINE}</p>
-      <p class="mt-3 whitespace-pre-line text-sm leading-relaxed">{BIO_LONG_BODY}</p>
+    <section class="os-block">
+      <h2 class="os-h">Bio</h2>
+      <p class="os-bio">{BIO_LONG_BODY}</p>
     </section>
 
-    <section class="mt-8 grid grid-cols-2 gap-8">
-      <div>
-        <h2 class="font-mono text-sm font-bold uppercase tracking-widest text-primary">// STAGES</h2>
-        <ul class="mt-3 space-y-1 font-mono text-xs uppercase leading-relaxed">
-          {STAGES.map((s) => <li>{s.event} — {s.venue.replace(" // ", ", ")}</li>)}
+    <div class="os-cols">
+      <section class="os-block">
+        <h2 class="os-h">Stages</h2>
+        <ul>
+          {STAGES.map((s) => <li>{s.event}, {s.venue}, {s.city}</li>)}
         </ul>
-      </div>
-      <div>
-        <h2 class="font-mono text-sm font-bold uppercase tracking-widest text-primary">// TECH RIDER</h2>
-        <ul class="mt-3 space-y-1 font-mono text-xs uppercase leading-relaxed">
-          <li>3x Pioneer CDJ-3000 (linked) // accepted: CDJ-2000NXS2</li>
-          <li>1x DJM-A9 // accepted: Xone:96, DJM-900NXS2</li>
-          <li>Set length 90–120 min // 145–160 BPM // slot: after the headliner</li>
+      </section>
+      <section class="os-block">
+        <h2 class="os-h">Rider</h2>
+        <ul>
+          <li>3× Pioneer CDJ-3000, linked (also fine: CDJ-2000NXS2)</li>
+          <li>Pioneer DJM-A9 (also fine: Xone:96, DJM-900NXS2)</li>
+          <li>Sets of 90–120 min, 145–160 BPM, best after the headliner</li>
         </ul>
-        <h2 class="mt-6 font-mono text-sm font-bold uppercase tracking-widest text-primary">// CONTACT</h2>
-        <p class="mt-3 font-mono text-xs uppercase leading-relaxed">
-          booking@dayshotechno.com<br />
-          dayshotechno.com<br />
-          IG @daysho.techno // TT @daysho.dj
-        </p>
-      </div>
-    </section>
+        <h2 class="os-h os-h--gap">Contact</h2>
+        <ul>
+          <li>booking@dayshotechno.com</li>
+          <li>dayshotechno.com</li>
+          <li>Instagram @daysho.techno · TikTok @daysho.dj</li>
+        </ul>
+      </section>
+    </div>
   </main>
 
   <style>
+    .one-sheet {
+      max-width: 52rem;
+      padding-block: clamp(2.5rem, 6vw, 4rem);
+    }
+
+    .os-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .os-head {
+      display: flex;
+      align-items: flex-end;
+      gap: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 4px solid var(--c-primary);
+    }
+
+    .os-head img {
+      height: 7rem;
+      width: auto;
+    }
+
+    .os-title {
+      font-size: 3.5rem;
+      font-weight: 700;
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      color: var(--c-primary);
+    }
+
+    .os-sub {
+      margin-top: 0.5rem;
+    }
+
+    .os-block {
+      margin-top: 2rem;
+    }
+
+    .os-h {
+      font-weight: 700;
+      color: var(--c-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .os-h--gap {
+      margin-top: 1.5rem;
+    }
+
+    .os-bio {
+      white-space: pre-line;
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+
+    .os-cols {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0 2.5rem;
+    }
+
+    .os-cols li {
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
     /* Swap the logo cut rather than filter-inverting it: inverting the master mark
        would turn the red letters cyan on paper. */
-    .onesheet-logo--print { display: none; }
+    .onesheet-logo--print {
+      display: none;
+    }
+
+    @media (max-width: 640px) {
+      .os-cols {
+        grid-template-columns: 1fr;
+      }
+    }
 
     @media print {
       .one-sheet {
         max-width: 100%;
+        width: 100%;
+        padding: 0;
         color: #000;
       }
-      .onesheet-logo--screen { display: none; }
-      .onesheet-logo--print { display: block; }
+
+      .onesheet-logo--screen {
+        display: none;
+      }
+
+      .onesheet-logo--print {
+        display: block;
+      }
+
+      .os-title,
+      .os-h {
+        color: #000;
+      }
+
+      .os-head {
+        border-bottom-color: #000;
+      }
     }
   </style>
 </Layout>

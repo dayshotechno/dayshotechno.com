@@ -47,5 +47,15 @@ design system). Single-page EPK plus legal pages and a printable one-sheet.
 - One-sheet "PDF" relies on browser print; no generated .pdf file in the zip.
 - Stage log has no dates; schema.org events have no startDate.
 
+## Redesign 2026-10-25 ("name as a monument")
+- One typeface (Space Grotesk), five type steps as tokens in `src/styles/global.css`;
+  JetBrains Mono, noise/scanline overlays, warning stripes and blueprint grids removed.
+- Hero: real crowd photo (`hero_wide*.webp`, `hero_tall.webp`, cropped from
+  `../assets/Picture (105 of 196).JPEG`), cut at the shoulders; "DAY SHO" runs full width
+  underneath where the shirt print is. Not produced by `npm run assets` — re-crop by hand.
+- Listen section uses press_06 instead of `desktop-loop.mp4`: the clip is too dark to read.
+- Bio tool: radio tabs (CSS `:has`) + copy button with execCommand fallback.
+- Entrance motion: `[data-reveal]` children, gated by `html.js` so no-JS shows everything.
+
 ---
-*Last updated: 2026-06-11 (Astro rebuild)*
+*Last updated: 2026-10-25 (redesign)*

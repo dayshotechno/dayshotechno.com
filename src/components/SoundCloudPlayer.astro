@@ -1,17 +1,12 @@
 ---
-// Brutalist click-to-load chrome around the SoundCloud iframe.
-// The third-party embed only loads after user interaction (performance + GDPR).
+// Click-to-load facade around the SoundCloud iframe. Nothing from SoundCloud is
+// requested until the visitor presses play (performance + GDPR, see /datenschutz).
 interface Props {
   trackUrl: string;
-  label?: string;
   trackName?: string;
 }
 
-const {
-  trackUrl,
-  label = "AUDIO_FEED_01",
-  trackName = "SCHRANZLÄNGENVERGLEICH",
-} = Astro.props;
+const { trackUrl, trackName = "Schranzlängenvergleich" } = Astro.props;
 
 const embedSrc =
   "https://w.soundcloud.com/player/?url=" +
@@ -19,29 +14,94 @@ const embedSrc =
   "&color=%23ff2a2a&auto_play=true&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&theme=dark";
 ---
 
-<div class="sc-player border border-primary bg-surface" data-embed-src={embedSrc}>
-  <div class="flex items-center justify-between border-b border-primary px-3 py-2">
-    <span class="font-mono text-xs uppercase tracking-widest text-primary">{label}</span>
-    <span class="font-mono text-xs uppercase tracking-widest text-muted" aria-hidden="true">REC ●</span>
-  </div>
-  <button
-    type="button"
-    class="sc-load group flex w-full items-center gap-4 px-4 py-6 text-left hover:bg-void transition-colors"
-  >
-    <span
-      class="flex h-12 w-12 shrink-0 items-center justify-center border border-content text-content group-hover:border-primary group-hover:text-primary transition-colors"
-      aria-hidden="true"
-    >
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M3 1l11 7-11 7z" /></svg>
+<div class="sc-player" data-embed-src={embedSrc}>
+  <button type="button" class="sc-load">
+    <span class="sc-play" aria-hidden="true">
+      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M3 1l11 7-11 7z"></path></svg>
     </span>
-    <span class="min-w-0">
-      <span class="block truncate font-mono text-sm uppercase tracking-wider text-content">{trackName}</span>
-      <span class="block font-mono text-[11px] uppercase tracking-widest text-muted">
-        TRANSMIT VIA SOUNDCLOUD // CLICK TO ARM
-      </span>
+    <span class="sc-text">
+      <span class="sc-title" lang="de">{trackName}</span>
+      <span class="sc-note">Full set · plays from SoundCloud</span>
     </span>
   </button>
 </div>
+
+<style>
+  .sc-player {
+    background: var(--c-base);
+    color: var(--c-content);
+  }
+
+  .sc-load {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    width: 100%;
+    padding: 1.25rem;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .sc-play {
+    display: grid;
+    place-items: center;
+    width: 4rem;
+    height: 4rem;
+    flex: none;
+    background: var(--c-primary);
+    color: var(--c-base);
+    transition:
+      background-color 0.2s,
+      transform 0.25s var(--ease-out);
+  }
+
+  .sc-play svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-left: 0.2rem;
+  }
+
+  .sc-load:hover .sc-play,
+  .sc-load:focus-visible .sc-play {
+    background: var(--c-content);
+    transform: scale(1.06);
+  }
+
+  .sc-load:active .sc-play {
+    transform: scale(0.96);
+  }
+
+  .sc-text {
+    min-width: 0;
+  }
+
+  .sc-title {
+    display: block;
+    font-size: var(--t-lead);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    hyphens: auto;
+  }
+
+  @media (max-width: 480px) {
+    .sc-title {
+      font-size: 1.2rem;
+    }
+
+    .sc-play {
+      width: 3.25rem;
+      height: 3.25rem;
+    }
+  }
+
+  .sc-note {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: var(--t-small);
+    color: var(--c-soft);
+  }
+</style>
 
 <script>
   // Swap the facade for the real iframe on first interaction.

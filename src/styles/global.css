@@ -3,31 +3,43 @@
 @tailwind utilities;
 
 /* ============================================================
-   DAY SHO EPK — DARK INDUSTRIAL INTERFACE
+   DAY SHO EPK — one ground, one ink, one red.
+   The page is built from the name: it is the monument in the hero and
+   returns at full width in the footer. Everything between is small and
+   plain so that contrast holds.
    ============================================================ */
 
 :root {
-  /* ---- Layout grid ------------------------------------------
-     One container definition for the whole page. Column edges, the HUD and the
-     hero figure all resolve against these three values, so nothing is positioned
-     against the raw viewport. Absolutely positioned elements re-derive the shell
-     width themselves rather than reading 100vw — 100vw includes the scrollbar
-     and would land them ~7px off the grid. */
-  --gutter: clamp(1rem, 2.6vw, 3rem);
-  --maxw: 1560px;
-  --gap: clamp(0.75rem, 1.3vw, 1.5rem);
+  /* One frame for the whole page: equal outer margins at every width. */
+  --gutter: clamp(1.25rem, 2.6vw, 2.5rem);
+  --maxw: 1600px;
+  --gap: clamp(0.75rem, 1.4vw, 1.5rem);
+  --section: clamp(5.5rem, 9vw, 8.5rem);
 
+  /* Colour roles */
   --c-base: #050505;
-  --c-surface: #0a0a0a;
+  --c-surface: #111111;
+  --c-raise: #1a1a1a;
   --c-primary: #ff2a2a;
-  --c-content: #e0e0e0;
-  --c-muted: #6b6b6b;
+  --c-content: #e6e6e6;
+  --c-soft: #a6a6a6;
+  --c-paper: #e6e6e6;
   --c-scan: #39ff14;
-  --c-industrial: #c0a062;
-  --c-overlay: rgba(0, 0, 0, 0.85);
+
+  /* Kept for the legal pages and the one-sheet, which still read these names. */
+  --c-muted: #a6a6a6;
+
+  /* Five type steps. Nothing on the page is set outside them. */
+  --t-small: 0.875rem; /* 14px — captions, notes, legal */
+  --t-body: 1.0625rem; /* 17px — running text */
+  --t-lead: clamp(1.375rem, 1.1rem + 1.1vw, 2.125rem); /* 22–34px — statements, line-up */
+  --t-head: clamp(2.25rem, 1.6rem + 2.6vw, 4.25rem); /* 36–68px — section headings */
+  --t-mono: clamp(6.5rem, 21vw, 22rem); /* the name */
+
+  --ease-out: cubic-bezier(0.2, 0.75, 0.2, 1);
 }
 
-/* ---- Brutalist resets ------------------------------------ */
+/* ---- Resets ---------------------------------------------------- */
 * {
   border-radius: 0 !important;
 }
@@ -41,9 +53,11 @@ html {
 body {
   background: var(--c-base);
   color: var(--c-content);
-  font-family: "Space Grotesk", sans-serif;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: var(--t-body);
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  font-kerning: normal;
 }
 
 ::selection {
@@ -52,11 +66,11 @@ body {
 }
 
 :focus-visible {
-  outline: 1px solid var(--c-primary);
-  outline-offset: 2px;
+  outline: 2px solid var(--c-primary);
+  outline-offset: 3px;
 }
 
-/* ---- Container + 12 column grid ---------------------------- */
+/* ---- Frame ------------------------------------------------------- */
 .shell {
   width: min(100% - var(--gutter) * 2, var(--maxw));
   margin-inline: auto;
@@ -68,338 +82,179 @@ body {
   column-gap: var(--gap);
 }
 
-/* Debug aid: append ?grid to the URL to see the column rhythm. */
-body[data-grid] .shell {
-  background-image: repeating-linear-gradient(
-    to right,
-    rgba(255, 42, 42, 0.14) 0,
-    rgba(255, 42, 42, 0.14) calc((100% - 11 * var(--gap)) / 12),
-    transparent calc((100% - 11 * var(--gap)) / 12),
-    transparent calc((100% - 11 * var(--gap)) / 12 + var(--gap))
-  );
+.section {
+  padding-block: var(--section);
 }
 
-/* ---- Global noise overlay --------------------------------- */
-.noise-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 90;
-  pointer-events: none;
-  background-image: url("/assets/noise.png");
-  background-repeat: repeat;
-  background-size: 200px 200px;
-  mix-blend-mode: overlay;
-  opacity: 0.05;
-  will-change: transform;
+.h2 {
+  font-size: var(--t-head);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  text-wrap: balance;
 }
 
-/* ---- Scanline overlay -------------------------------------- */
-.scanline-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 91;
-  pointer-events: none;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(224, 224, 224, 0.6) 0px,
-    rgba(224, 224, 224, 0.6) 1px,
-    transparent 1px,
-    transparent 3px
-  );
-  opacity: 0.03;
+.lead {
+  font-size: var(--t-lead);
+  line-height: 1.22;
+  letter-spacing: -0.015em;
 }
 
-@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
-  .scanline-overlay {
-    animation: scan-drift 8s linear infinite;
+.small {
+  font-size: var(--t-small);
+  line-height: 1.5;
+}
+
+.soft {
+  color: var(--c-soft);
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Links -------------------------------------------------------- */
+.link {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  transition: color 0.2s, text-decoration-thickness 0.2s;
+}
+
+.link:hover,
+.link:focus-visible {
+  color: var(--c-primary);
+  text-decoration-thickness: 3px;
+}
+
+/* ---- Buttons: one shape (square), one fill per role ---------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 3.25rem;
+  padding: 0.85rem 1.4rem;
+  font-size: var(--t-body);
+  font-weight: 700;
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    transform 0.2s var(--ease-out);
+}
+
+.btn:active {
+  transform: translateY(2px) scale(0.98);
+}
+
+.btn--red {
+  background: var(--c-primary);
+  color: var(--c-base);
+}
+
+.btn--red:hover,
+.btn--red:focus-visible {
+  background: var(--c-content);
+  color: var(--c-base);
+}
+
+.btn--ink {
+  background: var(--c-base);
+  color: var(--c-content);
+}
+
+.btn--ink:hover,
+.btn--ink:focus-visible {
+  background: var(--c-primary);
+  color: var(--c-base);
+}
+
+.btn--ghost {
+  background: var(--c-raise);
+  color: var(--c-content);
+}
+
+.btn--ghost:hover,
+.btn--ghost:focus-visible {
+  background: var(--c-primary);
+  color: var(--c-base);
+}
+
+/* The stepped arrow from the STOCKDUNKEL flyers, as the one recurring mark. */
+.step-arrow {
+  width: 1.1em;
+  height: 1.1em;
+  flex: none;
+  transition: transform 0.25s var(--ease-out);
+}
+
+.btn:hover .step-arrow,
+.btn:focus-visible .step-arrow {
+  transform: translateX(4px);
+}
+
+/* ---- Reveal: content is visible by default; JS opts it into motion --- */
+.js [data-reveal] > * {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s var(--ease-out),
+    transform 0.7s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 80ms);
+}
+
+.js [data-reveal].is-in > * {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .js [data-reveal] > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
   }
 }
 
-@keyframes scan-drift {
-  from { background-position-y: 0; }
-  to { background-position-y: 3px; }
-}
-
-/* ---- Moving green scan line (hero) ------------------------- */
-.scan-beam {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 1px;
-  background: var(--c-scan);
-  opacity: 0.3;
-  pointer-events: none;
-  animation: scan-beam 10s linear infinite;
-  will-change: transform;
-}
-
-@keyframes scan-beam {
-  from { transform: translateY(0); }
-  to { transform: translateY(100vh); }
-}
-
-/* ---- Warning stripe dividers ------------------------------- */
-.divider-stripes {
-  height: 16px;
-  background: repeating-linear-gradient(
-    45deg,
-    #ff2a2a 0px,
-    #ff2a2a 12px,
-    #050505 12px,
-    #050505 24px
-  );
-  border-top: 1px solid #333;
-  border-bottom: 1px solid #333;
-}
-
-.divider-stripes--bw {
-  background: repeating-linear-gradient(
-    45deg,
-    #e0e0e0 0px,
-    #e0e0e0 12px,
-    #050505 12px,
-    #050505 24px
-  );
-}
-
-/* ---- Blueprint grid ---------------------------------------- */
-.blueprint {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 48px 48px;
-}
-
-/* ---- Blinking terminal cursor ------------------------------- */
-.cursor-blink::after {
-  content: "▮";
-  color: var(--c-primary);
-  margin-left: 0.15em;
-  animation: blink 1s steps(1) infinite;
-}
-
-@keyframes blink {
-  50% { opacity: 0; }
-}
-
-/* ---- Glitch hover (CSS only) -------------------------------- */
-.glitch-hover {
-  position: relative;
-  transition: text-shadow 0.2s steps(2);
-}
-
-.glitch-hover:hover,
-.glitch-hover:focus-visible {
-  text-shadow:
-    2px 0 0 rgba(255, 42, 42, 0.8),
-    -2px 0 0 rgba(0, 255, 255, 0.8);
-  animation: glitch-jitter 0.2s steps(2) 1;
-}
-
-@keyframes glitch-jitter {
-  0% { transform: translate(0); }
-  25% { transform: translate(-1px, 1px); }
-  50% { transform: translate(1px, -1px); }
-  75% { transform: translate(-1px, -1px); }
-  100% { transform: translate(0); }
-}
-
-/* ---- Industrial switch (download buttons) -------------------- */
+/* ---- Legacy helpers still used by /impressum, /datenschutz, /one-sheet --- */
 .switch-btn {
-  display: block;
-  width: 100%;
-  background: var(--c-base);
-  border: 1px solid var(--c-content);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.25rem;
+  padding: 0.85rem 1.4rem;
+  background: var(--c-raise);
   color: var(--c-content);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.875rem;
-  letter-spacing: 0.15em;
+  font-weight: 700;
   text-transform: uppercase;
-  padding: 1.25rem 1.5rem;
-  text-align: left;
-  transition: color 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+  letter-spacing: 0.02em;
+  transition: background-color 0.2s, color 0.2s;
 }
 
 .switch-btn:hover,
 .switch-btn:focus-visible {
-  color: var(--c-primary);
-  border-color: var(--c-primary);
-  box-shadow: 6px 6px 0 var(--c-primary);
-  transform: translate(-2px, -2px);
-}
-
-/* Primary variant: red block, dark type (submit actions) */
-.switch-btn--primary {
   background: var(--c-primary);
-  border-color: var(--c-primary);
   color: var(--c-base);
-  text-align: center;
-  font-weight: 700;
 }
 
-.switch-btn--primary:hover,
-.switch-btn--primary:focus-visible {
-  background: var(--c-base);
-  color: var(--c-primary);
-  box-shadow: 6px 6px 0 var(--c-content);
-}
-
-/* ---- Form fields (raw industrial inputs) --------------------- */
-.field-raw {
-  width: 100%;
-  background: transparent;
-  border: 0;
-  border-bottom: 1px solid #333;
-  color: var(--c-content);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.875rem;
-  padding: 0.75rem 0.25rem;
-}
-
-.field-raw::placeholder {
-  color: var(--c-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-
-.field-raw:focus {
-  outline: 1px solid var(--c-primary);
-  outline-offset: 0;
-  border-bottom-color: var(--c-primary);
-}
-
-select.field-raw {
-  appearance: none;
-  text-transform: uppercase;
-}
-
-select.field-raw option {
-  background: var(--c-surface);
-  color: var(--c-content);
-}
-
-input.field-raw::-webkit-calendar-picker-indicator {
-  filter: invert(0.7);
-}
-
-/* ---- CRT monitor frame --------------------------------------- */
-.crt-frame {
-  position: relative;
-  border: 2px solid #333;
-  background: #000;
-  overflow: hidden;
-}
-
-.crt-frame::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.35) 0px,
-    rgba(0, 0, 0, 0.35) 1px,
-    transparent 1px,
-    transparent 3px
-  );
-}
-
-.crt-frame::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: radial-gradient(ellipse at center, transparent 60%, rgba(0, 0, 0, 0.5) 100%);
-}
-
-/* ---- Skewed press frame --------------------------------------- */
-.press-frame {
-  position: relative;
-  border: 1px solid var(--c-primary);
-  transform: skewX(-2deg);
-  overflow: hidden;
-}
-
-/* Fully desaturated at rest: the frames come from three separate shoots with
-   different colour temperatures, and only a common treatment makes them one set. */
-.press-frame > img {
-  transform: skewX(2deg) scale(1.06);
-  filter: grayscale(1) contrast(1.15);
-  transition: filter 0.35s;
-}
-
-.press-frame:hover > img,
-.press-frame:focus-within > img {
-  filter: grayscale(0) contrast(1.05);
-}
-
-.press-frame__tag {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  transform: skewX(2deg);
-  transform-origin: bottom left;
-  background: var(--c-base);
-  border-top: 1px solid var(--c-primary);
-  border-right: 1px solid var(--c-primary);
-  color: var(--c-muted);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  padding: 2px 8px;
-}
-
-/* ---- Full-bleed studio triptych --------------------------------- */
-.triptych {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: #333;
-  border-block: 1px solid #333;
-}
-
-.triptych figure {
-  position: relative;
-  overflow: hidden;
-  background: var(--c-base);
-  aspect-ratio: 3 / 4;
-}
-
-.triptych img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  object-position: center 30%;
-  filter: grayscale(1) contrast(1.2);
-  transition: filter 0.35s, transform 0.5s;
-}
-
-.triptych figure:hover img {
-  filter: grayscale(0.7) contrast(1.1);
-  transform: scale(1.03);
-}
-
-@media (max-width: 640px) {
-  .triptych figure { aspect-ratio: 2 / 3; }
-}
-
-/* ---- Reduced motion: kill ambience ------------------------------ */
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  .scan-beam,
-  .scanline-overlay,
-  .cursor-blink::after {
-    animation: none !important;
-  }
-}
-
-/* ---- Print: clean one-sheet -------------------------------------- */
+/* ---- Print -------------------------------------------------------- */
 @media print {
-  .noise-overlay,
-  .scanline-overlay,
-  .scan-beam,
   .no-print {
     display: none !important;
   }

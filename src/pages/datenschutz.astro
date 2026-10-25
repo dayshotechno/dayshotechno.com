@@ -3,33 +3,48 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="Datenschutz | DAY SHO" description="Datenschutzerklärung für DAY SHO." noindex lang="de">
-  <main id="main" class="mx-auto flex min-h-screen w-full max-w-3xl flex-col justify-center px-4 py-20">
-    <h1 class="font-display text-4xl font-bold uppercase tracking-tight text-content md:text-6xl">
-      <span class="text-primary">//</span> DATENSCHUTZ
-    </h1>
+  <main id="main" class="shell legal">
+    <h1 class="h2">Datenschutz</h1>
 
-    <div class="mt-10 space-y-6 border border-[#333] bg-surface p-6 font-mono text-sm leading-relaxed text-content md:p-10">
+    <div class="legal-body">
       <p>
-        <strong class="text-primary">1. VERANTWORTLICHER:</strong> Patrick Schlauer, Plüddemanngasse 47a, 8010 Graz.
+        <strong>1. Verantwortlicher:</strong> Patrick Schlauer, Plüddemanngasse 47a, 8010 Graz.
       </p>
       <p>
-        <strong class="text-primary">2. HOSTING &amp; SICHERHEIT (CLOUDFLARE):</strong> Zur Absicherung dieser Website
+        <strong>2. Hosting &amp; Sicherheit (Cloudflare):</strong> Zur Absicherung dieser Website
         nutzen wir Dienste von Cloudflare. Dabei werden technisch notwendige Daten (wie Ihre IP-Adresse) verarbeitet,
         um Angriffe abzuwehren. Dies dient unserem berechtigten Interesse an einer sicheren Website gemäß Art. 6 Abs. 1
         lit. f DSGVO.
       </p>
       <p>
-        <strong class="text-primary">3. AUDIO-INHALTE (SOUNDCLOUD):</strong> Wir binden einen Audioplayer von
+        <strong>3. Audio-Inhalte (SoundCloud):</strong> Wir binden einen Audioplayer von
         SoundCloud ein. Der Player wird erst nach Ihrem Klick geladen; dabei wird eine Verbindung zu den Servern von
         SoundCloud hergestellt. Es können Daten (IP-Adresse, Geräteinfos) an SoundCloud übertragen und Cookies gesetzt
         werden. Anbieter: SoundCloud Global Limited &amp; Co. KG, Rheinsberger Str. 76/77, 10115 Berlin, Deutschland.
       </p>
       <p>
-        <strong class="text-primary">4. IHRE RECHTE:</strong> Sie haben das Recht auf Auskunft, Berichtigung, Löschung
+        <strong>4. Ihre Rechte:</strong> Sie haben das Recht auf Auskunft, Berichtigung, Löschung
         und Einschränkung der Verarbeitung Ihrer Daten.
       </p>
     </div>
 
-    <a href="/" class="switch-btn glitch-hover mt-10 max-w-xs">&gt; ZURÜCK_ZUR_BASIS</a>
+    <a href="/" class="btn btn--ghost legal-back">Zurück zum Press Kit</a>
   </main>
+  <style is:global>
+    .legal {
+      max-width: 46rem;
+      padding-block: clamp(4rem, 10vw, 8rem);
+    }
+
+    .legal-body {
+      display: grid;
+      gap: 1.25rem;
+      margin-top: 2.5rem;
+      max-width: 62ch;
+    }
+
+    .legal-back {
+      margin-top: 3rem;
+    }
+  </style>
 </Layout>

@@ -1,43 +1,121 @@
 ---
-// Section H — monospace social index + legal links (Austrian Impressum requirement).
+// Footer: four short lists, then the name once more at full width.
+// The Impressum and Datenschutz links are an Austrian legal requirement.
 const socials = [
-  { label: "INSTAGRAM", href: "https://instagram.com/daysho.techno" },
-  { label: "TIKTOK", href: "https://www.tiktok.com/@daysho.dj" },
-  { label: "SOUNDCLOUD", href: "https://on.soundcloud.com/0Oiz8yh04PoAh92DmF" },
+  { label: "Instagram", href: "https://instagram.com/daysho.techno" },
+  { label: "TikTok", href: "https://www.tiktok.com/@daysho.dj" },
+  { label: "SoundCloud", href: "https://on.soundcloud.com/0Oiz8yh04PoAh92DmF" },
 ];
 ---
 
-<footer class="border-t border-primary bg-void">
-  <div class="shell flex flex-col gap-8 py-12 md:flex-row md:items-end md:justify-between">
+<footer class="footer">
+  <div class="shell footer-cols">
+    <div>
+      <h2 class="footer-h">Booking</h2>
+      <a href="mailto:booking@dayshotechno.com" class="link">booking@dayshotechno.com</a>
+      <p class="soft">Graz, Austria</p>
+    </div>
     <nav aria-label="Social media">
-      <p class="font-mono text-[11px] uppercase tracking-widest text-muted">EXTERNAL_CHANNELS:</p>
-      <ul class="mt-3 space-y-2">
+      <h2 class="footer-h">Follow</h2>
+      <ul>
         {
-          socials.map((social) => (
+          socials.map((s) => (
             <li>
-              <a
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="glitch-hover font-mono text-sm uppercase tracking-widest text-content hover:text-primary"
-              >
-                &gt; {social.label}
+              <a href={s.href} target="_blank" rel="noopener noreferrer" class="link">
+                {s.label}
               </a>
             </li>
           ))
         }
       </ul>
     </nav>
-
-    <div class="font-mono text-[11px] uppercase tracking-widest text-muted md:text-right">
-      <p>
-        <a href="/impressum" class="hover:text-content underline underline-offset-4">IMPRESSUM</a>
-        <span class="mx-2">/</span>
-        <a href="/datenschutz" class="hover:text-content underline underline-offset-4">DATENSCHUTZ</a>
-      </p>
-      <p class="mt-3">
-        © {new Date().getFullYear()} DAY SHO // <span class="text-scan">ALL SYSTEMS OPERATIONAL</span>
-      </p>
+    <div>
+      <h2 class="footer-h">Downloads</h2>
+      <ul>
+        <li><a href="/downloads/presskit.zip" download class="link">Press kit</a></li>
+        <li><a href="/downloads/rider.txt" download class="link">Rider</a></li>
+        <li><a href="/one-sheet" class="link">One-sheet</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="footer-h">Legal</h2>
+      <ul>
+        <li><a href="/impressum" class="link">Impressum</a></li>
+        <li><a href="/datenschutz" class="link">Datenschutz</a></li>
+      </ul>
     </div>
   </div>
+
+  <div class="shell footer-name-wrap">
+    <p class="footer-name" aria-hidden="true">DAY SHO</p>
+    <p class="small soft">© {new Date().getFullYear()} DAY SHO</p>
+  </div>
 </footer>
+
+<style>
+  .footer {
+    padding-top: clamp(4rem, 8vw, 7rem);
+    padding-bottom: 1.5rem;
+    overflow: hidden;
+  }
+
+  .footer-cols {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2rem var(--gap);
+  }
+
+  .footer-h {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-cols li {
+    padding-block: 0.1rem;
+  }
+
+  .footer-name-wrap {
+    margin-top: clamp(5rem, 14vw, 12rem);
+  }
+
+  .footer-name {
+    margin-inline: -0.035em;
+    font-size: calc((min(100vw, var(--maxw) + var(--gutter) * 2) - var(--gutter) * 2) / 3.66);
+    font-weight: 700;
+    line-height: 0.74;
+    letter-spacing: -0.055em;
+    white-space: nowrap;
+    color: var(--c-primary);
+    padding-bottom: 0.08em;
+    margin-bottom: 1rem;
+    transform-origin: 50% 100%;
+  }
+
+  /* The name grows into place as the page ends. */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .footer-name {
+        animation: name-arrive linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 100%;
+      }
+    }
+  }
+
+  @keyframes name-arrive {
+    from {
+      transform: scale(0.92);
+      opacity: 0.3;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .footer-cols {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .footer-cols > :first-child {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

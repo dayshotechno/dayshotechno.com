@@ -1,0 +1,23 @@
+---
+// The stepped arrow from the STOCKDUNKEL flyers, pointing right (or down).
+// Fills with currentColor so it takes the colour of the control it sits in.
+interface Props {
+  dir?: "right" | "down";
+  class?: string;
+}
+
+const { dir = "right", class: className = "step-arrow" } = Astro.props;
+const path = "M26 0h12v8h8v8h-8v8h8v8h-8v8h8v8h-8v4h18L32 88 8 52h18V0z";
+---
+
+{
+  dir === "right" ? (
+    <svg viewBox="0 0 88 64" class={className} fill="currentColor" aria-hidden="true">
+      <path transform="translate(0 64) rotate(-90)" d={path} />
+    </svg>
+  ) : (
+    <svg viewBox="0 0 64 88" class={className} fill="currentColor" aria-hidden="true">
+      <path d={path} />
+    </svg>
+  )
+}

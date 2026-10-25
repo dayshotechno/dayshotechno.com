@@ -1,6 +1,5 @@
 ---
 import "../styles/global.css";
-import ScanlineOverlay from "../components/ScanlineOverlay.astro";
 
 interface Props {
   title?: string;
@@ -70,23 +69,50 @@ const schema = {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
 
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    <!-- Opts the page into entrance motion. Without script, nothing is ever hidden. -->
+    <script is:inline>document.documentElement.classList.add("js");</script>
   </head>
   <body>
     <a
       href="#main"
-      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] bg-primary text-void font-mono text-xs uppercase tracking-widest px-4 py-2"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] bg-primary text-void font-bold px-4 py-3"
     >
-      SKIP_TO_CONTENT
+      Skip to content
     </a>
 
-    <div class="noise-overlay" aria-hidden="true"></div>
-    <ScanlineOverlay />
-
     <slot />
+
+    <script>
+      // Entrance for the parts of every section: each direct child of a
+      // [data-reveal] block rises in turn, once, as the block enters.
+      const blocks = document.querySelectorAll<HTMLElement>("[data-reveal]");
+      const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      blocks.forEach((block) =>
+        Array.from(block.children).forEach((child, i) =>
+          (child as HTMLElement).style.setProperty("--i", String(i))
+        )
+      );
+
+      if (reduced || !("IntersectionObserver" in window)) {
+        blocks.forEach((b) => b.classList.add("is-in"));
+      } else {
+        const io = new IntersectionObserver(
+          (records) =>
+            records.forEach((r) => {
+              if (!r.isIntersecting) return;
+              r.target.classList.add("is-in");
+              io.unobserve(r.target);
+            }),
+          { rootMargin: "0px 0px -10% 0px" }
+        );
+        blocks.forEach((b) => io.observe(b));
+      }
+    </script>
   </body>
 </html>

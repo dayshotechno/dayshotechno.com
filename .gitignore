@@ -23,3 +23,6 @@ epk-full.jpeg
 # Local Claude settings
 .claude/settings.local.json
 build/
+
+# design inspector screenshots
+.taste-skill/

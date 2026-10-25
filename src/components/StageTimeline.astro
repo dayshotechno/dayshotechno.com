@@ -1,102 +1,131 @@
 ---
-import Micro from "./Micro.astro";
-
-// Section D — DESTROYED_STAGES.LOG: vertical event log, printed line-by-line on scroll.
-import { STAGES as stages } from "../data/bio";
+// Stages: the rooms he has played, set like a line-up — one size, fixed column
+// starts, nothing between the rows but leading.
+import { STAGES } from "../data/bio";
 ---
 
-<section id="stages" class="shell py-20 md:py-28">
-  <h2 class="font-mono text-2xl font-bold uppercase tracking-widest text-content md:text-4xl">
-    <span class="text-primary">//</span> DESTROYED_STAGES.LOG<span class="cursor-blink"></span>
-  </h2>
-  <p class="mt-2 flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-muted">
-    <Micro name="tickStrip" class="h-3 w-[70px] text-primary" />
-    EVENT HISTORY // VERIFIED IMPACT REPORTS
-  </p>
+<section id="stages" class="stages section">
+  <div class="shell">
+    <div class="stages-head" data-reveal>
+      <h2 class="h2">Stages</h2>
+      <p class="soft">Newest first.</p>
+    </div>
 
-  <ol id="stage-log" class="mt-10 border-l border-[#333]">
-    {
-      stages.map((stage) => (
-        <li class="log-entry relative py-5 pl-6 md:pl-10">
-          <span class="absolute -left-[5px] top-7 h-[9px] w-[9px] bg-primary" aria-hidden="true" />
-          <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-            <span class="font-mono text-xs tracking-widest text-muted">{stage.id}</span>
-            <span
-              class:list={[
-                "font-mono text-[11px] uppercase tracking-widest",
-                stage.tag === "ACTIVE" ? "text-primary" : "text-content/70",
-              ]}
-            >
-              [{stage.tag}]
-            </span>
-          </div>
-          <h3 class="mt-1 font-display text-2xl font-bold uppercase tracking-tight text-content md:text-4xl">
-            {stage.event}
-          </h3>
-          <p class="mt-1 font-mono text-sm uppercase tracking-wider text-muted">{stage.venue}</p>
-        </li>
-      ))
-    }
-  </ol>
+    <table class="stages-table">
+      <caption class="sr-only">Events DAY SHO has played, newest first</caption>
+      <thead class="sr-only">
+        <tr>
+          <th scope="col">Event</th>
+          <th scope="col">Venue</th>
+          <th scope="col">City</th>
+        </tr>
+      </thead>
+      <tbody data-reveal>
+        {
+          STAGES.map((s) => (
+            <tr>
+              <th scope="row">{s.event}</th>
+              <td>{s.venue}</td>
+              <td>{s.city}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+
+    <p class="stages-foot lead" data-reveal>
+      <span>Shared bills with Jan Vanderveigt and 333CXT.</span>
+    </p>
+  </div>
 </section>
 
 <style>
-  /* Each entry is wiped in left-to-right in discrete steps, like a line being
-     printed to a terminal. Stays visible if JS never runs (no .is-in dependency
-     for the base state under reduced motion). */
-  .log-entry {
-    opacity: 0;
-    clip-path: inset(0 100% 0 0);
+  .stages {
+    background: var(--c-surface);
   }
 
-  .log-entry.is-in {
-    animation:
-      log-print 0.5s steps(14, end) forwards,
-      log-fade 0.12s linear forwards;
-    animation-delay: var(--d, 0ms);
+  .stages-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    flex-wrap: wrap;
+    margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
   }
 
-  @keyframes log-print {
-    to { clip-path: inset(0 0 0 0); }
+  .stages-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: clamp(1.375rem, 0.9rem + 2vw, 2.75rem);
+    line-height: 1.45;
+    letter-spacing: -0.02em;
   }
 
-  @keyframes log-fade {
-    to { opacity: 1; }
+  .stages-table th,
+  .stages-table td {
+    padding: 0;
+    text-align: left;
+    font-weight: 400;
+    vertical-align: baseline;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .log-entry {
-      opacity: 1;
-      clip-path: none;
+  .stages-table tbody th {
+    width: 48%;
+    font-weight: 500;
+  }
+
+  .stages-table td {
+    color: var(--c-soft);
+  }
+
+  .stages-table td:last-child {
+    text-align: right;
+  }
+
+  .stages-table tbody tr {
+    transition: color 0.2s;
+  }
+
+  .stages-table tbody tr:hover th,
+  .stages-table tbody tr:hover td {
+    color: var(--c-primary);
+  }
+
+  .stages-foot {
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  /* The reveal moves rows, not the table body. */
+  .js .stages-table tbody[data-reveal] > tr {
+    transition-property: opacity, transform, color;
+  }
+
+  @media (max-width: 767px) {
+    .stages-table,
+    .stages-table tbody,
+    .stages-table tr,
+    .stages-table th,
+    .stages-table td {
+      display: block;
     }
-    .log-entry.is-in { animation: none; }
+
+    .stages-table tbody tr {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      column-gap: 1rem;
+      padding-block: 0.6rem;
+    }
+
+    .stages-table tbody th {
+      grid-column: 1 / -1;
+      width: auto;
+      font-size: 1.375rem;
+      line-height: 1.2;
+    }
+
+    .stages-table td {
+      font-size: 1rem;
+      letter-spacing: 0;
+    }
   }
 </style>
-
-<script>
-  // ponytail: IntersectionObserver + a CSS class. This replaced gsap + ScrollTrigger
-  // (44 kB) for what is ultimately "add a class when it scrolls into view".
-  const entries = document.querySelectorAll<HTMLElement>(".log-entry");
-
-  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    const io = new IntersectionObserver(
-      (records, obs) => {
-        records.forEach((r) => {
-          if (!r.isIntersecting) return;
-          const el = r.target as HTMLElement;
-          el.style.setProperty("--d", `${(Number(el.dataset.i) % 3) * 90}ms`);
-          el.classList.add("is-in");
-          obs.unobserve(el);
-        });
-      },
-      { rootMargin: "0px 0px -12% 0px" }
-    );
-
-    entries.forEach((el, i) => {
-      el.dataset.i = String(i);
-      io.observe(el);
-    });
-  } else {
-    entries.forEach((el) => el.classList.add("is-in"));
-  }
-</script>

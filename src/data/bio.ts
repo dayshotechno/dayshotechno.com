@@ -15,14 +15,14 @@ export const CLAIM_INLINE = CLAIM.join(" ");
 // that is the search term with volume. Positioning and discoverability are two
 // different jobs — do not merge them back together.
 //
-// Every claim below is his, and checkable: 145-160 BPM, rooms up to 500, the slot
+// Every claim below is his, and checkable: 145-160 BPM, the slot
 // after the headliner, the venues in STAGES. No adjectives that cannot be verified.
 
 export const BIO_MICRO =
   "DAY SHO is a schranz DJ from Graz, Austria — 145 to 160 BPM, no breaks, and closing tracks that have no business being in a schranz set.";
 
 export const BIO_SHORT =
-  "DAY SHO is a schranz DJ from Graz, Austria. He plays 145 to 160 BPM with no breaks and no runways — the older, more relentless end of the genre rather than the current hard techno wave. Into that he folds old records and tracks a room will shout along to, and he usually closes somewhere outside techno entirely. Rooms up to 500. Postgarage, Das Werk, röda.";
+  "DAY SHO is a schranz DJ from Graz, Austria. He plays 145 to 160 BPM with no breaks and no runways — the older, more relentless end of the genre rather than the current hard techno wave. Into that he folds old records and tracks a room will shout along to, and he usually closes somewhere outside techno entirely. Postgarage, Das Werk, röda.";
 
 // Kept as paragraphs rather than one block: rendered with `whitespace-pre-line`, and
 // the copy button hands a promoter real paragraph breaks to paste into an event page.
@@ -35,7 +35,7 @@ export const BIO_LONG_PARAGRAPHS = [
 
   "That has a specific use, and promoters have worked it out: he plays after the headliner. The slot where the room either stays or goes home.",
 
-  "Rooms up to 500. Postgarage Graz, Das Werk Vienna, Kulturverein röda Steyr, Eventfabrik Niklasdorf, Schloss Mautern. Shared bills with Jan Vanderveigt and 333CXT. Sets of 90 to 120 minutes.",
+  "Postgarage Graz, Das Werk Vienna, Kulturverein röda Steyr, Eventfabrik Niklasdorf, Schloss Mautern. Shared bills with Jan Vanderveigt and 333CXT. Sets of 90 to 120 minutes.",
 
   "Based in Graz. Replies within 48 hours and turns up on time.",
 ] as const;
@@ -46,17 +46,20 @@ export const BIO_LONG_BODY = BIO_LONG_PARAGRAPHS.join("\n\n");
 // here — the one-sheet still prints CLAIM_INLINE as a separate header above it.
 export const BIO_LONG = BIO_LONG_BODY;
 
+// Three lengths a promoter actually needs: a line under the name on a flyer, a
+// paragraph for the event page, the full text for press.
 export const BIOS = [
-  { id: "micro", label: "BIO_MICRO // LINEUP_POST", text: BIO_MICRO },
-  { id: "short", label: "BIO_SHORT // 65_WORDS", text: BIO_SHORT },
-  { id: "long", label: "BIO_LONG // FULL_DOSSIER", text: BIO_LONG },
+  { id: "micro", label: "Line-up post", use: "One sentence for a flyer or a line-up announcement.", text: BIO_MICRO },
+  { id: "short", label: "Event page", use: "A paragraph for the event page or a festival programme.", text: BIO_SHORT },
+  { id: "long", label: "Full press bio", use: "The whole story, for press and promoters who want it.", text: BIO_LONG },
 ];
 
+// Newest first. No dates: none were supplied, and none are invented here.
 export const STAGES = [
-  { id: "LOG_06", event: "Trash-O-Ween", venue: "Kulturverein röda // Steyr", tag: "ACTIVE" },
-  { id: "LOG_05", event: "Polytox Production Face2Face", venue: "Postgarage // Graz", tag: "LOGGED" },
-  { id: "LOG_04", event: "Sauhaufen", venue: "Postgarage // Graz", tag: "LOGGED" },
-  { id: "LOG_03", event: "Face2Face", venue: "Das Werk // Wien", tag: "LOGGED" },
-  { id: "LOG_02", event: "Noise", venue: "Eventfabrik // Niklasdorf", tag: "LOGGED" },
-  { id: "LOG_01", event: "Ehrnau-Rave", venue: "Schloss Mautern // Mautern", tag: "LOGGED" },
+  { event: "Trash-O-Ween", venue: "Kulturverein röda", city: "Steyr" },
+  { event: "Polytox Production Face2Face", venue: "Postgarage", city: "Graz" },
+  { event: "Sauhaufen", venue: "Postgarage", city: "Graz" },
+  { event: "Face2Face", venue: "Das Werk", city: "Vienna" },
+  { event: "Noise", venue: "Eventfabrik", city: "Niklasdorf" },
+  { event: "Ehrnau-Rave", venue: "Schloss Mautern", city: "Mautern" },
 ];

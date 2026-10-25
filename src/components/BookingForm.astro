@@ -5,68 +5,147 @@
 // runtime) to build a mailto: string. Native constraint validation does the checking.
 const BOOKING_EMAIL = "booking@dayshotechno.com";
 
-const BUDGET_RANGES = ["< 500 EUR", "500 - 1.000 EUR", "1.000 - 2.500 EUR", "> 2.500 EUR", "TBD / NEGOTIABLE"];
+const BUDGET_RANGES = ["Under 500 EUR", "500–1,000 EUR", "1,000–2,500 EUR", "Over 2,500 EUR", "To be discussed"];
 
 const FIELDS = [
-  { name: "name", label: "NAME *", placeholder: "YOUR NAME", required: true, autocomplete: "name" },
-  { name: "venue", label: "VENUE *", placeholder: "CLUB / FESTIVAL", required: true },
-  { name: "city", label: "CITY *", placeholder: "CITY", required: true },
-  { name: "date", label: "DATE *", type: "date", required: true },
-  { name: "capacity", label: "ESTIMATED CAPACITY", type: "number", placeholder: "e.g. 800", min: "0" },
+  { name: "name", label: "Your name", required: true, autocomplete: "name" },
+  { name: "venue", label: "Club or festival", required: true, autocomplete: "organization" },
+  { name: "city", label: "City", required: true, autocomplete: "address-level2" },
+  { name: "date", label: "Date", type: "date", required: true },
+  { name: "capacity", label: "Capacity", type: "number", placeholder: "e.g. 400", min: "0", inputmode: "numeric" },
 ];
 ---
 
-<form id="booking-form" class="space-y-6" data-email={BOOKING_EMAIL}>
-  <div class="grid gap-6 md:grid-cols-2">
+<form id="booking-form" class="bf" data-email={BOOKING_EMAIL}>
+  <div class="bf-grid">
     {
       FIELDS.map((f) => (
-        <label class="block">
-          <span class="font-mono text-[11px] uppercase tracking-widest text-muted">{f.label}</span>
+        <label class="bf-field">
+          <span class="bf-label">
+            {f.label}
+            {f.required && <span class="bf-req"> (required)</span>}
+          </span>
           <input
             name={f.name}
             type={f.type ?? "text"}
             required={f.required}
             placeholder={f.placeholder}
             min={f.min}
+            inputmode={f.inputmode}
             autocomplete={f.autocomplete}
-            class="field-raw mt-1"
+            class="bf-input"
           />
         </label>
       ))
     }
 
-    <label class="block">
-      <span class="font-mono text-[11px] uppercase tracking-widest text-muted">BUDGET RANGE</span>
-      <select name="budget" class="field-raw mt-1">
-        <option value="" disabled selected>SELECT RANGE</option>
+    <label class="bf-field">
+      <span class="bf-label">Budget</span>
+      <select name="budget" class="bf-input">
+        <option value="">Choose a range</option>
         {BUDGET_RANGES.map((range) => <option value={range}>{range}</option>)}
       </select>
     </label>
+
+    <label class="bf-field bf-field--wide">
+      <span class="bf-label">Anything else</span>
+      <textarea name="message" rows="3" class="bf-input" placeholder="Line-up, set time, travel"></textarea>
+    </label>
   </div>
 
-  <label class="block">
-    <span class="font-mono text-[11px] uppercase tracking-widest text-muted">MESSAGE</span>
-    <textarea
-      name="message"
-      rows="4"
-      class="field-raw mt-1 resize-y"
-      placeholder="EVENT DETAILS, LINE-UP, SET LENGTH..."></textarea>
-  </label>
-
-  <button type="submit" class="switch-btn switch-btn--primary glitch-hover cursor-pointer">
-    &gt; TRANSMIT_REQUEST
-  </button>
-
-  <p
-    id="booking-status"
-    class="font-mono text-[11px] uppercase leading-relaxed tracking-wider text-muted"
-    aria-live="polite"
-  >
-    <span data-idle>OPENS YOUR MAIL CLIENT. DIRECT LINE: </span>
-    <span data-sent hidden>REQUEST HANDED TO YOUR MAIL CLIENT. NO CLIENT? WRITE DIRECTLY TO </span>
-    <a href={`mailto:${BOOKING_EMAIL}`} class="text-primary underline underline-offset-4">{BOOKING_EMAIL}</a>
-  </p>
+  <div class="bf-foot">
+    <button type="submit" class="btn btn--ink bf-submit">Write the email</button>
+    <p id="booking-status" class="small" aria-live="polite">
+      <span data-idle>Opens your mail app with everything filled in.</span>
+      <span data-sent hidden>Handed to your mail app. Nothing opened? Write to {BOOKING_EMAIL}.</span>
+    </p>
+  </div>
 </form>
+
+<style>
+  .bf-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.75rem var(--gap);
+  }
+
+  .bf-field {
+    display: block;
+  }
+
+  .bf-field--wide {
+    grid-column: 1 / -1;
+  }
+
+  .bf-label {
+    display: block;
+    font-size: var(--t-small);
+    font-weight: 500;
+  }
+
+  .bf-req {
+    color: #555;
+    font-weight: 400;
+  }
+
+  /* Form fields keep their bottom rule: it is the field. */
+  .bf-input {
+    width: 100%;
+    margin-top: 0.35rem;
+    padding: 0.6rem 0;
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid var(--c-base);
+    color: var(--c-base);
+    font: inherit;
+    transition: border-color 0.2s;
+  }
+
+  .bf-input::placeholder {
+    color: #6b6b6b;
+  }
+
+  .bf-input:focus {
+    outline: none;
+    border-bottom-color: var(--c-primary);
+  }
+
+  .bf-input:focus-visible {
+    outline: 2px solid var(--c-primary);
+    outline-offset: 4px;
+  }
+
+  select.bf-input {
+    appearance: none;
+    cursor: pointer;
+  }
+
+  textarea.bf-input {
+    resize: vertical;
+  }
+
+  .bf-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+    margin-top: 2.25rem;
+  }
+
+  .bf-submit {
+    min-width: 14rem;
+  }
+
+  @media (max-width: 640px) {
+    .bf-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .bf-submit {
+      width: 100%;
+    }
+  }
+</style>
 
 <script>
   const form = document.querySelector<HTMLFormElement>("#booking-form");
@@ -77,18 +156,17 @@ const FIELDS = [
     const data = new FormData(form);
     const get = (k: string) => String(data.get(k) ?? "").trim();
 
-    const subject = `Booking Request: DAY SHO - ${get("date") || "[DATE]"} / ${get("city") || "[CITY]"}`;
+    const subject = `Booking request: DAY SHO – ${get("date") || "[date]"} / ${get("city") || "[city]"}`;
     const body = [
-      "BOOKING REQUEST // DAY SHO",
-      "----------------------------------------",
-      `NAME:      ${get("name")}`,
-      `VENUE:     ${get("venue")}`,
-      `CITY:      ${get("city")}`,
-      `DATE:      ${get("date")}`,
-      `CAPACITY:  ${get("capacity")}`,
-      `BUDGET:    ${get("budget")}`,
-      "----------------------------------------",
-      "MESSAGE:",
+      "Booking request for DAY SHO",
+      "",
+      `Name:      ${get("name")}`,
+      `Venue:     ${get("venue")}`,
+      `City:      ${get("city")}`,
+      `Date:      ${get("date")}`,
+      `Capacity:  ${get("capacity")}`,
+      `Budget:    ${get("budget")}`,
+      "",
       get("message"),
     ].join("\n");
 

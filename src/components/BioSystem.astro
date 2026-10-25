@@ -1,61 +1,94 @@
 ---
-// Section C — the "Data Sheet": three bio lengths, each copy-to-clipboard.
-import { BIOS as bios } from "../data/bio";
+// Bio: the short bio set large with a square portrait dropped into it like an
+// initial, then the one tool on the page — pick the length you need, copy it.
+import { BIOS } from "../data/bio";
+import dims from "../data/images.json";
+
+const words = (t: string) => t.trim().split(/\s+/).length;
+
+const facts = [
+  { k: "Based in", v: "Graz, Austria" },
+  { k: "Tempo", v: "145–160 BPM" },
+  { k: "Set length", v: "90–120 minutes" },
+  { k: "Best slot", v: "After the headliner" },
+];
 ---
 
-<section id="bio" class="shell py-20 md:py-28">
-  <div class="grid gap-10 md:grid-cols-[1fr_2fr]">
-    <!-- Left: oversized display title -->
-    <div>
-      <div class="sticky top-8">
-        <h2
-          class="font-display font-bold uppercase leading-[0.9] text-content"
-          style="font-size: clamp(3rem, 8vw, 8rem);"
-        >
-          BIO<span class="cursor-blink text-[0.35em] align-middle"></span>
-        </h2>
-        <p class="mt-4 font-mono text-xs uppercase tracking-widest text-muted">
-          SUBJECT: DAY SHO<br />
-          CLASS: HARD_TECHNO / SCHRANZ<br />
-          STATUS: <span class="text-scan">OPERATIONAL</span>
+<section id="bio" class="bio">
+  <div class="shell g12 bio-grid">
+    <div class="bio-side" data-reveal>
+      <h2 class="h2">Bio</h2>
+      <dl class="bio-facts">
+        {
+          facts.map((f) => (
+            <div>
+              <dt class="small soft">{f.k}</dt>
+              <dd>{f.v}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+
+    <div class="bio-main" data-reveal>
+      <p class="bio-statement">
+        <img
+          class="bio-portrait"
+          src="/assets/press_01.webp"
+          alt="DAY SHO in profile against a concrete wall, lowering his sunglasses"
+          width={dims.press_01.w}
+          height={dims.press_01.h}
+          loading="lazy"
+        />
+        DAY SHO plays schranz out of Graz: 145 to 160 BPM, no breaks, no runways.
+      </p>
+      <div class="bio-body">
+        <p>
+          The older, more relentless end of the genre, not the current hard techno wave, and he is
+          explicit about why: too many breaks, too little
+          time to lose yourself. What pulled him in was what he already knew from metal and punk, the
+          forward pressure, the way it moves a room whether the room agreed to it or not.
+        </p>
+        <p>
+          Into that he folds old records and tracks a room will shout along to, and he often closes
+          outside techno entirely, on old drum &amp; bass or dubstep. Promoters have worked out where it
+          fits: after the headliner, the slot where the room either stays or goes home.
         </p>
       </div>
     </div>
 
-    <!-- Right: terminal containers -->
-    <div class="space-y-6">
-      {
-        bios.map((bio) => (
-          <article class="border border-[#333] bg-surface" data-bio={bio.id}>
-            <header class="flex items-center justify-between gap-2 border-b border-[#333] px-4 py-2">
-              <h3 class="font-mono text-xs uppercase tracking-widest text-primary">{bio.label}</h3>
-              <button
-                type="button"
-                class="copy-btn glitch-hover shrink-0 border border-[#333] px-3 py-1 font-mono text-[11px] uppercase tracking-widest text-muted hover:border-primary hover:text-primary transition-colors"
-                data-copy={bio.text}
-              >
-                [COPY]
-              </button>
-            </header>
-            <p class="px-4 py-5 font-body text-sm leading-relaxed whitespace-pre-line text-content md:text-base">{bio.text}</p>
-          </article>
-        ))
-      }
+  </div>
 
-      <!-- Contact sheet. Desaturated at rest so six frames from three different
-           shoots read as one system; colour returns on the hovered frame only. -->
-      <div class="grid grid-cols-2 gap-4 pt-4 md:grid-cols-4">
+  <div class="bio-band">
+    <div class="shell g12 bio-tool" data-reveal>
+      <div class="bio-tool__head">
+        <h3 class="bio-tool__title">Take a bio for your event</h3>
+        <p class="soft">Pick the length you need. The text is his, ready to paste.</p>
+
+        <fieldset class="bio-tabs">
+          <legend class="sr-only">Bio length</legend>
+          {
+            BIOS.map((b, i) => (
+              <label class="bio-tab">
+                <input type="radio" name="bio-length" value={b.id} checked={i === 1} />
+                <span class="bio-tab__label">{b.label}</span>
+                <span class="bio-tab__count small tabular">{words(b.text)} words</span>
+              </label>
+            ))
+          }
+        </fieldset>
+      </div>
+
+      <div class="bio-panels">
         {
-          [
-            { src: "/assets/press_01.webp", fig: "FIG_01", alt: "DAY SHO in profile against a concrete wall, lowering his sunglasses" },
-            { src: "/assets/press_02.webp", fig: "FIG_02", alt: "DAY SHO facing the camera with headphones around his neck, reaching toward the lens" },
-            { src: "/assets/press_03.webp", fig: "FIG_03", alt: "DAY SHO shielding his face with an outstretched hand in front of a concrete wall" },
-            { src: "/assets/press_06.webp", fig: "FIG_04", alt: "DAY SHO mixing on Pioneer CDJs, headphones on, tattooed arms over the decks" },
-          ].map((img) => (
-            <figure class="press-frame aspect-[3/4]">
-              <img src={img.src} alt={img.alt} loading="lazy" class="h-full w-full object-cover" />
-              <figcaption class="press-frame__tag">{img.fig}</figcaption>
-            </figure>
+          BIOS.map((b) => (
+            <article class="bio-panel" data-panel={b.id}>
+              <p class="small soft">{b.use}</p>
+              <p class="bio-panel__text">{b.text}</p>
+              <button type="button" class="btn btn--red bio-copy" data-copy={b.text} hidden>
+                Copy {b.label.toLowerCase()}
+              </button>
+            </article>
           ))
         }
       </div>
@@ -63,21 +96,238 @@ import { BIOS as bios } from "../data/bio";
   </div>
 </section>
 
+<style>
+  .bio {
+    padding-top: var(--section);
+  }
+
+  .bio-grid {
+    row-gap: clamp(3rem, 6vw, 5rem);
+    padding-bottom: clamp(4rem, 8vw, 7rem);
+  }
+
+  .bio-band {
+    background: var(--c-surface);
+    padding-block: clamp(3rem, 6vw, 5.5rem);
+  }
+
+  .bio-side {
+    grid-column: 1 / span 3;
+  }
+
+  .bio-facts {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  .bio-facts dd {
+    font-weight: 500;
+  }
+
+  .bio-main {
+    grid-column: 4 / span 9;
+  }
+
+  .bio-statement {
+    font-size: var(--t-lead);
+    line-height: 1.24;
+    letter-spacing: -0.015em;
+    max-width: 34ch;
+  }
+
+  .bio-body {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem var(--gap);
+    margin-top: 2.5rem;
+    max-width: 62rem;
+  }
+
+  @media (max-width: 767px) {
+    .bio-body {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Square portrait, three lines tall, dropped in like an initial. */
+  .bio-portrait {
+    float: left;
+    width: 3.72em;
+    height: 3.72em;
+    margin: 0.2em 0.5em 0.1em 0;
+    object-fit: cover;
+    object-position: 50% 25%;
+    filter: grayscale(1) contrast(1.1);
+  }
+
+  /* ---- The tool --------------------------------------------------- */
+  .bio-tool {
+    row-gap: 2rem;
+  }
+
+  .bio-tool__head {
+    grid-column: 1 / span 4;
+  }
+
+  .bio-tool__title {
+    font-size: var(--t-lead);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+
+  .bio-tabs {
+    display: grid;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+
+  .bio-tab {
+    position: relative;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.15rem;
+    background: var(--c-raise);
+    cursor: pointer;
+    transition:
+      background-color 0.2s,
+      color 0.2s,
+      transform 0.2s var(--ease-out);
+  }
+
+  .bio-tab input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .bio-tab__label {
+    font-weight: 700;
+  }
+
+  .bio-tab:hover {
+    transform: translateX(4px);
+  }
+
+  .bio-tab:has(input:checked) {
+    background: var(--c-content);
+    color: var(--c-base);
+  }
+
+  .bio-tab:has(input:checked) .bio-tab__count {
+    color: #333;
+  }
+
+  .bio-tab:has(input:focus-visible) {
+    outline: 2px solid var(--c-primary);
+    outline-offset: 3px;
+  }
+
+  .bio-tab__count {
+    color: var(--c-soft);
+  }
+
+  .bio-panels {
+    grid-column: 6 / span 7;
+  }
+
+  .bio-panel__text {
+    margin-top: 1rem;
+    max-width: 62ch;
+    white-space: pre-line;
+  }
+
+  .bio-copy {
+    margin-top: 2rem;
+  }
+
+  .bio-copy.is-done {
+    background: var(--c-content);
+  }
+
+  /* One panel at a time once the browser can follow the radios; every bio stays
+     readable where it cannot. */
+  @supports selector(:has(*)) {
+    .bio-panel {
+      display: none;
+    }
+
+    .bio-tool:has(input[value="micro"]:checked) [data-panel="micro"],
+    .bio-tool:has(input[value="short"]:checked) [data-panel="short"],
+    .bio-tool:has(input[value="long"]:checked) [data-panel="long"] {
+      display: block;
+      animation: panel-in 0.35s var(--ease-out);
+    }
+  }
+
+  @keyframes panel-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+
+  @media (max-width: 1023px) {
+    .bio-side,
+    .bio-main,
+    .bio-tool__head,
+    .bio-panels {
+      grid-column: 1 / -1;
+    }
+
+    .bio-facts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .bio-statement {
+      font-size: 1.375rem;
+    }
+
+    .bio-portrait {
+      width: 3.6em;
+      height: 3.6em;
+    }
+  }
+</style>
+
 <script>
-  document.querySelectorAll<HTMLButtonElement>(".copy-btn").forEach((btn) => {
+  // Copy with the Clipboard API; where a browser refuses it, select the text and
+  // fall back to the legacy copy command, so the promoter is never left with nothing.
+  function selectText(el: Element) {
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    const sel = getSelection();
+    sel?.removeAllRanges();
+    sel?.addRange(range);
+  }
+
+  document.querySelectorAll<HTMLButtonElement>(".bio-copy").forEach((btn) => {
+    btn.hidden = false;
+    const label = btn.textContent;
+    const text = btn.parentElement?.querySelector(".bio-panel__text");
+
     btn.addEventListener("click", async () => {
+      let ok = false;
       try {
         await navigator.clipboard.writeText(btn.dataset.copy ?? "");
-        const original = btn.textContent;
-        btn.textContent = "[COPIED]";
-        btn.classList.add("text-scan", "border-scan");
-        setTimeout(() => {
-          btn.textContent = original;
-          btn.classList.remove("text-scan", "border-scan");
-        }, 1500);
+        ok = true;
       } catch {
-        btn.textContent = "[FAILED]";
+        if (text) {
+          selectText(text);
+          ok = document.execCommand("copy");
+        }
       }
+
+      btn.textContent = ok ? "Copied, paste it anywhere" : "Text selected, press Ctrl+C";
+      btn.classList.toggle("is-done", ok);
+      setTimeout(() => {
+        btn.textContent = label;
+        btn.classList.remove("is-done");
+      }, 2600);
     });
   });
 </script>
